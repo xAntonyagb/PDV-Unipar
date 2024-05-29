@@ -3,6 +3,7 @@ package org.example.pdvapi.entities;
 import jakarta.persistence.*;
 
 import java.sql.Timestamp;
+import java.util.List;
 
 @Entity
 @Table(name = "venda")
@@ -15,6 +16,8 @@ public class Venda {
     private double valorTotal;
     @ManyToOne
     private Cliente cliente;
+    @OneToMany
+    private List<ItemVenda> itensVenda;
 
     public Venda() {
     }
