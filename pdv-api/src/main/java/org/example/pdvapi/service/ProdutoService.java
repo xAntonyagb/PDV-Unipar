@@ -11,7 +11,6 @@ import java.util.Optional;
 
 @Service
 public class ProdutoService {
-
     @Autowired
     private ProdutoRepository repository;
 
@@ -32,8 +31,9 @@ public class ProdutoService {
         return repository.save(produto);
     }
 
-    public List<Produto> findByNome(String nome) {
-        return repository.findByNomeIsContainingIgnoreCase(nome);
+    public List<Produto> findByNome(String descricao) {
+        Optional<List<Produto>> produtos = repository.findByDescricaoContainingIgnoreCase(descricao);
+        return produtos.orElse(null);
     }
 
     public void delete(Long id) {

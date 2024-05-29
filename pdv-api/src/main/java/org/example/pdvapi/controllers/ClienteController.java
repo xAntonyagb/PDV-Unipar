@@ -5,9 +5,10 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import jakarta.validation.Valid;
-import org.example.pdvapi.Services.ClienteService;
+import org.example.pdvapi.service.ClienteService;
 import org.example.pdvapi.entities.Cliente;
 import org.example.pdvapi.repositories.ClienteRepository;
+import org.example.pdvapi.service.ClienteService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -28,10 +29,7 @@ public class ClienteController {
                     { @Content(mediaType = "application/json", schema =
                     @Schema(implementation = Cliente.class)) }),
             @ApiResponse(responseCode = "400", description = "ID invalido informado"),
-            @ApiResponse(responseCode = "404", description = "Cliente não encontrado"),
-            @ApiResponse(responseCode = "500", description = "Internal server error", content =
-                    { @Content(mediaType = "application/json", schema =
-                    @Schema(implementation = ApiException.class)) }) })
+            @ApiResponse(responseCode = "404", description = "Cliente não encontrado")})
 
     @GetMapping("/{id}")
     public ResponseEntity<Cliente> getById(@PathVariable Long id) {
@@ -43,33 +41,33 @@ public class ClienteController {
         return ResponseEntity.ok(clienteService.getAll());
 
     }
-    @PostMapping
-    public ResponseEntity<Cliente> insert(@RequestBody @Valid Cliente cliente,
-                                          UriComponentsBuilder builder) {
-
-        clienteService.insert(cliente);
-
-        URI uri =
-                builder.path("/cliente/{id}").
-                        buildAndExpand(cliente.getId()).toUri();
-
-        return ResponseEntity.created(uri).body(cliente);
-
-    }
-
-    @PutMapping("/{id}")
-    public ResponseEntity<Cliente> update(@PathVariable int id,
-                                          @RequestBody Cliente cliente) {
-        clienteService.update(cliente);
-
-        return ResponseEntity.ok(cliente);
-    }
-
-    @DeleteMapping("/{id}")
-    public ResponseEntity<Void> delete(@PathVariable Long id) {
-        clienteService.delete(id);
-        return ResponseEntity.noContent().build();
-    }
+//    @PostMapping
+//    public ResponseEntity<Cliente> insert(@RequestBody @Valid Cliente cliente,
+//                                          UriComponentsBuilder builder) {
+//
+//        clienteService.insert(cliente);
+//
+//        URI uri =
+//                builder.path("/cliente/{id}").
+//                        buildAndExpand(cliente.getId()).toUri();
+//
+//        return ResponseEntity.created(uri).body(cliente);
+//
+//    }
+//
+//    @PutMapping("/{id}")
+//    public ResponseEntity<Cliente> update(@PathVariable int id,
+//                                          @RequestBody Cliente cliente) {
+//        clienteService.update(cliente);
+//
+//        return ResponseEntity.ok(cliente);
+//    }
+//
+//    @DeleteMapping("/{id}")
+//    public ResponseEntity<Void> delete(@PathVariable Long id) {
+//        clienteService.delete(id);
+//        return ResponseEntity.noContent().build();
+//    }
 
 
 
