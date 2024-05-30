@@ -1,31 +1,32 @@
 package com.mycompany.app.pdv.services;
 
 import com.mycompany.app.pdv.dtos.VendaDTO;
-import com.mycompany.app.pdv.entities.Venda;
-import com.mycompany.app.pdv.repositories.VendaRepositoryImp;
-import com.mycompany.app.pdv.util.EntityManagerUtil;
+import java.util.ArrayList;
 import java.util.List;
 
 
 public class VendaService {
     
     public VendaDTO insert(VendaDTO venda) throws Exception{
-        return new VendaRepositoryImp(EntityManagerUtil.getManager()).insert(venda);
+        return new VendaDTO();
     }
     
     public VendaDTO findById(Integer id){
-        return new VendaRepositoryImp(EntityManagerUtil.getManager()).findById(id);
+        return new VendaDTO();
     }
     
     public List<VendaDTO> findAll() {
-        return new VendaRepositoryImp(EntityManagerUtil.getManager()).findAll();
+        ArrayList<VendaDTO> vendas = new ArrayList();
+        List<VendaDTO> vendasList = null;
+        vendasList.addAll(vendas);
+        return vendasList;
     }
     
     public VendaDTO update(VendaDTO venda) throws Exception{
-        return new VendaRepositoryImp(EntityManagerUtil.getManager()).update(venda);
+        return new VendaDTO();
     }
     
     public boolean delete(VendaDTO venda) throws Exception{
-        return new VendaRepositoryImp(EntityManagerUtil.getManager()).delete(venda);
+        return true;
     }
 }

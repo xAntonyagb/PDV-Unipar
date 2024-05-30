@@ -9,14 +9,18 @@ package com.mycompany.app.pdv.dtos;
 public class ClienteDTO {
 
     private int id;
-
     private String nome;
-
+    private String email;
     private String telefone;
 
-    private String cpf;
-
     public ClienteDTO() {
+    }
+
+    public ClienteDTO(int id, String nome, String email, String telefone) {
+        this.id = id;
+        this.nome = nome;
+        this.email = email;
+        this.telefone = telefone;
     }
 
     public int getId() {
@@ -35,6 +39,14 @@ public class ClienteDTO {
         this.nome = nome;
     }
 
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
     public String getTelefone() {
         return telefone;
     }
@@ -42,14 +54,10 @@ public class ClienteDTO {
     public void setTelefone(String telefone) {
         this.telefone = telefone;
     }
+    
+    
 
-    public String getCpf() {
-        return cpf;
-    }
-
-    public void setCpf(String cpf) {
-        this.cpf = cpf;
-    }
+    
     
     
 }

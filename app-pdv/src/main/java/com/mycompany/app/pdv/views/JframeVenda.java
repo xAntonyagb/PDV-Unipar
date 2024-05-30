@@ -4,13 +4,16 @@
  */
 package com.mycompany.app.pdv.views;
 
-import com.mycompany.app.pdv.entities.ItemVenda;
+import com.mycompany.app.pdv.dtos.ItemVendaDTO;
+import com.mycompany.app.pdv.exceptions.ApiException;
 
 import com.mycompany.app.pdv.tablemodels.ItemVendaTableModel;
 
 import java.awt.Color;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
@@ -21,7 +24,7 @@ import javax.swing.table.DefaultTableModel;
 public class JframeVenda extends javax.swing.JFrame {
 
     
-    private static List<ItemVenda> listaItemVenda = new ArrayList<>();
+    private static List<ItemVendaDTO> listaItemVenda = new ArrayList<>();
     /**
      * Creates new form JframeVenda
      */
@@ -408,7 +411,13 @@ public class JframeVenda extends javax.swing.JFrame {
     }//GEN-LAST:event_jCheckBoxCpfNotaActionPerformed
 
     private void btSelecionarClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btSelecionarClienteActionPerformed
-        JPanel panel = new JpanelConsultaCliente();
+        JPanel panel = new JPanel();
+        try {
+            panel = new JpanelConsultaCliente();
+        /*ToDo*/
+        } catch (ApiException | InterruptedException ex) {
+            Logger.getLogger(JframeVenda.class.getName()).log(Level.SEVERE, null, ex);
+        }
         JFrame frame = new JFrame("Consulta de Cliente");
         frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         frame.setResizable(false);
@@ -432,7 +441,7 @@ public class JframeVenda extends javax.swing.JFrame {
             double total = 0;
             double subtotal = 0;
 
-            for(ItemVenda item : listaItemVenda) {
+            for(ItemVendaDTO item : listaItemVenda) {
                 desconto += item.getDescontoProduto();
                 subtotal += item.getProduto().getValorUnitario();
                 total += item.getProduto().getValorUnitario() - item.getDescontoProduto();
@@ -453,7 +462,15 @@ public class JframeVenda extends javax.swing.JFrame {
     }//GEN-LAST:event_btNovoActionPerformed
 
     private void btAddProdutosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btAddProdutosActionPerformed
-        JPanel panel = new JpanelConsultaProduto();
+        JPanel panel = new JPanel();
+        try {
+            panel = new JpanelConsultaProduto();
+        /*ToDo*/
+        } catch (ApiException ex) {
+            Logger.getLogger(JframeVenda.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (InterruptedException ex) {
+            Logger.getLogger(JframeVenda.class.getName()).log(Level.SEVERE, null, ex);
+        }
         JFrame frame = new JFrame("Consulta de Cliente");
         frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         frame.setResizable(false);
@@ -469,7 +486,15 @@ public class JframeVenda extends javax.swing.JFrame {
 
     private void btSelecionarVendedorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btSelecionarVendedorActionPerformed
 
-        JPanel panel = new JpanelConsultaCliente();
+        JPanel panel = new JPanel();
+        try {
+            panel = new JpanelConsultaCliente();
+        /*ToDo*/
+        } catch (ApiException ex) {
+            Logger.getLogger(JframeVenda.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (InterruptedException ex) {
+            Logger.getLogger(JframeVenda.class.getName()).log(Level.SEVERE, null, ex);
+        }
         JFrame frame = new JFrame("Consulta de Cliente");
         frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         frame.setResizable(false);
@@ -483,7 +508,7 @@ public class JframeVenda extends javax.swing.JFrame {
         atualizarTabela();
     }//GEN-LAST:event_btAtualizarTabelaActionPerformed
 
-    public void addNovoItemToTable(ItemVenda item) {
+    public void addNovoItemToTable(ItemVendaDTO item) {
         JframeVenda.listaItemVenda.add(item);
     }
     
