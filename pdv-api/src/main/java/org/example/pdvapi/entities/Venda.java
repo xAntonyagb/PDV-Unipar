@@ -1,6 +1,7 @@
 package org.example.pdvapi.entities;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.*;
 
 import java.sql.Timestamp;
 import java.util.List;
@@ -11,12 +12,27 @@ public class Venda {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
+
+    @NotBlank
+    @NotEmpty
     private String observacao;
+
+    @NotNull
+    @Future
     private Timestamp data;
+
+    @NotNull
+    @Column(name = "total")
+    @DecimalMin(value = "0.0")
+    @Digits(integer = 0, fraction = 2)
     private double valorTotal;
+
     @ManyToOne
+    @NotNull
     private Cliente cliente;
+
     @OneToMany
+    @NotNull
     private List<ItemVenda> itensVenda;
 
     public Venda() {
@@ -38,35 +54,58 @@ public class Venda {
         this.id = id;
     }
 
-    public String getObservacao() {
+    public @NotNull @NotBlank @NotEmpty String getObservacao() {
         return observacao;
     }
 
-    public void setObservacao(String observacao) {
+    public void setObservacao(@NotNull @NotBlank @NotEmpty String observacao) {
         this.observacao = observacao;
     }
 
-    public Timestamp getData() {
+    public @NotNull @Future Timestamp getData() {
         return data;
     }
 
-    public void setData(Timestamp data) {
+    public void setData(@NotNull @Future Timestamp data) {
         this.data = data;
     }
 
+    @NotNull
+    @DecimalMin(value = "0.0")
+    @Digits(integer = 0, fraction = 2)
     public double getValorTotal() {
         return valorTotal;
     }
 
-    public void setValorTotal(double valorTotal) {
+    public void setValorTotal(@NotNull @DecimalMin(value = "0.0") @Digits(integer = 0, fraction = 2) double valorTotal) {
         this.valorTotal = valorTotal;
     }
 
-    public Cliente getCliente() {
+    public @NotNull Cliente getCliente() {
         return cliente;
     }
 
-    public void setCliente(Cliente cliente) {
+    public void setCliente(@NotNull Cliente cliente) {
         this.cliente = cliente;
+    }
+
+    public @NotNull List<ItemVenda> getItensVenda() {
+        return itensVenda;
+    }
+
+    public void setItensVenda(@NotNull List<ItemVenda> itensVenda) {
+        this.itensVenda = itensVenda;
+    }
+
+    @Override
+    public String toString() {
+        return "Venda{" +
+                "id=" + id +
+                ", observacao='" + observacao + '\'' +
+                ", data=" + data +
+                ", valorTotal=" + valorTotal +
+                ", cliente=" + cliente +
+                ", itensVenda=" + itensVenda +
+                '}';
     }
 }
