@@ -62,4 +62,13 @@ public class Cliente {
     public void setTelefone(@NotNull @NotBlank String telefone) {
         this.telefone = telefone;
     }
+
+    public Object toDTO() {
+        Cliente cliente = new Cliente();
+        cliente.setId(this.id);
+        cliente.setNome(this.nome);
+        cliente.setEmail(this.email);
+        cliente.setTelefone(this.telefone);
+        return cliente;
+    }
 }

@@ -3,7 +3,10 @@ package org.example.pdvapi.controllers;
 import org.example.pdvapi.dtos.LoginRequestDTO;
 import org.example.pdvapi.dtos.LoginResponseDTO;
 import org.example.pdvapi.entities.Role;
+import org.example.pdvapi.exceptions.ApiException;
 import org.example.pdvapi.repositories.UserRepository;
+import org.example.pdvapi.service.TokenService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -20,6 +23,8 @@ import java.util.stream.Collectors;
 
 @RestController
 public class TokenController {
+    @Autowired
+    private TokenService tokenService;
 
     private final JwtEncoder jwtEncoder;
     private final UserRepository userRepository;
@@ -34,12 +39,15 @@ public class TokenController {
     }
 
     @PostMapping("/login")
-    public ResponseEntity<LoginResponseDTO> login(@RequestBody LoginRequestDTO loginRequest) {
+    public ResponseEntity<LoginResponseDTO> login(@RequestBody LoginRequestDTO loginRequest)  throws ApiException{
+
+        LoginResponseDTO loginResponseDTO = tokenService.login(loginRequest);
+
 
         var user = userRepository.findByUsernameIgnoreCase(loginRequest.username());
 
         if (user.isEmpty() || !user.get().isLoginCorrect(loginRequest, passwordEncoder)) {
-            throw new BadCredentialsException("user or password is invalid!");
+            throw new ApiException("Usuario ou senha invalido!");
         }
 
         var now = Instant.now();

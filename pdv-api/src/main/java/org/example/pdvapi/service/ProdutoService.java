@@ -1,8 +1,13 @@
 package org.example.pdvapi.service;
 
 
+import org.example.pdvapi.dtos.ItemVendaDTO;
+import org.example.pdvapi.dtos.VendaDTO;
+import org.example.pdvapi.entities.Cliente;
 import org.example.pdvapi.entities.Produto;
+import org.example.pdvapi.repositories.ClienteRepository;
 import org.example.pdvapi.repositories.ProdutoRepository;
+import org.example.pdvapi.repositories.VendaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -18,7 +23,7 @@ public class ProdutoService {
         return repository.save(produto);
     }
 
-    public Produto getById(Long id) {
+    public Produto getById(int id) {
         Optional<Produto> produto = repository.findById(id);
         return produto.orElse(null);
     }
@@ -27,16 +32,8 @@ public class ProdutoService {
         return repository.findAll();
     }
 
-    public Produto update(Produto produto) {
-        return repository.save(produto);
-    }
-
     public List<Produto> findByNome(String descricao) {
         Optional<List<Produto>> produtos = repository.findByDescricaoContainingIgnoreCase(descricao);
         return produtos.orElse(null);
-    }
-
-    public void delete(Long id) {
-        repository.deleteById(id);
     }
 }
