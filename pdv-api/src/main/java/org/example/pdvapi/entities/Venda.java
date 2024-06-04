@@ -34,6 +34,7 @@ public class Venda {
 
     @OneToMany
     @NotNull
+    @JoinColumn(name = "venda_id")
     private List<ItemVenda> itensVenda;
 
     public Venda() {
