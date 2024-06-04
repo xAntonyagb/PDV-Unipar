@@ -2,6 +2,7 @@ package org.example.pdvapi.entities;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
+import org.springframework.format.annotation.NumberFormat;
 
 @Entity
 @Table(name = "item_venda")
@@ -21,14 +22,14 @@ public class ItemVenda {
     @NotBlank
     @NotEmpty
     @DecimalMin(value = "0.0")
-    @Digits(integer = 0, fraction = 2)
+    @NumberFormat(pattern = "#.##")
     private double valorUnitario;
 
     @NotNull
     @NotBlank
     @NotEmpty
     @DecimalMin(value = "0.0")
-    @Digits(integer = 0, fraction = 2)
+    @NumberFormat(pattern = "#.##")
     private double valorTotal;
 
     @NotNull
@@ -75,12 +76,12 @@ public class ItemVenda {
     @NotBlank
     @NotEmpty
     @DecimalMin(value = "0.0")
-    @Digits(integer = 0, fraction = 2)
+    @NumberFormat(pattern = "#.##")
     public double getValorUnitario() {
         return valorUnitario;
     }
 
-    public void setValorUnitario(@NotNull @NotBlank @NotEmpty @DecimalMin(value = "0.0") @Digits(integer = 0, fraction = 2) double valorUnitario) {
+    public void setValorUnitario(@NotNull @NotBlank @NotEmpty @DecimalMin(value = "0.0") @NumberFormat(pattern = "#.##") double valorUnitario) {
         this.valorUnitario = valorUnitario;
     }
 
@@ -88,12 +89,12 @@ public class ItemVenda {
     @NotBlank
     @NotEmpty
     @DecimalMin(value = "0.0")
-    @Digits(integer = 0, fraction = 2)
+    @NumberFormat(pattern = "#.##")
     public double getValorTotal() {
         return valorTotal;
     }
 
-    public void setValorTotal(@NotNull @NotBlank @NotEmpty @DecimalMin(value = "0.0") @Digits(integer = 0, fraction = 2) double valorTotal) {
+    public void setValorTotal(@NotNull @NotBlank @NotEmpty @DecimalMin(value = "0.0") @NumberFormat(pattern = "#.##") double valorTotal) {
         this.valorTotal = valorTotal;
     }
 

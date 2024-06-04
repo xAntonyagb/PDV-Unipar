@@ -2,8 +2,8 @@ package org.example.pdvapi.entities;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
-import org.example.pdvapi.enums.CategoriaEnum;
 import org.hibernate.validator.constraints.Length;
+import org.springframework.format.annotation.NumberFormat;
 
 @Entity
 @Table(name = "produto")
@@ -23,23 +23,17 @@ public class Produto {
     @NotBlank
     @NotEmpty
     @DecimalMin(value = "0.0")
-    @Digits(integer = 0, fraction = 2)
+    @NumberFormat(pattern = "#.##")
     private double valor;
 
     @NotNull
-    @NotBlank
-    @NotEmpty
-    private CategoriaEnum categoria;
+    @ManyToOne
+    private Categoria categoria;
 
     public Produto() {
     }
 
-    public Produto(int id, String descricao, double valor, CategoriaEnum categoria) {
-        this.id = id;
-        this.descricao = descricao;
-        this.valor = valor;
-        this.categoria = categoria;
-    }
+
 
     public int getId() {
         return id;
@@ -61,21 +55,13 @@ public class Produto {
     @NotBlank
     @NotEmpty
     @DecimalMin(value = "0.0")
-    @Digits(integer = 0, fraction = 2)
+    @NumberFormat(pattern = "#.##")
     public double getValor() {
         return valor;
     }
 
-    public void setValor(@NotNull @NotBlank @NotEmpty @DecimalMin(value = "0.0") @Digits(integer = 0, fraction = 2) double valor) {
+    public void setValor(@NotNull @NotBlank @NotEmpty @DecimalMin(value = "0.0") @NumberFormat(pattern = "#.##") double valor) {
         this.valor = valor;
-    }
-
-    public @NotNull @NotBlank @NotEmpty CategoriaEnum getCategoria() {
-        return categoria;
-    }
-
-    public void setCategoria(@NotNull @NotBlank @NotEmpty CategoriaEnum categoria) {
-        this.categoria = categoria;
     }
 
     @Override

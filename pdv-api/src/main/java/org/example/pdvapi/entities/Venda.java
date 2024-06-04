@@ -2,6 +2,7 @@ package org.example.pdvapi.entities;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
+import org.springframework.format.annotation.NumberFormat;
 
 import java.sql.Timestamp;
 import java.util.List;
@@ -24,7 +25,7 @@ public class Venda {
     @NotNull
     @Column(name = "total")
     @DecimalMin(value = "0.0")
-    @Digits(integer = 0, fraction = 2)
+    @NumberFormat(pattern = "#.##")
     private double valorTotal;
 
     @ManyToOne
@@ -72,12 +73,12 @@ public class Venda {
 
     @NotNull
     @DecimalMin(value = "0.0")
-    @Digits(integer = 0, fraction = 2)
+    @NumberFormat(pattern = "#.##")
     public double getValorTotal() {
         return valorTotal;
     }
 
-    public void setValorTotal(@NotNull @DecimalMin(value = "0.0") @Digits(integer = 0, fraction = 2) double valorTotal) {
+    public void setValorTotal(@NotNull @DecimalMin(value = "0.0") @NumberFormat(pattern = "#.##") double valorTotal) {
         this.valorTotal = valorTotal;
     }
 
