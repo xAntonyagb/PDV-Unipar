@@ -19,7 +19,7 @@ public class ClienteService {
         return repository.save(cliente);
     }
 
-    public Cliente getById(Long id) {
+    public Cliente getById(int id) {
         Optional<Cliente> cliente = repository.findById(id);
         return cliente.orElse(null);
     }
@@ -36,7 +36,7 @@ public class ClienteService {
         return repository.findByNomeIsContainingIgnoreCase(nome);
     }
 
-    public void delete(Long id) {
+    public void delete(int id) {
         repository.deleteById(id);
     }
 }

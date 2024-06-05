@@ -19,7 +19,7 @@ public class ItemVendaService {
         return repository.save(itemVenda);
     }
 
-    public ItemVenda getById(Long id) {
+    public ItemVenda getById(int id) {
         Optional<ItemVenda> itemVenda = repository.findById(id);
         return itemVenda.orElse(null);
     }
@@ -32,7 +32,7 @@ public class ItemVendaService {
         return repository.save(itemVenda);
     }
 
-    public void delete(Long id) {
+    public void delete(int id) {
         repository.deleteById(id);
     }
 }

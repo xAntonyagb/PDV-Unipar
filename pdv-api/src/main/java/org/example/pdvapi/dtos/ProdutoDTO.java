@@ -1,29 +1,33 @@
 package org.example.pdvapi.dtos;
 
 
+import jakarta.validation.constraints.DecimalMin;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotNull;
+import org.example.pdvapi.entities.Categoria;
 import org.example.pdvapi.entities.Produto;
 import org.example.pdvapi.enums.CategoriaEnum;
+import org.hibernate.validator.constraints.Length;
 
 public class ProdutoDTO {
     private int id;
 
     private String descricao;
 
-    private double preco;
+    private double valor;
 
-    private CategoriaEnum categoria;
+    private Categoria categoria;
 
-    public ProdutoDTO() {
-    }
-
-    public ProdutoDTO(int id, String descricao, double preco, CategoriaEnum categoria) {
+    public ProdutoDTO(int id, @NotNull @NotBlank @NotEmpty @Length(min = 5, max = 60) String descricao, @NotNull @NotBlank @NotEmpty @DecimalMin(value = "0.0") double valor, @NotNull Categoria categoria) {
         this.id = id;
         this.descricao = descricao;
-        this.preco = preco;
+        this.valor = valor;
         this.categoria = categoria;
     }
 
-
+    public ProdutoDTO() {
+    }
 
     public int getId() {
         return id;
@@ -41,19 +45,19 @@ public class ProdutoDTO {
         this.descricao = descricao;
     }
 
-    public double getPreco() {
-        return preco;
+    public double getValor() {
+        return valor;
     }
 
-    public void setPreco(double preco) {
-        this.preco = preco;
+    public void setValor(double valor) {
+        this.valor = valor;
     }
 
-    public CategoriaEnum getCategoria() {
+    public Categoria getCategoria() {
         return categoria;
     }
 
-    public void setCategoria(CategoriaEnum categoria) {
+    public void setCategoria(Categoria categoria) {
         this.categoria = categoria;
     }
 
@@ -61,11 +65,11 @@ public class ProdutoDTO {
         Produto produto = new Produto();
         produto.setId(this.id);
         produto.setDescricao(this.descricao);
-        produto.setPreco(this.preco);
+        produto.setValor(this.valor);
         produto.setCategoria(this.categoria);
         return produto;
     }
     public static ProdutoDTO toDTO(Produto produto) {
-        return new ProdutoDTO(produto.getId(), produto.getDescricao(), produto.getPreco(), produto.getCategoria());
+        return new ProdutoDTO(produto.getId(), produto.getDescricao(), produto.getValor(), produto.getCategoria());
     }
 }

@@ -26,48 +26,10 @@ public class TokenController {
     @Autowired
     private TokenService tokenService;
 
-    private final JwtEncoder jwtEncoder;
-    private final UserRepository userRepository;
-    private BCryptPasswordEncoder passwordEncoder;
-
-    public TokenController(JwtEncoder jwtEncoder,
-                           UserRepository userRepository,
-                           BCryptPasswordEncoder passwordEncoder) {
-        this.jwtEncoder = jwtEncoder;
-        this.userRepository = userRepository;
-        this.passwordEncoder = passwordEncoder;
-    }
 
     @PostMapping("/login")
     public ResponseEntity<LoginResponseDTO> login(@RequestBody LoginRequestDTO loginRequest)  throws ApiException{
-
         LoginResponseDTO loginResponseDTO = tokenService.login(loginRequest);
-
-
-        var user = userRepository.findByUsernameIgnoreCase(loginRequest.username());
-
-        if (user.isEmpty() || !user.get().isLoginCorrect(loginRequest, passwordEncoder)) {
-            throw new ApiException("Usuario ou senha invalido!");
-        }
-
-        var now = Instant.now();
-        var expiresIn = 30000000000L;
-
-        var scopes = user.get().getRoles()
-                .stream()
-                .map(Role::getName)
-                .collect(Collectors.joining(" "));
-
-        var claims = JwtClaimsSet.builder()
-                .issuer("pdv-api")
-                .subject(user.get().getid().toString())
-                .issuedAt(now)
-                .expiresAt(now.plusSeconds(expiresIn))
-                .claim("scope", scopes)
-                .build();
-
-        var jwtValue = jwtEncoder.encode(JwtEncoderParameters.from(claims)).getTokenValue();
-
-        return ResponseEntity.ok(new LoginResponseDTO(jwtValue, expiresIn));
+        return ResponseEntity.ok(loginResponseDTO);
     }
 }

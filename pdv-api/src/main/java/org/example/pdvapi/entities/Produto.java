@@ -2,6 +2,7 @@ package org.example.pdvapi.entities;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
+import org.example.pdvapi.enums.CategoriaEnum;
 import org.hibernate.validator.constraints.Length;
 import org.springframework.format.annotation.NumberFormat;
 
@@ -62,6 +63,14 @@ public class Produto {
 
     public void setValor(@NotNull @NotBlank @NotEmpty @DecimalMin(value = "0.0") @NumberFormat(pattern = "#.##") double valor) {
         this.valor = valor;
+    }
+
+    public @NotNull Categoria getCategoria() {
+        return categoria;
+    }
+
+    public void setCategoria(Categoria categoria) {
+        this.categoria = categoria;
     }
 
     @Override

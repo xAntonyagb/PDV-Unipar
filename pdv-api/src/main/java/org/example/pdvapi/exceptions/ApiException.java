@@ -3,7 +3,7 @@ package org.example.pdvapi.exceptions;
 import java.util.Arrays;
 import java.util.List;
 
-public class ApiException {
+public class ApiException extends Throwable {
 
     private List<String> errorList;
 
