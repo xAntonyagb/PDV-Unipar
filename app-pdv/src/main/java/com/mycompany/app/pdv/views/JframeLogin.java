@@ -54,27 +54,25 @@ public class JframeLogin extends javax.swing.JFrame {
         jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel3.setText("LOGIN");
 
-        btEntrar.setBackground(new java.awt.Color(34, 40, 48));
+        btEntrar.setBackground(new java.awt.Color(40, 46, 56));
         btEntrar.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         btEntrar.setForeground(new java.awt.Color(255, 255, 255));
         btEntrar.setText("Entrar");
         btEntrar.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
         btEntrar.setBorderPainted(false);
-        btEntrar.setFocusPainted(false);
         btEntrar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btEntrarActionPerformed(evt);
             }
         });
 
-        btSair.setBackground(new java.awt.Color(34, 40, 48));
+        btSair.setBackground(new java.awt.Color(40, 46, 56));
         btSair.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         btSair.setForeground(new java.awt.Color(255, 255, 255));
         btSair.setText("Sair");
         btSair.setBorder(null);
+        btSair.setBorderPainted(false);
         btSair.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
-        btSair.setDefaultCapable(false);
-        btSair.setFocusPainted(false);
         btSair.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btSairActionPerformed(evt);
@@ -95,7 +93,7 @@ public class JframeLogin extends javax.swing.JFrame {
         txtSenha.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         txtSenha.setForeground(new java.awt.Color(229, 229, 229));
         txtSenha.setToolTipText(" Sua senha");
-        txtSenha.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(43, 51, 61), 1, true));
+        txtSenha.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(40, 46, 56), 1, true));
         jPanel3.add(txtSenha, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 30, 310, 35));
 
         jPanel4.setBackground(new java.awt.Color(25, 35, 45));
@@ -112,10 +110,10 @@ public class JframeLogin extends javax.swing.JFrame {
         txtUsuario.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         txtUsuario.setForeground(new java.awt.Color(229, 229, 229));
         txtUsuario.setToolTipText(" Seu usuário");
-        txtUsuario.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(43, 51, 61), 1, true));
+        txtUsuario.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(40, 46, 56), 1, true));
         jPanel4.add(txtUsuario, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 30, 310, 35));
 
-        jSeparator1.setForeground(new java.awt.Color(34, 40, 48));
+        jSeparator1.setForeground(new java.awt.Color(40, 46, 56));
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -190,7 +188,7 @@ public class JframeLogin extends javax.swing.JFrame {
         String usuario = txtUsuario.getText();
         String senha = new String(txtSenha.getPassword());
         
-        Border bordaPadrao = BorderFactory.createLineBorder(new Color(43, 51, 61));
+        Border bordaPadrao = BorderFactory.createLineBorder(new Color(40, 46, 56));
         Border bordaErro = BorderFactory.createLineBorder(new Color(175, 0, 0));
         
         txtUsuario.setBorder(bordaPadrao);
@@ -222,6 +220,24 @@ public class JframeLogin extends javax.swing.JFrame {
 
     
     public static void main(String args[]) {
+        try {
+            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
+                if ("Nimbus".equals(info.getName())) {
+                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
+                    break;
+                }
+            }
+        } catch (ClassNotFoundException ex) {
+            java.util.logging.Logger.getLogger(JframeLogin.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (InstantiationException ex) {
+            java.util.logging.Logger.getLogger(JframeLogin.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (IllegalAccessException ex) {
+            java.util.logging.Logger.getLogger(JframeLogin.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
+            java.util.logging.Logger.getLogger(JframeLogin.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        }
+        
+        
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 new JframeLogin().setVisible(true);
@@ -246,11 +262,9 @@ public class JframeLogin extends javax.swing.JFrame {
 
             JOptionPane.showMessageDialog(this, "Login realizado com sucesso!", "Sucesso!", JOptionPane.INFORMATION_MESSAGE);
             abrirFrameVenda();
-        } 
-        catch(ApiException ex) {
+        } catch(ApiException ex) {
             JOptionPane.showMessageDialog(this, "Um erro ocorreu ao realizar login:\n\n" + ex.getMessage(), "Erro de Login", JOptionPane.ERROR_MESSAGE);
-        } 
-        catch(InterruptedException ex) {
+        } catch(InterruptedException ex) {
             JOptionPane.showMessageDialog(this, "Tempo esgotado! Tente novamente mais tarde.\n\n" + ex.getMessage(), "Erro de Login", JOptionPane.ERROR_MESSAGE);
         }
         

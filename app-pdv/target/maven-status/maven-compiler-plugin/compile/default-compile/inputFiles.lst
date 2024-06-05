@@ -1,6 +1,7 @@
 D:\Faculdade\Trabalho 2Bim - WebDesktop\app-pdv\src\main\java\com\mycompany\app\pdv\tablemodels\ClienteTableModel.java
 D:\Faculdade\Trabalho 2Bim - WebDesktop\app-pdv\src\main\java\com\mycompany\app\pdv\services\ClienteService.java
 D:\Faculdade\Trabalho 2Bim - WebDesktop\app-pdv\src\main\java\com\mycompany\app\pdv\views\JpanelConsultaProduto.java
+D:\Faculdade\Trabalho 2Bim - WebDesktop\app-pdv\src\main\java\com\mycompany\app\pdv\dtos\LoginRequestDTO.java
 D:\Faculdade\Trabalho 2Bim - WebDesktop\app-pdv\src\main\java\com\mycompany\app\pdv\views\JframeVenda.java
 D:\Faculdade\Trabalho 2Bim - WebDesktop\app-pdv\src\main\java\com\mycompany\app\pdv\views\JpanelFinalizarVenda.java
 D:\Faculdade\Trabalho 2Bim - WebDesktop\app-pdv\src\main\java\com\mycompany\app\pdv\tablemodels\ProdutoTableModel.java
@@ -23,3 +24,4 @@ D:\Faculdade\Trabalho 2Bim - WebDesktop\app-pdv\src\main\java\com\mycompany\app\
 D:\Faculdade\Trabalho 2Bim - WebDesktop\app-pdv\src\main\java\com\mycompany\app\pdv\dtos\ItemVendaDTO.java
 D:\Faculdade\Trabalho 2Bim - WebDesktop\app-pdv\src\main\java\com\mycompany\app\pdv\resquestApi\IClienteRequest.java
 D:\Faculdade\Trabalho 2Bim - WebDesktop\app-pdv\src\main\java\com\mycompany\app\pdv\dtos\ProdutoDTO.java
+D:\Faculdade\Trabalho 2Bim - WebDesktop\app-pdv\src\main\java\com\mycompany\app\pdv\dtos\LoginResponseDTO.java
