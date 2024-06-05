@@ -3,7 +3,10 @@ package org.example.pdvapi.controllers;
 import org.example.pdvapi.dtos.LoginRequestDTO;
 import org.example.pdvapi.dtos.LoginResponseDTO;
 import org.example.pdvapi.entities.Role;
+import org.example.pdvapi.exceptions.ApiException;
 import org.example.pdvapi.repositories.UserRepository;
+import org.example.pdvapi.service.TokenService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -21,46 +24,14 @@ import java.util.stream.Collectors;
 
 @RestController
 public class TokenController {
+    @Autowired
+    private TokenService tokenService;
 
-    private final JwtEncoder jwtEncoder;
-    private final UserRepository userRepository;
-    private BCryptPasswordEncoder passwordEncoder;
-
-    public TokenController(JwtEncoder jwtEncoder,
-                           UserRepository userRepository,
-                           BCryptPasswordEncoder passwordEncoder) {
-        this.jwtEncoder = jwtEncoder;
-        this.userRepository = userRepository;
-        this.passwordEncoder = passwordEncoder;
-    }
 
     @PostMapping("/login")
-    public ResponseEntity<LoginResponseDTO> login(@RequestBody LoginRequestDTO loginRequest) {
+    public ResponseEntity<LoginResponseDTO> login(@RequestBody LoginRequestDTO loginRequest)  throws ApiException{
+        LoginResponseDTO loginResponseDTO = tokenService.login(loginRequest);
+        return ResponseEntity.ok(loginResponseDTO);
 
-        var user = userRepository.findByUsernameIgnoreCase(loginRequest.username());
-
-        if (user.isEmpty() || !user.get().isLoginCorrect(loginRequest, passwordEncoder)) {
-            throw new BadCredentialsException("user or password is invalid!");
-        }
-
-        var now = Instant.now();
-        var expiresIn = 30000000000L;
-
-        var scopes = user.get().getRoles()
-                .stream()
-                .map(Role::getName)
-                .collect(Collectors.joining(" "));
-
-        var claims = JwtClaimsSet.builder()
-                .issuer("pdv-api")
-                .subject(user.get().getid().toString())
-                .issuedAt(now)
-                .expiresAt(now.plusSeconds(expiresIn))
-                .claim("scope", scopes)
-                .build();
-
-        var jwtValue = jwtEncoder.encode(JwtEncoderParameters.from(claims)).getTokenValue();
-
-        return ResponseEntity.ok(new LoginResponseDTO(jwtValue, expiresIn, now));
     }
 }
