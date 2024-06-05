@@ -5,6 +5,7 @@ import retrofit2.Retrofit;
 import retrofit2.converter.jackson.JacksonConverterFactory;
 import com.mycompany.app.pdv.resquestApi.IClienteRequest;
 import com.mycompany.app.pdv.resquestApi.IProdutoRequest;
+import com.mycompany.app.pdv.resquestApi.ITokenRequest;
 
 public class RetrofitConfig {
 
@@ -25,4 +26,8 @@ public class RetrofitConfig {
     public IProdutoRequest produtoRequest(){
         return this.retrofit.create(IProdutoRequest.class);
     }
+    public ITokenRequest tokenRequest(){
+        return this.retrofit.create(ITokenRequest.class);
+        
+    } 
 }

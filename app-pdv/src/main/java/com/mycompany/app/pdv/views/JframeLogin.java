@@ -14,10 +14,17 @@ import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.mycompany.app.pdv.dtos.ClienteDTO;
 import com.mycompany.app.pdv.dtos.LoginRequestDTO;
 import com.mycompany.app.pdv.dtos.LoginResponseDTO;
+import com.mycompany.app.pdv.exceptions.ApiException;
+import com.mycompany.app.pdv.retrofit.RetrofitConfig;
 import com.mycompany.app.pdv.views.JframeVenda;
 import com.mycompany.app.pdvutils.GlobalVariables;
+import java.util.concurrent.CountDownLatch;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 /**
  *
@@ -174,31 +181,62 @@ private static final String BACKEND_URL = "http://localhost:8080/login";
     private void btEntrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btEntrarActionPerformed
     username = txtUsuario.getText();
     password = new String(txtSenha.getPassword());
-    try {
-            HttpClient client = HttpClient.newHttpClient();
-            ObjectMapper mapper = new ObjectMapper();
+//    try {
+//            HttpClient client = HttpClient.newHttpClient();
+//            ObjectMapper mapper = new ObjectMapper();
+//
+//            LoginRequestDTO loginRequest = new LoginRequestDTO(username, password);
+//            String requestBody = mapper.writeValueAsString(loginRequest);
+//
+//            HttpRequest request = HttpRequest.newBuilder()
+//                    .uri(new URI(BACKEND_URL))
+//                    .header("Content-Type", "application/json")
+//                    .POST(HttpRequest.BodyPublishers.ofString(requestBody))
+//                    .build();
+//
+//            HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
+//
+//            if (response.statusCode() == 200) {
+//                LoginResponseDTO loginResponse = mapper.readValue(response.body(), LoginResponseDTO.class);
+//                GlobalVariables.token = loginResponse.getAcessToken();
+//                abrirFrameVenda();
+//                dispose(); 
+//            } else {
+//                throw new RuntimeException("Falha ao fazer login: " + response.body());
+//            }
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//            JOptionPane.showMessageDialog(this, "Ocorreu um erro: " + e.getMessage(), "Erro de Login", JOptionPane.ERROR_MESSAGE);
+//        }
+        final ClienteDTO[] clienteDTO = new ClienteDTO[1];
+        final CountDownLatch latch = new CountDownLatch(1);
+        final Throwable[] throwable = new Throwable[1];
 
-            LoginRequestDTO loginRequest = new LoginRequestDTO(username, password);
-            String requestBody = mapper.writeValueAsString(loginRequest);
-
-            HttpRequest request = HttpRequest.newBuilder()
-                    .uri(new URI(BACKEND_URL))
-                    .header("Content-Type", "application/json")
-                    .POST(HttpRequest.BodyPublishers.ofString(requestBody))
-                    .build();
-
-            HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
-
-            if (response.statusCode() == 200) {
-                abrirFrameVenda();
-                dispose(); // Fecha o JFrame de login após abrir o JFrame de venda
-            } else {
-                throw new RuntimeException("Falha ao fazer login: " + response.body());
+        Call<ClienteDTO> call = new RetrofitConfig()
+                .clienteRequest().findById(id,"Bearer "+ token);
+        call.enqueue(new Callback<ClienteDTO>(){
+            @Override
+            public void onResponse(Call<ClienteDTO> call, Response<ClienteDTO> response) {
+                if (response.isSuccessful()) {
+                    clienteDTO[0] = response.body();
+                }
+                latch.countDown();
             }
-        } catch (Exception e) {
-            e.printStackTrace();
-            JOptionPane.showMessageDialog(this, "Ocorreu um erro: " + e.getMessage(), "Erro de Login", JOptionPane.ERROR_MESSAGE);
+
+            @Override
+            public void onFailure(Call<ClienteDTO> call, Throwable t) {
+                throwable[0] = new ApiException(t);
+                latch.countDown();
+            }
+        });
+
+        latch.await(); // Espera até que a chamada assíncrona seja concluída
+
+        if (throwable[0] != null) {
+            throw (ApiException) throwable[0];
         }
+
+        return clienteDTO[0];
     
 
     }//GEN-LAST:event_btEntrarActionPerformed
