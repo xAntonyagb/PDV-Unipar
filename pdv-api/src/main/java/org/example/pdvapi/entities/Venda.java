@@ -1,8 +1,14 @@
 package org.example.pdvapi.entities;
 
 import jakarta.persistence.*;
+
+import org.example.pdvapi.dtos.ClienteDTO;
+import org.example.pdvapi.dtos.ItemVendaDTO;
+import org.example.pdvapi.dtos.VendaDTO;
+
 import jakarta.validation.constraints.*;
 import org.springframework.format.annotation.NumberFormat;
+
 
 import java.sql.Timestamp;
 import java.util.List;
@@ -91,7 +97,12 @@ public class Venda {
         this.cliente = cliente;
     }
 
-    public @NotNull List<ItemVenda> getItensVenda() {
+
+    public VendaDTO toDTO() {
+        return new VendaDTO(this.id, this.observacao, this.data.toString(), this.valorTotal, (ClienteDTO) this.cliente.toDTO(), (List<ItemVendaDTO>) ItemVendaDTO.toDTOList(this.itensVenda));
+    }
+    @NotNull 
+    public List<ItemVenda> getItensVenda() {
         return itensVenda;
     }
 

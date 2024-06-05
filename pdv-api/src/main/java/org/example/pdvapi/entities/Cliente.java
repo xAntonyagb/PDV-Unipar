@@ -71,6 +71,15 @@ public class Cliente {
         this.telefone = telefone;
     }
 
+
+    public Object toDTO() {
+        Cliente cliente = new Cliente();
+        cliente.setId(this.id);
+        cliente.setNome(this.nome);
+        cliente.setEmail(this.email);
+        cliente.setTelefone(this.telefone);
+        return cliente;
+    }
     @Override
     public String toString() {
         return "Cliente{" +
@@ -79,5 +88,6 @@ public class Cliente {
                 ", email='" + email + '\'' +
                 ", telefone='" + telefone + '\'' +
                 '}';
+
     }
 }
