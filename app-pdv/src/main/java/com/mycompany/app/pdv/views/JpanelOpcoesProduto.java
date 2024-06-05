@@ -228,7 +228,7 @@ public class JpanelOpcoesProduto extends javax.swing.JPanel {
 
     private void consultarBanco() throws ApiException, InterruptedException {
         ProdutoService produtoService = new ProdutoService();
-        this.produto = produtoService.findById(this.produto.getId(), GlobalVariables.token);
+        this.produto = produtoService.findById(this.produto.getId(), GlobalVariables.acessToken);
     }
 
 }
