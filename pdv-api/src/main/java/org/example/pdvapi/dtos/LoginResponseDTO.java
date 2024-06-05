@@ -1,5 +1,7 @@
 package org.example.pdvapi.dtos;
 
-public record LoginResponseDTO (String acessToken, Long expiresIn) {
+import java.time.Instant;
+
+public record LoginResponseDTO (String acessToken, Long expiresIn, Instant createdAt) {
 
 }

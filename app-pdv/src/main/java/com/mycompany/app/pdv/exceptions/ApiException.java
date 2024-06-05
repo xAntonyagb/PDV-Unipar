@@ -11,6 +11,11 @@ package com.mycompany.app.pdv.exceptions;
 public class ApiException extends Exception {
 
     public ApiException(Throwable t) {
+        super(t.getMessage());
+    }
+
+    public ApiException(String message) {
+        super(message);
     }
     
 }

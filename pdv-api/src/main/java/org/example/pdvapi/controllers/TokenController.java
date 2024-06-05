@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 
 import java.time.Instant;
+import java.time.LocalDateTime;
 import java.util.stream.Collectors;
 
 @RestController
@@ -60,6 +61,6 @@ public class TokenController {
 
         var jwtValue = jwtEncoder.encode(JwtEncoderParameters.from(claims)).getTokenValue();
 
-        return ResponseEntity.ok(new LoginResponseDTO(jwtValue, expiresIn));
+        return ResponseEntity.ok(new LoginResponseDTO(jwtValue, expiresIn, now));
     }
 }
