@@ -5,16 +5,29 @@
 package com.mycompany.app.pdv.views;
 
 import java.awt.Color;
+import java.net.http.HttpClient;
 import javax.swing.BorderFactory;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
+import java.net.URI;
+import java.net.http.HttpClient;
+import java.net.http.HttpRequest;
+import java.net.http.HttpResponse;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.mycompany.app.pdv.dtos.LoginRequestDTO;
+import com.mycompany.app.pdv.dtos.LoginResponseDTO;
+import com.mycompany.app.pdv.views.JframeVenda;
+import com.mycompany.app.pdvutils.GlobalVariables;
 
 /**
  *
  * @author wallg
  */
-public class JframeLogin extends javax.swing.JFrame {
 
+public class JframeLogin extends javax.swing.JFrame {
+private static final String BACKEND_URL = "http://localhost:8080/login";
+    private String username;
+    private String password;
     /**
      * Creates new form JframeLogin
      */
@@ -159,33 +172,34 @@ public class JframeLogin extends javax.swing.JFrame {
     }//GEN-LAST:event_txtUsuarioActionPerformed
 
     private void btEntrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btEntrarActionPerformed
-//         String usuario = txtUsuario.getText();
-//        String senha = new String(txtSenha.getPassword());
-//        if (usuario.isEmpty()) {
-//        txtUsuario.setBorder(BorderFactory.createLineBorder(Color.RED));
-//        JOptionPane.showMessageDialog(this, "O campo de usuário está vazio.", "Erro de Login", JOptionPane.ERROR_MESSAGE);
-//        return; 
-//    }
-//    
-//    
-//    if (senha.isEmpty()) {
-//        
-//        txtSenha.setBorder(BorderFactory.createLineBorder(Color.RED));
-//        JOptionPane.showMessageDialog(this, "O campo de senha está vazio.", "Erro de Login", JOptionPane.ERROR_MESSAGE);
-//        return;
-//    }
-//    
-//    if(senha.isEmpty() && usuario.isEmpty()){
-//        txtSenha.setBorder(BorderFactory.createLineBorder(Color.RED));
-//        JOptionPane.showMessageDialog(this, "Insira o usuário e senha para entrar.", "Erro de Login", JOptionPane.ERROR_MESSAGE);
-//        return;
-//    }else {
-//        abrirFrameVenda();
-//        dispose(); // Fecha o JFrame de login após abrir o JFrame de venda
-//       }
-//    
-//    
-//    
+    username = txtUsuario.getText();
+    password = new String(txtSenha.getPassword());
+    try {
+            HttpClient client = HttpClient.newHttpClient();
+            ObjectMapper mapper = new ObjectMapper();
+
+            LoginRequestDTO loginRequest = new LoginRequestDTO(username, password);
+            String requestBody = mapper.writeValueAsString(loginRequest);
+
+            HttpRequest request = HttpRequest.newBuilder()
+                    .uri(new URI(BACKEND_URL))
+                    .header("Content-Type", "application/json")
+                    .POST(HttpRequest.BodyPublishers.ofString(requestBody))
+                    .build();
+
+            HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
+
+            if (response.statusCode() == 200) {
+                abrirFrameVenda();
+                dispose(); // Fecha o JFrame de login após abrir o JFrame de venda
+            } else {
+                throw new RuntimeException("Falha ao fazer login: " + response.body());
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            JOptionPane.showMessageDialog(this, "Ocorreu um erro: " + e.getMessage(), "Erro de Login", JOptionPane.ERROR_MESSAGE);
+        }
+    
 
     }//GEN-LAST:event_btEntrarActionPerformed
 
