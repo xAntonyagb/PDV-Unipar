@@ -1,9 +1,14 @@
 package org.example.pdvapi.entities;
 
 import jakarta.persistence.*;
+
 import org.example.pdvapi.dtos.ClienteDTO;
 import org.example.pdvapi.dtos.ItemVendaDTO;
 import org.example.pdvapi.dtos.VendaDTO;
+
+import jakarta.validation.constraints.*;
+import org.springframework.format.annotation.NumberFormat;
+
 
 import java.sql.Timestamp;
 import java.util.List;
@@ -14,12 +19,28 @@ public class Venda {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
+
+    @NotBlank
+    @NotEmpty
     private String observacao;
+
+    @NotNull
+    @Future
     private Timestamp data;
+
+    @NotNull
+    @Column(name = "total")
+    @DecimalMin(value = "0.0")
+    @NumberFormat(pattern = "#.##")
     private double valorTotal;
+
     @ManyToOne
+    @NotNull
     private Cliente cliente;
+
     @OneToMany
+    @NotNull
+    @JoinColumn(name = "venda_id")
     private List<ItemVenda> itensVenda;
 
     public Venda() {
@@ -41,47 +62,63 @@ public class Venda {
         this.id = id;
     }
 
-    public String getObservacao() {
+    public @NotNull @NotBlank @NotEmpty String getObservacao() {
         return observacao;
     }
 
-    public void setObservacao(String observacao) {
+    public void setObservacao(@NotNull @NotBlank @NotEmpty String observacao) {
         this.observacao = observacao;
     }
 
-    public Timestamp getData() {
+    public @NotNull @Future Timestamp getData() {
         return data;
     }
 
-    public void setData(Timestamp data) {
+    public void setData(@NotNull @Future Timestamp data) {
         this.data = data;
     }
 
+    @NotNull
+    @DecimalMin(value = "0.0")
+    @NumberFormat(pattern = "#.##")
     public double getValorTotal() {
         return valorTotal;
     }
 
-    public void setValorTotal(double valorTotal) {
+    public void setValorTotal(@NotNull @DecimalMin(value = "0.0") @NumberFormat(pattern = "#.##") double valorTotal) {
         this.valorTotal = valorTotal;
     }
 
-    public Cliente getCliente() {
+    public @NotNull Cliente getCliente() {
         return cliente;
     }
 
-    public void setCliente(Cliente cliente) {
+    public void setCliente(@NotNull Cliente cliente) {
         this.cliente = cliente;
     }
 
+
+    public VendaDTO toDTO() {
+        return new VendaDTO(this.id, this.observacao, this.data.toString(), this.valorTotal, (ClienteDTO) this.cliente.toDTO(), (List<ItemVendaDTO>) ItemVendaDTO.toDTOList(this.itensVenda));
+    }
+    @NotNull 
     public List<ItemVenda> getItensVenda() {
         return itensVenda;
     }
 
-    public void setItensVenda(List<ItemVenda> itensVenda) {
+    public void setItensVenda(@NotNull List<ItemVenda> itensVenda) {
         this.itensVenda = itensVenda;
     }
 
-    public VendaDTO toDTO() {
-        return new VendaDTO(this.id, this.observacao, this.data.toString(), this.valorTotal, (ClienteDTO) this.cliente.toDTO(), (List<ItemVendaDTO>) ItemVendaDTO.toDTOList(this.itensVenda));
+    @Override
+    public String toString() {
+        return "Venda{" +
+                "id=" + id +
+                ", observacao='" + observacao + '\'' +
+                ", data=" + data +
+                ", valorTotal=" + valorTotal +
+                ", cliente=" + cliente +
+                ", itensVenda=" + itensVenda +
+                '}';
     }
 }

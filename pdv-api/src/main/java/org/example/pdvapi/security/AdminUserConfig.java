@@ -31,18 +31,18 @@ public class AdminUserConfig implements CommandLineRunner {
     public void run(String... args) throws Exception {
 
         Optional<Role> roleAdmin = roleRepository.findByName(Role.Values.ADMIN.name());
-//        Role role = new Role();
-//        if (roleAdmin.isPresent()){
-//            role = roleAdmin.get();
-//            System.out.println("Role admin já existe");
-//        } else {
-//            role = new Role();
-//            role.setName(Role.Values.ADMIN.name());
-//            roleRepository.save(role);
-//        }
-//        Role roleAux = new Role();
-//        roleAux.setId(role.getId());
-//        roleAux.setName(role.getName());
+        Role role = new Role();
+        if (roleAdmin.isPresent()){
+            role = roleAdmin.get();
+            System.out.println("Role admin já existe");
+        } else {
+            role = new Role();
+            role.setName(Role.Values.ADMIN.name());
+            roleRepository.save(role);
+        }
+        Role roleAux = new Role();
+        roleAux.setId(role.getId());
+        roleAux.setName(role.getName());
 
 
         Optional<Usuario> userAdmin = userRepository.findByUsernameIgnoreCase("admin");
@@ -53,7 +53,7 @@ public class AdminUserConfig implements CommandLineRunner {
             Usuario user = new Usuario();
             user.setUsername("admin");
             user.setPassword(passwordEncoder.encode("123"));
-            List<Role> roles = List.of(roleAdmin.get());
+            List<Role> roles = List.of(role);
             user.setRoles(roles);
             userRepository.save(user);
         }

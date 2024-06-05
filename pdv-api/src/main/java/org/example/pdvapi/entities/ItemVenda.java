@@ -1,26 +1,42 @@
 package org.example.pdvapi.entities;
 
 import jakarta.persistence.*;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.*;
+import org.springframework.format.annotation.NumberFormat;
 
 @Entity
 @Table(name = "item_venda")
 public class ItemVenda {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
+
     @NotNull
     @NotBlank
+    @NotEmpty
+    @Min(value = 0)
     private int quantidade;
+
     @NotNull
     @NotBlank
+    @NotEmpty
+    @DecimalMin(value = "0.0")
+    @NumberFormat(pattern = "#.##")
     private double valorUnitario;
+
     @NotNull
     @NotBlank
+    @NotEmpty
+    @DecimalMin(value = "0.0")
+    @NumberFormat(pattern = "#.##")
     private double valorTotal;
+
+    @NotNull
     @ManyToOne
     private Produto produto;
+
+    @NotNull
     @ManyToOne
     private Venda venda;
 
@@ -46,47 +62,67 @@ public class ItemVenda {
 
     @NotNull
     @NotBlank
+    @NotEmpty
+    @Min(value = 0)
     public int getQuantidade() {
         return quantidade;
     }
 
-    public void setQuantidade(@NotNull @NotBlank int quantidade) {
+    public void setQuantidade(@NotNull @NotBlank @NotEmpty @Min(value = 0) int quantidade) {
         this.quantidade = quantidade;
     }
 
     @NotNull
     @NotBlank
+    @NotEmpty
+    @DecimalMin(value = "0.0")
+    @NumberFormat(pattern = "#.##")
     public double getValorUnitario() {
         return valorUnitario;
     }
 
-    public void setValorUnitario(@NotNull @NotBlank double valorUnitario) {
+    public void setValorUnitario(@NotNull @NotBlank @NotEmpty @DecimalMin(value = "0.0") @NumberFormat(pattern = "#.##") double valorUnitario) {
         this.valorUnitario = valorUnitario;
     }
 
     @NotNull
     @NotBlank
+    @NotEmpty
+    @DecimalMin(value = "0.0")
+    @NumberFormat(pattern = "#.##")
     public double getValorTotal() {
         return valorTotal;
     }
 
-    public void setValorTotal(@NotNull @NotBlank double valorTotal) {
+    public void setValorTotal(@NotNull @NotBlank @NotEmpty @DecimalMin(value = "0.0") @NumberFormat(pattern = "#.##") double valorTotal) {
         this.valorTotal = valorTotal;
     }
 
-    public Produto getProduto() {
+    public @NotNull Produto getProduto() {
         return produto;
     }
 
-    public void setProduto(Produto produto) {
+    public void setProduto(@NotNull Produto produto) {
         this.produto = produto;
     }
 
-    public Venda getVenda() {
+    public @NotNull Venda getVenda() {
         return venda;
     }
 
-    public void setVenda(Venda venda) {
+    public void setVenda(@NotNull Venda venda) {
         this.venda = venda;
+    }
+
+    @Override
+    public String toString() {
+        return "ItemVenda{" +
+                "id=" + id +
+                ", quantidade=" + quantidade +
+                ", valorUnitario=" + valorUnitario +
+                ", valorTotal=" + valorTotal +
+                ", produto=" + produto +
+                ", venda=" + venda +
+                '}';
     }
 }

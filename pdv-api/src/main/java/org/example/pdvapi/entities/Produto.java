@@ -1,39 +1,39 @@
 package org.example.pdvapi.entities;
 
 import jakarta.persistence.*;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotEmpty;
-import jakarta.validation.constraints.NotNull;
-import org.example.pdvapi.enums.CategoriaEnum;
+import jakarta.validation.constraints.*;
 import org.hibernate.validator.constraints.Length;
+import org.springframework.format.annotation.NumberFormat;
 
 @Entity
 @Table(name = "produto")
 public class Produto {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
+
     @NotNull
     @NotBlank
     @NotEmpty
     @Length(min = 5, max = 60)
     private String descricao;
+
     @NotNull
     @NotBlank
     @NotEmpty
-    private double preco;
+    @DecimalMin(value = "0.0")
+    @NumberFormat(pattern = "#.##")
+    private double valor;
 
-    private CategoriaEnum categoria;
+    @NotNull
+    @ManyToOne
+    private Categoria categoria;
 
     public Produto() {
     }
 
-    public Produto(int id, String descricao, double preco, CategoriaEnum categoria) {
-        this.id = id;
-        this.descricao = descricao;
-        this.preco = preco;
-        this.categoria = categoria;
-    }
+
 
     public int getId() {
         return id;
@@ -54,19 +54,23 @@ public class Produto {
     @NotNull
     @NotBlank
     @NotEmpty
-    public double getPreco() {
-        return preco;
+    @DecimalMin(value = "0.0")
+    @NumberFormat(pattern = "#.##")
+    public double getValor() {
+        return valor;
     }
 
-    public void setPreco(@NotNull @NotBlank @NotEmpty double preco) {
-        this.preco = preco;
+    public void setValor(@NotNull @NotBlank @NotEmpty @DecimalMin(value = "0.0") @NumberFormat(pattern = "#.##") double valor) {
+        this.valor = valor;
     }
 
-    public CategoriaEnum getCategoria() {
-        return categoria;
-    }
-
-    public void setCategoria(CategoriaEnum categoria) {
-        this.categoria = categoria;
+    @Override
+    public String toString() {
+        return "Produto{" +
+                "id=" + id +
+                ", descricao='" + descricao + '\'' +
+                ", valor=" + valor +
+                ", categoria=" + categoria +
+                '}';
     }
 }
