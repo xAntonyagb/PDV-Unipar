@@ -41,7 +41,6 @@ com\mycompany\app\pdv\services\ProdutoService.class
 com\mycompany\app\pdv\tablemodels\ProdutoTableModel.class
 com\mycompany\app\pdv\views\JframeVenda$3.class
 com\mycompany\app\pdv\views\JframeLogin.class
-com\mycompany\app\pdv\dtos\LoginRequestDTO.class
 com\mycompany\app\pdv\dtos\LoginResponseDTO.class
 com\mycompany\app\pdv\services\ProdutoService$2.class
 com\mycompany\app\pdv\tablemodels\ItemVendaTableModel.class

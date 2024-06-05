@@ -12,10 +12,10 @@ import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.mycompany.app.pdv.dtos.LoginRequestDTO;
 import com.mycompany.app.pdv.dtos.LoginResponseDTO;
 import com.mycompany.app.pdv.views.JframeVenda;
 import com.mycompany.app.pdvutils.GlobalVariables;
+import javax.swing.JRootPane;
 
 /**
  *
@@ -192,33 +192,9 @@ public class JframeLogin extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btEntrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btEntrarActionPerformed
-    username = txtUsuario.getText();
-    password = new String(txtSenha.getPassword());
-    try {
-            HttpClient client = HttpClient.newHttpClient();
-            ObjectMapper mapper = new ObjectMapper();
-
-            LoginRequestDTO loginRequest = new LoginRequestDTO(username, password);
-            String requestBody = mapper.writeValueAsString(loginRequest);
-
-            HttpRequest request = HttpRequest.newBuilder()
-                    .uri(new URI(BACKEND_URL))
-                    .header("Content-Type", "application/json")
-                    .POST(HttpRequest.BodyPublishers.ofString(requestBody))
-                    .build();
-
-            HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
-
-            if (response.statusCode() == 200) {
-                abrirFrameVenda();
-                dispose(); // Fecha o JFrame de login após abrir o JFrame de venda
-            } else {
-                throw new RuntimeException("Falha ao fazer login: " + response.body());
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-            JOptionPane.showMessageDialog(this, "Ocorreu um erro: " + e.getMessage(), "Erro de Login", JOptionPane.ERROR_MESSAGE);
-        }
+    String username = txtUsuario.getText();
+    String password = new String(txtSenha.getPassword());
+    realizarSignIn(username, password);
     
 
     }//GEN-LAST:event_btEntrarActionPerformed

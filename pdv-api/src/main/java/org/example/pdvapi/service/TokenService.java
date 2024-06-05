@@ -54,6 +54,6 @@ public class TokenService {
                 .build();
 
         var jwtValue = jwtEncoder.encode(JwtEncoderParameters.from(claims)).getTokenValue();
-        return new LoginResponseDTO(jwtValue, expiresIn);
+        return new LoginResponseDTO(jwtValue, expiresIn, now );
     }
 }
