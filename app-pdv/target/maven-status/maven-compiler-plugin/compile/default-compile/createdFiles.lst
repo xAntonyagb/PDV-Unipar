@@ -10,6 +10,7 @@ com\mycompany\app\pdv\views\JframeVenda.class
 com\mycompany\app\pdv\services\ClienteService.class
 com\mycompany\app\pdv\views\JpanelFinalizarVenda$2.class
 com\mycompany\app\pdv\views\JframeVenda$8.class
+com\mycompany\app\pdv\services\TokenService$1.class
 com\mycompany\app\pdv\dtos\VendaDTO.class
 com\mycompany\app\pdv\views\JpanelOpcoesProduto.class
 com\mycompany\app\pdv\views\JframeLogin$1.class
@@ -22,12 +23,12 @@ com\mycompany\app\pdv\resquestApi\ITokenRequest.class
 com\mycompany\app\pdv\dtos\TokenDTO.class
 com\mycompany\app\pdv\services\ProdutoService$3.class
 com\mycompany\app\pdvutils\GlobalVariables.class
-com\mycompany\app\pdv\views\JframeLogin$4.class
 com\mycompany\app\pdv\services\ClienteService$2.class
 com\mycompany\app\pdv\dtos\ItemVendaDTO.class
 com\mycompany\app\pdv\views\JframeVenda$10.class
 com\mycompany\app\pdv\views\JpanelConsultaProduto$4.class
 com\mycompany\app\pdv\views\JframeVenda$7.class
+com\mycompany\app\pdv\services\TokenService.class
 com\mycompany\app\pdv\views\JframeVenda$6.class
 com\mycompany\app\pdv\views\JframeLogin$3.class
 com\mycompany\app\pdv\views\JpanelConsultaProduto$2.class

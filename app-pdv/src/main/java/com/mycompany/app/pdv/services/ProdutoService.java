@@ -13,7 +13,7 @@ import retrofit2.Response;
 public class ProdutoService {
 
      
-     public ProdutoDTO findById(Integer id, String token) throws ApiException, InterruptedException {
+    public ProdutoDTO findById(Integer id, String token) throws ApiException, InterruptedException {
         final ProdutoDTO[] produtoDTO = new ProdutoDTO[1];
         final CountDownLatch latch = new CountDownLatch(1);
         final Throwable[] throwable = new Throwable[1];
@@ -108,15 +108,5 @@ public class ProdutoService {
 
         return produtoList[0];
     }    
-    /*public Produto insert(Produto produto){
-         return new ProdutoRepositoryImp(EntityManagerUtil.getManager()).insert(produto);
-     }*/
-     /*
-     public Produto update(Produto produto){
-         return new ProdutoRepositoryImp(EntityManagerUtil.getManager()).update(produto);
-     }
-     
-     public boolean delete(Produto produto){
-         return new ProdutoRepositoryImp(EntityManagerUtil.getManager()).delete(produto);
-     }*/
+    
 }

@@ -23,11 +23,14 @@ public class RetrofitConfig {
     public IClienteRequest clienteRequest(){
         return this.retrofit.create(IClienteRequest.class);
     }
+    
     public IProdutoRequest produtoRequest(){
         return this.retrofit.create(IProdutoRequest.class);
     }
+
     public ITokenRequest tokenRequest(){
         return this.retrofit.create(ITokenRequest.class);
         
     } 
+
 }
