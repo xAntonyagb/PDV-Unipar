@@ -2,6 +2,7 @@ package org.example.pdvapi.service;
 
 
 import org.example.pdvapi.entities.Cliente;
+import org.example.pdvapi.exceptions.NotFoundException;
 import org.example.pdvapi.repositories.ClienteRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -19,13 +20,20 @@ public class ClienteService {
         return repository.save(cliente);
     }
 
-    public Cliente getById(int id) {
+    public Cliente getById(int id) throws NotFoundException {
         Optional<Cliente> cliente = repository.findById(id);
-        return cliente.orElse(null);
+        if (cliente.isEmpty()) {
+            throw new NotFoundException("Cliente não encontrado");
+        }
+        return cliente.get();
     }
     
-    public List<Cliente> getAll() {
-        return repository.findAll();
+    public List<Cliente> getAll() throws NotFoundException{
+        List<Cliente> clientes = repository.findAll();
+        if (clientes.isEmpty()) {
+            throw new NotFoundException("Nenhum cliente foi encontrado");
+        }
+        return clientes;
     }
 
     public Cliente update(Cliente cliente) {
