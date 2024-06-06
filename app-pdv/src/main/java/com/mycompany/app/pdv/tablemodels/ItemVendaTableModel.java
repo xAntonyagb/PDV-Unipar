@@ -5,7 +5,6 @@ import java.util.List;
 import javax.swing.table.DefaultTableModel;
 
 
-
 public class ItemVendaTableModel extends DefaultTableModel {
 
     public ItemVendaTableModel() {
@@ -22,10 +21,10 @@ public class ItemVendaTableModel extends DefaultTableModel {
         for (ItemVendaDTO itemVenda : listItemVenda) {
             this.addRow(new String[] {
                 itemVenda.getProduto().getDescricao(),
-                Double.toString(itemVenda.getProduto().getValorUnitario()),
+                Double.toString(itemVenda.getValorUnitario()),
+                Double.toString(itemVenda.getQuantidade()),
                 Double.toString(itemVenda.getDescontoProduto()),
-                Double.toString(itemVenda.getValorTotal()),
-                Double.toString(itemVenda.getQuantidade())});
+                Double.toString(itemVenda.getValorTotal())});
         }
     }
     
