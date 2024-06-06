@@ -57,7 +57,7 @@ public class ProdutoService {
         final Throwable[] throwable = new Throwable[1];
 
         Call<List<ProdutoDTO>> call = new RetrofitConfig()
-                .produtoRequest().findAll(token);
+                .produtoRequest().findAll("Bearer " + token);
         call.enqueue(new Callback<List<ProdutoDTO>>() {
             @Override
             public void onResponse(Call<List<ProdutoDTO>> call, Response<List<ProdutoDTO>> response) {
