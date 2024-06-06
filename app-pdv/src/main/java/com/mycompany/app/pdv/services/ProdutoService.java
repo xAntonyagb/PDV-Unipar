@@ -26,6 +26,12 @@ public class ProdutoService {
                 if (response.isSuccessful()) {
                     produtoDTO[0] = response.body();
                 } 
+                else if(response.code() == 401) {
+                    throwable[0] = new ApiException(response.code() + ": Seu login expirou!");
+                } 
+                else {
+                    throwable[0] = new ApiException(new Throwable("Error: " + response.code()));
+                }
                 latch.countDown();
             }
 
@@ -58,6 +64,12 @@ public class ProdutoService {
                 if (response.isSuccessful()) {
                     produtoList[0] = response.body();
                 }
+                else if(response.code() == 401) {
+                    throwable[0] = new ApiException(response.code() + ": Seu login expirou!");
+                } 
+                else {
+                    throwable[0] = new ApiException(new Throwable("Error: " + response.code()));
+                }
                 latch.countDown();
             }
 
@@ -89,6 +101,12 @@ public class ProdutoService {
             public void onResponse(Call<List<ProdutoDTO>> call, Response<List<ProdutoDTO>> response) {
                 if (response.isSuccessful()) {
                     produtoList[0] = response.body();
+                }
+                else if(response.code() == 401) {
+                    throwable[0] = new ApiException(response.code() + ": Seu login expirou!");
+                } 
+                else {
+                    throwable[0] = new ApiException(new Throwable("Error: " + response.code()));
                 }
                 latch.countDown();
             }

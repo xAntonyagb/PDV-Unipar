@@ -26,12 +26,10 @@ public class JFrameConsultaProduto extends javax.swing.JFrame {
     
     public JFrameConsultaProduto(JframeVenda frameVenda) {
         this.frameVenda = frameVenda;
-        
         initComponents();
         
         try {
             atualizarLista();
-        
         
         jTextFieldPesquisa.getDocument().addDocumentListener(new DocumentListener() {
             @Override

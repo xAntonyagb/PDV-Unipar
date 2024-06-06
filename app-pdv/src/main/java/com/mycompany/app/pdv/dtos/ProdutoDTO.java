@@ -16,15 +16,18 @@ public class ProdutoDTO {
     private double valorUnitario;
 
     private int quantidade;
+    
+    private CategoriaDTO categoria;
 
     public ProdutoDTO(){
     }
 
-    public ProdutoDTO(int id, String descricao, double valorUnitario, int quantidade) {
+    public ProdutoDTO(int id, String descricao, double valorUnitario, int quantidade, CategoriaDTO categoria) {
         this.id = id;
         this.descricao = descricao;
         this.valorUnitario = valorUnitario;
         this.quantidade = quantidade;
+        this.categoria = categoria;
     }
 
     public int getId() {
@@ -58,4 +61,18 @@ public class ProdutoDTO {
     public void setQuantidade(int quantidade) {
         this.quantidade = quantidade;
     }
+
+    public CategoriaDTO getCategoria() {
+        return categoria;
+    }
+
+    public void setCategoria(CategoriaDTO categoria) {
+        this.categoria = categoria;
+    }
+
+    @Override
+    public String toString() {
+        return "ProdutoDTO{" + "id=" + id + ", descricao=" + descricao + ", valorUnitario=" + valorUnitario + ", quantidade=" + quantidade + ", categoria=" + categoria + '}';
+    }
+    
 }

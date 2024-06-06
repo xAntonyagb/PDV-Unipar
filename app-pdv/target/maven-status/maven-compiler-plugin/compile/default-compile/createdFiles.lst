@@ -15,6 +15,7 @@ com\mycompany\app\pdv\dtos\VendaDTO.class
 com\mycompany\app\pdv\views\JFrameConsultaProduto$7.class
 com\mycompany\app\pdv\views\components\TableDark$TableDarkHeader.class
 com\mycompany\app\pdv\views\JframeLogin$1.class
+com\mycompany\app\pdv\dtos\CategoriaDTO.class
 com\mycompany\app\pdv\views\components\ModernScrollBarUI$ScrollBarButton.class
 com\mycompany\app\pdv\views\components\ModernScrollBarUI.class
 com\mycompany\app\pdv\views\JFrameConsultaProduto$4.class

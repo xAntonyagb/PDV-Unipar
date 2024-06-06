@@ -30,6 +30,12 @@ public class ClienteService {
                 if (response.isSuccessful()) {
                     clienteDTO[0] = response.body();
                 }
+                else if(response.code() == 401) {
+                    throwable[0] = new ApiException(response.code() + ": Seu login expirou!");
+                } 
+                else {
+                    throwable[0] = new ApiException(new Throwable("Error: " + response.code()));
+                }
                 latch.countDown();
             }
 
@@ -61,6 +67,12 @@ public class ClienteService {
             public void onResponse(Call<List<ClienteDTO>> call, Response<List<ClienteDTO>> response) {
                 if (response.isSuccessful()) {
                     clienteList[0] = response.body();
+                }
+                else if(response.code() == 401) {
+                    throwable[0] = new ApiException(response.code() + ": Seu login expirou!");
+                } 
+                else {
+                    throwable[0] = new ApiException(new Throwable("Error: " + response.code()));
                 }
                 latch.countDown();
             }
@@ -94,6 +106,12 @@ public class ClienteService {
                 if (response.isSuccessful()) {
                     clienteList[0] = response.body();
                 } 
+                else if(response.code() == 401) {
+                    throwable[0] = new ApiException(response.code() + ": Seu login expirou!");
+                } 
+                else {
+                    throwable[0] = new ApiException(new Throwable("Error: " + response.code()));
+                }
                 latch.countDown();
             }
 

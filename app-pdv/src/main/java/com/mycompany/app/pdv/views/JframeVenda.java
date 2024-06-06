@@ -4,7 +4,6 @@ import com.mycompany.app.pdv.dtos.ClienteDTO;
 import com.mycompany.app.pdv.dtos.ItemVendaDTO;
 import com.mycompany.app.pdv.dtos.VendaDTO;
 import com.mycompany.app.pdv.tablemodels.ItemVendaTableModel;
-import java.awt.BorderLayout;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.util.ArrayList;

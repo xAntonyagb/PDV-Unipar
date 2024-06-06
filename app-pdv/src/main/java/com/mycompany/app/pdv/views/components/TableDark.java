@@ -68,7 +68,7 @@ public class TableDark extends JTable {
         panel.setForeground(SCROLL_BACKGROUND);
         scroll.setCorner(JScrollPane.UPPER_RIGHT_CORNER, panel);
         scroll.getViewport().setBackground(SCROLL_BACKGROUND);
-        scroll.setBorder(BorderFactory.createLineBorder(SCROLL_BORDER_COLOR, 0));
+        scroll.setBorder(BorderFactory.createLineBorder(SCROLL_BORDER_COLOR, 2));
     }
 
     private class TableDarkHeader extends DefaultTableCellRenderer {
