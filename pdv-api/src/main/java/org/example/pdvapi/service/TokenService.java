@@ -3,9 +3,7 @@ package org.example.pdvapi.service;
 import org.example.pdvapi.dtos.LoginRequestDTO;
 import org.example.pdvapi.dtos.LoginResponseDTO;
 import org.example.pdvapi.entities.Role;
-import org.example.pdvapi.exceptions.ApiException;
 import org.example.pdvapi.repositories.UserRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.oauth2.jwt.JwtClaimsSet;
 import org.springframework.security.oauth2.jwt.JwtEncoder;
@@ -29,12 +27,12 @@ public class TokenService {
         this.passwordEncoder = passwordEncoder;
     }
 
-    public LoginResponseDTO login(LoginRequestDTO loginRequest)  throws ApiException{
+    public LoginResponseDTO login(LoginRequestDTO loginRequest)  throws Exception{
 
         var user = userRepository.findByUsernameIgnoreCase(loginRequest.username());
 
         if (user.isEmpty() || !user.get().isLoginCorrect(loginRequest, passwordEncoder)) {
-            throw new ApiException("Usuario ou senha invalido!");
+            throw new Exception("Usuario ou senha invalido!");
         }
 
         var now = Instant.now();

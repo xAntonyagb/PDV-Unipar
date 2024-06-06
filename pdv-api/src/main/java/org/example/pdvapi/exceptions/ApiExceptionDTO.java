@@ -3,15 +3,15 @@ package org.example.pdvapi.exceptions;
 import java.util.Arrays;
 import java.util.List;
 
-public class ApiException extends Throwable {
+public class ApiExceptionDTO {
 
     private List<String> errorList;
 
-    public ApiException(String message) {
+    public ApiExceptionDTO(String message) {
         errorList = Arrays.asList(message);
     }
 
-    public ApiException(List<String> errorList) {
+    public ApiExceptionDTO(List<String> errorList) {
         this.errorList = errorList;
     }
 

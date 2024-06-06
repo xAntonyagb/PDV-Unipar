@@ -5,6 +5,8 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import jakarta.validation.Valid;
+import org.example.pdvapi.dtos.ProdutoDTO;
+import org.example.pdvapi.exceptions.NotFoundException;
 import org.example.pdvapi.service.ProdutoService;
 import org.example.pdvapi.entities.Cliente;
 import org.example.pdvapi.entities.Produto;
@@ -35,14 +37,15 @@ public class ProdutoController {
 
 
     @GetMapping("/{id}")
-    public ResponseEntity<Produto> getById(@PathVariable int id) {
-        return ResponseEntity.ok(produtoService.getById(id));
+    public ResponseEntity<ProdutoDTO> getById(@PathVariable int id) throws NotFoundException {
+        ProdutoDTO produto = ProdutoDTO.toDTO(produtoService.getById(id));
+        return ResponseEntity.ok(produto);
     }
 
     @GetMapping("/all")
-    public ResponseEntity<List<Produto>> getAll() {
-        return ResponseEntity.ok(produtoService.getAll());
-
+    public ResponseEntity<List<ProdutoDTO>> getAll() throws NotFoundException {
+        List<ProdutoDTO> produtos = ProdutoDTO.toDTOList(produtoService.getAll());
+        return ResponseEntity.ok(produtos);
     }
 
 //    @PostMapping
