@@ -9,6 +9,7 @@ import java.sql.Timestamp;
 import java.util.List;
 
 public class VendaDTO {
+
     private int id;
     private String observacao;
     private String data;

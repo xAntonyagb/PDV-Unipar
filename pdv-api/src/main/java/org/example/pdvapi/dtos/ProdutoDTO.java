@@ -10,6 +10,8 @@ import org.example.pdvapi.entities.Produto;
 import org.example.pdvapi.enums.CategoriaEnum;
 import org.hibernate.validator.constraints.Length;
 
+import java.util.List;
+
 public class ProdutoDTO {
     private int id;
 
@@ -19,7 +21,7 @@ public class ProdutoDTO {
 
     private Categoria categoria;
 
-    public ProdutoDTO(int id, @NotNull @NotBlank @NotEmpty @Length(min = 5, max = 60) String descricao, @NotNull @NotBlank @NotEmpty @DecimalMin(value = "0.0") double valor, @NotNull Categoria categoria) {
+    public ProdutoDTO(int id, String descricao, double valor, Categoria categoria) {
         this.id = id;
         this.descricao = descricao;
         this.valor = valor;
@@ -71,5 +73,8 @@ public class ProdutoDTO {
     }
     public static ProdutoDTO toDTO(Produto produto) {
         return new ProdutoDTO(produto.getId(), produto.getDescricao(), produto.getValor(), produto.getCategoria());
+    }
+    public static List<ProdutoDTO> toDTOList(List<Produto> produtos) {
+        return produtos.stream().map(ProdutoDTO::toDTO).toList();
     }
 }

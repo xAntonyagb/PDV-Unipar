@@ -36,8 +36,8 @@ public class SecurityConfig {
         http
                 .authorizeHttpRequests(authorize -> authorize
                         .requestMatchers(HttpMethod.POST, "/login").permitAll()
-                        .requestMatchers(HttpMethod.GET,"/swagger-ui/",
-                                                                        "/swagger-resources/",
+                        .requestMatchers(HttpMethod.GET,"/swagger-ui/**",
+                                                                        "/swagger-resources/**",
                                                                         "/v3/api-docs/**").permitAll()
                         .anyRequest().authenticated())
                 .csrf(csrf -> csrf.disable())
@@ -46,6 +46,7 @@ public class SecurityConfig {
 
         return http.build();
     }
+
     @Bean
     public JwtDecoder jwtDecoder() {
         return NimbusJwtDecoder.withPublicKey(this.publicKey).build();

@@ -6,7 +6,7 @@ import org.example.pdvapi.entities.Cliente;
 import org.example.pdvapi.entities.ItemVenda;
 import org.example.pdvapi.entities.Produto;
 import org.example.pdvapi.entities.Venda;
-import org.example.pdvapi.exceptions.ApiException;
+import org.example.pdvapi.exceptions.NotFoundException;
 import org.example.pdvapi.repositories.ClienteRepository;
 import org.example.pdvapi.repositories.ProdutoRepository;
 import org.example.pdvapi.repositories.VendaRepository;
@@ -26,14 +26,28 @@ public class VendaService {
     private ProdutoRepository produtoRepository;
 
 
-    public VendaDTO doCalc(VendaDTO vendaDTO)  throws ApiException {
+    public VendaDTO doCalc(VendaDTO vendaDTO) throws Exception{
         validate(vendaDTO);
         // Calcula o valor total da venda
-        vendaDTO.setValorTotal(vendaDTO.getItensVenda().stream().mapToDouble(item -> item.getValorTotal()).sum());
+        //primeiro calcula o valor total dos itemvenda
+        for (ItemVendaDTO itemVenda : vendaDTO.getItensVenda()) {
+            //busca o produto no banco de dados
+            Produto produto = produtoRepository.findById(itemVenda.getProduto().getId()).orElse(null);
+            //seta o valor unitario do itemvenda
+            itemVenda.setValorUnitario(produto.getValor());
+            //seta o valor total do itemvenda
+            itemVenda.setValorTotal(itemVenda.getQuantidade() * itemVenda.getValorUnitario());
+        }
+        //depois calcula o valor total da venda
+        double valorTotal = 0;
+        for (ItemVendaDTO itemVenda : vendaDTO.getItensVenda()) {
+            valorTotal += itemVenda.getValorTotal();
+        }
+        vendaDTO.setValorTotal(valorTotal);
         return vendaDTO;
     }
 
-    public VendaDTO insert(VendaDTO vendaDTO)  throws ApiException{
+    public VendaDTO insert(VendaDTO vendaDTO)  throws Exception{
         validate(vendaDTO);
         // Insere a venda no banco de dados
         Venda venda = vendaDTO.toEntity();
@@ -62,28 +76,41 @@ public class VendaService {
         return venda.toDTO();
     }
 
-    public void validate(VendaDTO vendaDTO) throws ApiException {
+    public void validate(VendaDTO vendaDTO) throws Exception {
         // Verifica se o cliente é válido
         if (vendaDTO.getCliente() == null) {
-            throw new ApiException("Cliente inválido");
+            throw new Exception("Cliente inválido");
         }
         if (vendaDTO.getCliente().getId() <= 0) {
-            throw new ApiException("Cliente inválido");
+            throw new Exception("Cliente inválido");
         }
         Cliente cliente = clienteRepository.findById(vendaDTO.getCliente().getId()).orElse(null);
         if (cliente == null) {
-            throw new ApiException("Cliente não encontrado");
+            throw new NotFoundException("Cliente não encontrado");
         }
 
         // Verifica se a lista de itens da venda não está vazia
         if (vendaDTO.getItensVenda() == null || vendaDTO.getItensVenda().isEmpty()) {
-            throw new ApiException("A venda deve ter pelo menos um item");
+            throw new Exception("A venda deve ter pelo menos um item");
         }
         //Verifica se existem produtos repetidos
         for (int i = 0; i < vendaDTO.getItensVenda().size(); i++) {
+            // Verifica se o produto do item é válido
+            if (vendaDTO.getItensVenda().get(i).getProduto() == null) {
+                throw new Exception("Produto inválido no item da venda");
+            }
+            if (vendaDTO.getItensVenda().get(i).getProduto().getId() <= 0) {
+                throw new Exception("Produto inválido no item da venda");
+            }
+            Produto produto = produtoRepository.findById(vendaDTO.getItensVenda().get(i).getProduto().getId()).orElse(null);
+            if (produto == null) {
+                throw new NotFoundException("Produto não encontrado no item da venda");
+            }
+
+
             for (int j = i + 1; j < vendaDTO.getItensVenda().size(); j++) {
                 if (vendaDTO.getItensVenda().get(i).getProduto().getId() == vendaDTO.getItensVenda().get(j).getProduto().getId()) {
-                    throw new ApiException("Produtos repetidos na venda");
+                    throw new Exception("Produtos repetidos na venda");
                 }
             }
         }
@@ -92,23 +119,20 @@ public class VendaService {
         for (ItemVendaDTO item : vendaDTO.getItensVenda()) {
             // Verifica se o produto do item é válido
             if (item.getProduto() == null) {
-                throw new ApiException("Produto inválido no item da venda");
+                throw new Exception("Produto inválido no item da venda");
             }
             if (item.getProduto().getId() <= 0) {
-                throw new ApiException("Produto inválido no item da venda");
+                throw new Exception("Produto inválido no item da venda");
             }
-            Produto produto = produtoRepository.findById(item.getProduto().getId()).orElse(null);
-            if (produto == null) {
-                throw new ApiException("Produto não encontrado no item da venda");
-            }
+
             // Verifica se a quantidade do item é maior que zero
             if (item.getQuantidade() <= 0) {
-                throw new ApiException("A quantidade do item da venda deve ser maior que zero");
+                throw new Exception("A quantidade do item da venda deve ser maior que zero");
             }
         }
         // Verifica se a data da venda é válida
         if (vendaDTO.getData() == null || vendaDTO.getData().isEmpty()) {
-            throw new ApiException("Data da venda inválida");
+            throw new Exception("Data da venda inválida");
         }
     }
 }
