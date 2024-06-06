@@ -32,12 +32,12 @@ public class ClienteController {
             @ApiResponse(responseCode = "404", description = "Cliente não encontrado")})
 
     @GetMapping("/{id}")
-    public ResponseEntity<Cliente> getById(@PathVariable int id) {
+    public ResponseEntity<Cliente> getById(@PathVariable int id) throws Exception {
         return ResponseEntity.ok(clienteService.getById(id));
     }
 
     @GetMapping("/all")
-    public ResponseEntity<List<Cliente>> getAll() {
+    public ResponseEntity<List<Cliente>> getAll()  throws Exception{
         return ResponseEntity.ok(clienteService.getAll());
 
     }
