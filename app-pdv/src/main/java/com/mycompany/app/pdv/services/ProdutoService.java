@@ -3,6 +3,8 @@ package com.mycompany.app.pdv.services;
 import com.mycompany.app.pdv.dtos.ProdutoDTO;
 import com.mycompany.app.pdv.exceptions.ApiException;
 import com.mycompany.app.pdv.retrofit.RetrofitConfig;
+import com.mycompany.app.pdvutils.ApiLogger;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.concurrent.CountDownLatch;
 import retrofit2.Call;
@@ -23,6 +25,9 @@ public class ProdutoService {
         call.enqueue(new Callback<ProdutoDTO>() {
             @Override
             public void onResponse(Call<ProdutoDTO> call, Response<ProdutoDTO> response) {
+                ApiLogger apiLogger = new ApiLogger();
+                Integer code =  response.code();
+                apiLogger.logOperation(LocalDateTime.now(), " GET(findById) - PRODUTO ", code.toString());
                 if (response.isSuccessful()) {
                     produtoDTO[0] = response.body();
                 } 
@@ -37,6 +42,9 @@ public class ProdutoService {
 
             @Override
             public void onFailure(Call<ProdutoDTO> call, Throwable t) {
+                ApiLogger apiLogger = new ApiLogger();
+                Integer code = 500;
+                apiLogger.logOperation(LocalDateTime.now(), " GET(findById) - PRODUTO ", code.toString());
                 throwable[0] = new ApiException(t);
                 latch.countDown();
             }
@@ -61,6 +69,9 @@ public class ProdutoService {
         call.enqueue(new Callback<List<ProdutoDTO>>() {
             @Override
             public void onResponse(Call<List<ProdutoDTO>> call, Response<List<ProdutoDTO>> response) {
+                ApiLogger apiLogger = new ApiLogger();
+                Integer code =  response.code();
+                apiLogger.logOperation(LocalDateTime.now(), " GET(findAll) - PRODUTO ", code.toString());
                 if (response.isSuccessful()) {
                     produtoList[0] = response.body();
                 }
@@ -75,6 +86,9 @@ public class ProdutoService {
 
             @Override
             public void onFailure(Call<List<ProdutoDTO>> call, Throwable t) {
+                ApiLogger apiLogger = new ApiLogger();
+                Integer code = 500;
+                apiLogger.logOperation(LocalDateTime.now(), " GET(findAll) - PRODUTO ", code.toString());
                 throwable[0] = new ApiException(t);
                 latch.countDown();
             }
@@ -99,6 +113,9 @@ public class ProdutoService {
         call.enqueue(new Callback<List<ProdutoDTO>>() {
             @Override
             public void onResponse(Call<List<ProdutoDTO>> call, Response<List<ProdutoDTO>> response) {
+                ApiLogger apiLogger = new ApiLogger();
+                Integer code =  response.code();
+                apiLogger.logOperation(LocalDateTime.now(), " GET(findByDesc) - PRODUTO ", code.toString());
                 if (response.isSuccessful()) {
                     produtoList[0] = response.body();
                 }
@@ -113,6 +130,9 @@ public class ProdutoService {
 
             @Override
             public void onFailure(Call<List<ProdutoDTO>> call, Throwable t) {
+                ApiLogger apiLogger = new ApiLogger();
+                Integer code = 500;
+                apiLogger.logOperation(LocalDateTime.now(), " GET(findByDesc) - PRODUTO ", code.toString());
                 throwable[0] = new ApiException(t);
                 latch.countDown();
             }
