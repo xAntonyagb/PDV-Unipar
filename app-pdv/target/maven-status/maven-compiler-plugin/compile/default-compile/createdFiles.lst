@@ -50,6 +50,8 @@ com\mycompany\app\pdv\views\JframeVenda$3.class
 com\mycompany\app\pdv\views\JFrameConsultaProduto$2.class
 com\mycompany\app\pdv\views\JFrameConsultaCliente$3.class
 com\mycompany\app\pdv\views\JframeLogin.class
+com\mycompany\app\pdv\views\JFrameConsultaProduto$9.class
+com\mycompany\app\pdvutils\ApiLogger.class
 com\mycompany\app\pdv\dtos\LoginResponseDTO.class
 com\mycompany\app\pdv\views\JFrameConsultaCliente.class
 com\mycompany\app\pdv\views\JFrameConsultaProduto.class
