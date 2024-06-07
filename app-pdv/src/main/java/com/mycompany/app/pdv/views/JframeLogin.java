@@ -7,7 +7,6 @@ import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import com.mycompany.app.pdv.views.JframeVenda;
 import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionAdapter;

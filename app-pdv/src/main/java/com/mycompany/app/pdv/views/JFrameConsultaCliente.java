@@ -70,6 +70,11 @@ public class JFrameConsultaCliente extends javax.swing.JFrame {
 
         jPanel2.setBackground(new java.awt.Color(25, 35, 45));
 
+        jScrollPane2.setBackground(new java.awt.Color(25, 35, 45));
+        jScrollPane2.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
+        jScrollPane2.setForeground(new java.awt.Color(25, 35, 45));
+
+        jTableClientes.setForeground(new java.awt.Color(204, 204, 204));
         jTableClientes.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
@@ -85,10 +90,12 @@ public class JFrameConsultaCliente extends javax.swing.JFrame {
 
         jTextFieldPesquisa.setBackground(new java.awt.Color(40, 46, 56));
         jTextFieldPesquisa.setForeground(new java.awt.Color(204, 204, 204));
+        jTextFieldPesquisa.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(40, 46, 56)));
 
         jButtonSelecionar.setBackground(new java.awt.Color(40, 46, 56));
         jButtonSelecionar.setForeground(new java.awt.Color(204, 204, 204));
         jButtonSelecionar.setText("Selecionar");
+        jButtonSelecionar.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(40, 46, 56)));
         jButtonSelecionar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButtonSelecionarActionPerformed(evt);
@@ -98,6 +105,7 @@ public class JFrameConsultaCliente extends javax.swing.JFrame {
         jButtonCancelar.setBackground(new java.awt.Color(40, 46, 56));
         jButtonCancelar.setForeground(new java.awt.Color(204, 204, 204));
         jButtonCancelar.setText("Cancelar");
+        jButtonCancelar.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(40, 46, 56)));
         jButtonCancelar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButtonCancelarActionPerformed(evt);

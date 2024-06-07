@@ -69,13 +69,13 @@ public class JFrameFinalizarVenda extends javax.swing.JFrame {
         jFieldDescontoFinal = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setPreferredSize(null);
 
         jPanel1.setBackground(new java.awt.Color(25, 35, 45));
 
         btFinalizarVenda.setBackground(new java.awt.Color(0, 102, 0));
         btFinalizarVenda.setForeground(new java.awt.Color(204, 204, 204));
         btFinalizarVenda.setText("Finalizar");
+        btFinalizarVenda.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(40, 46, 56)));
         btFinalizarVenda.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btFinalizarVendaActionPerformed(evt);
@@ -85,6 +85,7 @@ public class JFrameFinalizarVenda extends javax.swing.JFrame {
         btCancelarVenda.setBackground(new java.awt.Color(153, 0, 0));
         btCancelarVenda.setForeground(new java.awt.Color(204, 204, 204));
         btCancelarVenda.setText("Cancelar");
+        btCancelarVenda.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(40, 46, 56)));
         btCancelarVenda.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btCancelarVendaActionPerformed(evt);
@@ -94,6 +95,9 @@ public class JFrameFinalizarVenda extends javax.swing.JFrame {
         jComboBoxMetodoPgmt.setBackground(new java.awt.Color(40, 46, 56));
         jComboBoxMetodoPgmt.setForeground(new java.awt.Color(204, 204, 204));
         jComboBoxMetodoPgmt.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Crédito", "Débito", "Dinheiro" }));
+        jComboBoxMetodoPgmt.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(40, 46, 56)));
+        jComboBoxMetodoPgmt.setFocusable(false);
+        jComboBoxMetodoPgmt.setRequestFocusEnabled(false);
 
         jLabel1.setForeground(new java.awt.Color(204, 204, 204));
         jLabel1.setText("Método de pagamento:");
@@ -103,6 +107,7 @@ public class JFrameFinalizarVenda extends javax.swing.JFrame {
 
         jFieldVlTotal.setBackground(new java.awt.Color(40, 46, 56));
         jFieldVlTotal.setForeground(new java.awt.Color(204, 204, 204));
+        jFieldVlTotal.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(40, 46, 56)));
         jFieldVlTotal.setEnabled(false);
 
         jLabel3.setForeground(new java.awt.Color(204, 204, 204));
@@ -116,10 +121,12 @@ public class JFrameFinalizarVenda extends javax.swing.JFrame {
 
         jFieldSubTotal.setBackground(new java.awt.Color(40, 46, 56));
         jFieldSubTotal.setForeground(new java.awt.Color(204, 204, 204));
+        jFieldSubTotal.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(40, 46, 56)));
         jFieldSubTotal.setEnabled(false);
 
         jFieldDescontoTotal.setBackground(new java.awt.Color(40, 46, 56));
         jFieldDescontoTotal.setForeground(new java.awt.Color(204, 204, 204));
+        jFieldDescontoTotal.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(40, 46, 56)));
         jFieldDescontoTotal.setEnabled(false);
 
         jLabel6.setFont(new java.awt.Font("Segoe UI", 0, 30)); // NOI18N
@@ -133,6 +140,7 @@ public class JFrameFinalizarVenda extends javax.swing.JFrame {
 
         jFieldDescontoFinal.setBackground(new java.awt.Color(40, 46, 56));
         jFieldDescontoFinal.setForeground(new java.awt.Color(204, 204, 204));
+        jFieldDescontoFinal.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(40, 46, 56)));
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -189,18 +197,18 @@ public class JFrameFinalizarVenda extends javax.swing.JFrame {
                 .addGap(15, 15, 15)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
-                    .addComponent(jComboBoxMetodoPgmt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jComboBoxMetodoPgmt, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(30, 30, 30)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jFieldSubTotal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(jFieldSubTotal, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jFieldDescontoFinal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 22, Short.MAX_VALUE)
+                        .addComponent(jFieldDescontoFinal, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 25, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jFieldDescontoTotal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jFieldDescontoTotal, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel3))
                 .addGap(2, 2, 2)
                 .addComponent(jLabel5)
@@ -209,12 +217,12 @@ public class JFrameFinalizarVenda extends javax.swing.JFrame {
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(3, 3, 3)
                         .addComponent(jLabel2))
-                    .addComponent(jFieldVlTotal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jFieldVlTotal, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(btCancelarVenda, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btFinalizarVenda, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(20, Short.MAX_VALUE))
+                .addContainerGap(24, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());

@@ -2,6 +2,7 @@ package org.example.pdvapi.controllers;
 
 import org.example.pdvapi.exceptions.ApiExceptionDTO;
 import org.example.pdvapi.exceptions.NotFoundException;
+import org.example.pdvapi.exceptions.UnauthorizedException;
 import org.example.pdvapi.exceptions.ValidationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.validation.FieldError;
@@ -23,6 +24,7 @@ public class ExceptionHandlerController {
         ApiExceptionDTO apiException = new ApiExceptionDTO(e.getMessage());
         return apiException;
     }
+
     //Exceção de Validação
     @ExceptionHandler(ValidationException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
@@ -35,6 +37,14 @@ public class ExceptionHandlerController {
     @ExceptionHandler(NotFoundException.class)
     @ResponseStatus(HttpStatus.NOT_FOUND)
     public ApiExceptionDTO handleApiException(NotFoundException e) {
+        ApiExceptionDTO apiException = new ApiExceptionDTO(e.getMessage());
+        return apiException;
+    }
+
+    //Exeção de unauthorized
+    @ExceptionHandler(UnauthorizedException.class)
+    @ResponseStatus(HttpStatus.UNAUTHORIZED)
+    public ApiExceptionDTO handleApiException(UnauthorizedException e) {
         ApiExceptionDTO apiException = new ApiExceptionDTO(e.getMessage());
         return apiException;
     }

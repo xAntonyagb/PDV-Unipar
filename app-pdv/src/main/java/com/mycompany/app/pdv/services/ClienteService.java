@@ -48,8 +48,8 @@ public class ClienteService {
             public void onFailure(Call<ClienteDTO> call, Throwable t) {
                 ApiLogger apiLogger = new ApiLogger();
                 Integer code = 500;
-                apiLogger.logOperation(LocalDateTime.now(), " GET(findById) - CLIENTE ", code.toString());
-                throwable[0] = new ApiException(t);
+                apiLogger.logOperation(LocalDateTime.now(), " GET(findById) - CLIENTE ", code.toString() + " - " + t.getMessage());
+                throwable[0] = new ApiException("Não foi possivel estabelecer conexão com o host!");
                 latch.countDown();
             }
         });
@@ -92,8 +92,8 @@ public class ClienteService {
             public void onFailure(Call<List<ClienteDTO>> call, Throwable t) {
                 ApiLogger apiLogger = new ApiLogger();
                 Integer code = 500;
-                apiLogger.logOperation(LocalDateTime.now(), " GET(findAll) - CLIENTE ", code.toString());
-                throwable[0] = new ApiException(t);
+                apiLogger.logOperation(LocalDateTime.now(), " GET(findAll) - CLIENTE ", code.toString() + " - " + t.getMessage());
+                throwable[0] = new ApiException("Não foi possivel estabelecer conexão com o host!");
                 latch.countDown();
             }
         });
@@ -136,8 +136,8 @@ public class ClienteService {
             public void onFailure(Call<List<ClienteDTO>> call, Throwable t) {
                 ApiLogger apiLogger = new ApiLogger();
                 Integer code = 500;
-                apiLogger.logOperation(LocalDateTime.now(), " GET(findByName) - CLIENTE ", code.toString());
-                throwable[0] = new ApiException(t);
+                apiLogger.logOperation(LocalDateTime.now(), " GET(findByName) - CLIENTE ", code.toString() + " - " + t.getMessage());
+                throwable[0] = new ApiException("Não foi possivel estabelecer conexão com o host!");
                 latch.countDown();
             }
         });

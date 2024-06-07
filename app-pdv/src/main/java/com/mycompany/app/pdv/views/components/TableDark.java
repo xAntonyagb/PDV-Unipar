@@ -20,7 +20,7 @@ import javax.swing.table.DefaultTableCellRenderer;
  */
 public class TableDark extends JTable {
 
-    private static final Color DEFAULT_BACKGROUND = new Color(25,35,45); 
+    private static final Color DEFAULT_BACKGROUND = new Color(25,35,45);  
     private static final Color TABLE_BORDER = new Color(19,27,35); 
     private static final Color HEADER_BACKGROUND = new Color(22, 31, 40);
     private static final Color HEADER_FOREGROUND = new Color(204, 204, 204);
@@ -65,9 +65,12 @@ public class TableDark extends JTable {
     public void fixTable(JScrollPane scroll) {
         scroll.setVerticalScrollBar(new ScrollBarCustom());
         JPanel panel = new JPanel();
+        panel.setBackground(HEADER_BACKGROUND);
+        
         scroll.setCorner(JScrollPane.UPPER_RIGHT_CORNER, panel);
         scroll.getViewport().setBackground(DEFAULT_BACKGROUND);
         scroll.setBorder(BorderFactory.createLineBorder(TABLE_BORDER ,2));
+        scroll.setBackground(DEFAULT_BACKGROUND);
     }
 
     private class TableDarkHeader extends DefaultTableCellRenderer {

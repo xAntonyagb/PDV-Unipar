@@ -44,8 +44,8 @@ public class ProdutoService {
             public void onFailure(Call<ProdutoDTO> call, Throwable t) {
                 ApiLogger apiLogger = new ApiLogger();
                 Integer code = 500;
-                apiLogger.logOperation(LocalDateTime.now(), " GET(findById) - PRODUTO ", code.toString());
-                throwable[0] = new ApiException(t);
+                apiLogger.logOperation(LocalDateTime.now(), " GET(findById) - PRODUTO ", code.toString() + " - " + t.getMessage());
+                throwable[0] = new ApiException("Não foi possivel estabelecer conexão com o host!");
                 latch.countDown();
             }
         });
@@ -88,8 +88,8 @@ public class ProdutoService {
             public void onFailure(Call<List<ProdutoDTO>> call, Throwable t) {
                 ApiLogger apiLogger = new ApiLogger();
                 Integer code = 500;
-                apiLogger.logOperation(LocalDateTime.now(), " GET(findAll) - PRODUTO ", code.toString());
-                throwable[0] = new ApiException(t);
+                apiLogger.logOperation(LocalDateTime.now(), " GET(findAll) - PRODUTO ", code.toString() + " - " + t.getMessage());
+                throwable[0] = new ApiException("Não foi possivel estabelecer conexão com o host!");
                 latch.countDown();
             }
         });
@@ -132,8 +132,8 @@ public class ProdutoService {
             public void onFailure(Call<List<ProdutoDTO>> call, Throwable t) {
                 ApiLogger apiLogger = new ApiLogger();
                 Integer code = 500;
-                apiLogger.logOperation(LocalDateTime.now(), " GET(findByDesc) - PRODUTO ", code.toString());
-                throwable[0] = new ApiException(t);
+                apiLogger.logOperation(LocalDateTime.now(), " GET(findByDesc) - PRODUTO ", code.toString() + " - " + t.getMessage());
+                throwable[0] = new ApiException("Não foi possivel estabelecer conexão com o host!");
                 latch.countDown();
             }
         });

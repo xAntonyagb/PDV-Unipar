@@ -36,6 +36,7 @@ com\mycompany\app\pdv\views\JframeVenda$7.class
 com\mycompany\app\pdv\services\TokenService.class
 com\mycompany\app\pdv\views\JFrameFinalizarVenda$3.class
 com\mycompany\app\pdv\views\JframeVenda$6.class
+com\mycompany\app\pdv\views\JFrameConsultaProduto$11.class
 com\mycompany\app\pdv\views\JframeLogin$3.class
 com\mycompany\app\pdv\views\JFrameFinalizarVenda$2.class
 com\mycompany\app\pdv\views\components\ScrollBarCustom.class
@@ -66,6 +67,7 @@ com\mycompany\app\pdv\views\JFrameConsultaProduto$5.class
 com\mycompany\app\pdv\exceptions\ApiException.class
 com\mycompany\app\pdv\views\JframeVenda$5.class
 com\mycompany\app\pdv\services\ProdutoService$1.class
+com\mycompany\app\pdv\views\JFrameConsultaProduto$10.class
 com\mycompany\app\pdv\views\JframeLogin$5.class
 com\mycompany\app\pdv\views\JframeLogin$2.class
 com\mycompany\app\pdv\views\JframeVenda$2.class

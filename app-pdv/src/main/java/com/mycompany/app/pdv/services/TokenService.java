@@ -4,7 +4,9 @@ import com.mycompany.app.pdv.dtos.TokenDTO;
 import com.mycompany.app.pdv.dtos.UsuarioDTO;
 import com.mycompany.app.pdv.exceptions.ApiException;
 import com.mycompany.app.pdv.retrofit.RetrofitConfig;
+import com.mycompany.app.pdvutils.ApiLogger;
 import com.mycompany.app.pdvutils.GlobalVariables;
+import java.time.LocalDateTime;
 import java.util.concurrent.CountDownLatch;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -33,6 +35,10 @@ public class TokenService {
         call.enqueue(new Callback<TokenDTO>() {
             @Override
             public void onResponse(Call<TokenDTO> call, Response<TokenDTO> response) {
+                ApiLogger apiLogger = new ApiLogger();
+                Integer code =  response.code();
+                apiLogger.logOperation(LocalDateTime.now(), " GET(getToken) - LOGIN ", code.toString());
+                
                 if (response.isSuccessful()) {
                     tokenDTO[0] = response.body();
                 } else {
@@ -47,7 +53,11 @@ public class TokenService {
 
             @Override
             public void onFailure(Call<TokenDTO> call, Throwable t) {
-                throwable[0] = new ApiException(t);
+                ApiLogger apiLogger = new ApiLogger();
+                Integer code = 500;
+                apiLogger.logOperation(LocalDateTime.now(), " GET(getToken) - LOGIN ", code.toString() + " - " + t.getMessage());
+                
+                throwable[0] = new ApiException("Não foi possivel estabelecer conexão com o host!");
                 latch.countDown();
             }
         });

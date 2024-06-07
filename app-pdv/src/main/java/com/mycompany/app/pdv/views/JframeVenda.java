@@ -18,7 +18,6 @@ public class JframeVenda extends javax.swing.JFrame {
     private ClienteDTO cliente;
     private VendaDTO venda;
     private double vlTotal;
-    private double vlTotalDesconto;
     
     public JframeVenda() {   
         initComponents();
@@ -43,7 +42,7 @@ public class JframeVenda extends javax.swing.JFrame {
         btFinalizar = new javax.swing.JButton();
         Divisor = new javax.swing.JPanel();
         jFieldCliente = new javax.swing.JTextField();
-        btAddProdutos1 = new javax.swing.JButton();
+        btRemoverProduto = new javax.swing.JButton();
         jPanel4 = new javax.swing.JPanel();
         jPanel5 = new javax.swing.JPanel();
         jPanel2 = new javax.swing.JPanel();
@@ -162,13 +161,13 @@ public class JframeVenda extends javax.swing.JFrame {
         });
 
         Divisor.setBackground(new java.awt.Color(40, 46, 56));
-        Divisor.setPreferredSize(new java.awt.Dimension(372, 2));
+        Divisor.setPreferredSize(new java.awt.Dimension(366, 2));
 
         javax.swing.GroupLayout DivisorLayout = new javax.swing.GroupLayout(Divisor);
         Divisor.setLayout(DivisorLayout);
         DivisorLayout.setHorizontalGroup(
             DivisorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 372, Short.MAX_VALUE)
+            .addGap(0, 0, Short.MAX_VALUE)
         );
         DivisorLayout.setVerticalGroup(
             DivisorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -182,17 +181,17 @@ public class JframeVenda extends javax.swing.JFrame {
         jFieldCliente.setMinimumSize(new java.awt.Dimension(64, 15));
         jFieldCliente.setPreferredSize(new java.awt.Dimension(64, 40));
 
-        btAddProdutos1.setBackground(new java.awt.Color(81, 19, 19));
-        btAddProdutos1.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
-        btAddProdutos1.setForeground(new java.awt.Color(204, 204, 204));
-        btAddProdutos1.setText("Remover");
-        btAddProdutos1.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(76, 17, 17), 2, true));
-        btAddProdutos1.setFocusable(false);
-        btAddProdutos1.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
-        btAddProdutos1.setIconTextGap(15);
-        btAddProdutos1.addActionListener(new java.awt.event.ActionListener() {
+        btRemoverProduto.setBackground(new java.awt.Color(81, 19, 19));
+        btRemoverProduto.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
+        btRemoverProduto.setForeground(new java.awt.Color(204, 204, 204));
+        btRemoverProduto.setText("Remover");
+        btRemoverProduto.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(76, 17, 17), 2, true));
+        btRemoverProduto.setFocusable(false);
+        btRemoverProduto.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
+        btRemoverProduto.setIconTextGap(15);
+        btRemoverProduto.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btAddProdutos1ActionPerformed(evt);
+                btRemoverProdutoActionPerformed(evt);
             }
         });
 
@@ -201,25 +200,23 @@ public class JframeVenda extends javax.swing.JFrame {
         jPanel7Layout.setHorizontalGroup(
             jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel7Layout.createSequentialGroup()
-                .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                    .addComponent(Divisor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel7Layout.createSequentialGroup()
-                        .addContainerGap()
+                .addContainerGap()
+                .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel7Layout.createSequentialGroup()
+                        .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jFieldCliente, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(btSelecionarCliente, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(btAddProdutos, javax.swing.GroupLayout.DEFAULT_SIZE, 360, Short.MAX_VALUE)
+                            .addComponent(btRemoverProduto, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 175, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(394, 394, 394)
+                        .addComponent(jPanel13, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addGroup(jPanel7Layout.createSequentialGroup()
                         .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(btFinalizar, javax.swing.GroupLayout.DEFAULT_SIZE, 360, Short.MAX_VALUE)
-                            .addComponent(btNovo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addGap(0, 0, Short.MAX_VALUE)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(jPanel7Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jFieldCliente, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(btSelecionarCliente, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(btAddProdutos, javax.swing.GroupLayout.DEFAULT_SIZE, 360, Short.MAX_VALUE)
-                    .addComponent(btAddProdutos1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 175, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(394, 394, 394)
-                .addComponent(jPanel13, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
+                            .addComponent(btNovo, javax.swing.GroupLayout.DEFAULT_SIZE, 360, Short.MAX_VALUE)
+                            .addComponent(Divisor, javax.swing.GroupLayout.DEFAULT_SIZE, 360, Short.MAX_VALUE))
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
         );
         jPanel7Layout.setVerticalGroup(
             jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -234,8 +231,8 @@ public class JframeVenda extends javax.swing.JFrame {
                         .addGap(150, 150, 150)
                         .addComponent(btAddProdutos, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(btAddProdutos1, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 105, Short.MAX_VALUE)
+                .addComponent(btRemoverProduto, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 104, Short.MAX_VALUE)
                 .addComponent(btFinalizar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(btNovo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -422,7 +419,6 @@ public class JframeVenda extends javax.swing.JFrame {
         jScrollPane2.setBackground(new java.awt.Color(25, 35, 45));
         jScrollPane2.setForeground(new java.awt.Color(25, 35, 45));
 
-        tableItens.setBackground(new java.awt.Color(25, 35, 45));
         tableItens.setForeground(new java.awt.Color(25, 35, 45));
         tableItens.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -484,6 +480,7 @@ public class JframeVenda extends javax.swing.JFrame {
         );
 
         jMenuBar1.setBackground(new java.awt.Color(22, 31, 40));
+        jMenuBar1.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
         jMenuBar1.setForeground(new java.awt.Color(255, 255, 255));
         jMenuBar1.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         jMenuBar1.setRequestFocusEnabled(false);
@@ -499,6 +496,7 @@ public class JframeVenda extends javax.swing.JFrame {
         jMenuItem3.setForeground(new java.awt.Color(204, 204, 204));
         jMenuItem3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/META-INF/Novo.png"))); // NOI18N
         jMenuItem3.setText("Gerenciar Categorias");
+        jMenuItem3.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
         jMenu1.add(jMenuItem3);
 
         jMenuBar1.add(jMenu1);
@@ -613,9 +611,9 @@ public class JframeVenda extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jMenuItem1ActionPerformed
 
-    private void btAddProdutos1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btAddProdutos1ActionPerformed
+    private void btRemoverProdutoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btRemoverProdutoActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_btAddProdutos1ActionPerformed
+    }//GEN-LAST:event_btRemoverProdutoActionPerformed
     
     public void limparVenda() {
         this.cliente = null;
@@ -679,9 +677,9 @@ public class JframeVenda extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel Divisor;
     private javax.swing.JButton btAddProdutos;
-    private javax.swing.JButton btAddProdutos1;
     private javax.swing.JButton btFinalizar;
     public javax.swing.JButton btNovo;
+    private javax.swing.JButton btRemoverProduto;
     private javax.swing.JButton btSelecionarCliente;
     private javax.swing.JTextField jFieldCliente;
     private javax.swing.JLabel jLabel10;
