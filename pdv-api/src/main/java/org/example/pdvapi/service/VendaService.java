@@ -7,6 +7,8 @@ import org.example.pdvapi.entities.ItemVenda;
 import org.example.pdvapi.entities.Produto;
 import org.example.pdvapi.entities.Venda;
 import org.example.pdvapi.exceptions.NotFoundException;
+import org.example.pdvapi.exceptions.StockException;
+import org.example.pdvapi.exceptions.ValidationException;
 import org.example.pdvapi.repositories.ClienteRepository;
 import org.example.pdvapi.repositories.ProdutoRepository;
 import org.example.pdvapi.repositories.VendaRepository;
@@ -14,7 +16,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Service
 public class VendaService {
@@ -26,7 +30,7 @@ public class VendaService {
     private ProdutoRepository produtoRepository;
 
 
-    public VendaDTO doCalc(VendaDTO vendaDTO) throws Exception{
+    public VendaDTO doCalc(VendaDTO vendaDTO) throws ValidationException, NotFoundException, StockException {
         validate(vendaDTO);
         // Calcula o valor total da venda
         //primeiro calcula o valor total dos itemvenda
@@ -47,7 +51,7 @@ public class VendaService {
         return vendaDTO;
     }
 
-    public VendaDTO insert(VendaDTO vendaDTO)  throws Exception{
+    public VendaDTO insert(VendaDTO vendaDTO) throws ValidationException, NotFoundException, StockException {
         validate(vendaDTO);
         // Insere a venda no banco de dados
         Venda venda = vendaDTO.toEntity();
@@ -76,63 +80,65 @@ public class VendaService {
         return venda.toDTO();
     }
 
-    public void validate(VendaDTO vendaDTO) throws Exception {
+    public void validate(VendaDTO vendaDTO) throws ValidationException, NotFoundException, StockException {
+        // ------------------------------ CLIENTE ------------------------------
         // Verifica se o cliente é válido
         if (vendaDTO.getCliente() == null) {
-            throw new Exception("Cliente inválido");
+            throw new ValidationException("Nenhum cliente foi informado na venda!");
         }
         if (vendaDTO.getCliente().getId() <= 0) {
-            throw new Exception("Cliente inválido");
-        }
-        Cliente cliente = clienteRepository.findById(vendaDTO.getCliente().getId()).orElse(null);
-        if (cliente == null) {
-            throw new NotFoundException("Cliente não encontrado");
+            throw new ValidationException("O cliente informado é inválido!");
         }
 
+        Cliente cliente = clienteRepository.findById(
+                vendaDTO.getCliente().getId())
+                .orElse(null);
+
+        if (cliente == null) {
+            throw new NotFoundException("O cliente informado não pode ser encontrado ou não existe");
+        }
+
+
+        // ------------------------------ VENDA ------------------------------
         // Verifica se a lista de itens da venda não está vazia
         if (vendaDTO.getItensVenda() == null || vendaDTO.getItensVenda().isEmpty()) {
-            throw new Exception("A venda deve ter pelo menos um item");
+            throw new ValidationException("A venda deve ter pelo menos um item");
         }
-        //Verifica se existem produtos repetidos
+
+        Set<Long> produtosIds = new HashSet<>(); // Armazenar os produtos já verificados
+
         for (int i = 0; i < vendaDTO.getItensVenda().size(); i++) {
+            // Verificar repetido
+            long produtoId = vendaDTO.getItensVenda().get(i).getProduto().getId();
+
+            // Se não consegue adicionar o ID, ele já foi adicionado
+            if (!produtosIds.add(produtoId)) {
+                throw new ValidationException("O produto informado já foi adicionado: " + i);
+            }
+
             // Verifica se o produto do item é válido
             if (vendaDTO.getItensVenda().get(i).getProduto() == null) {
-                throw new Exception("Produto inválido no item da venda");
+                throw new ValidationException("O seguinte produto informado é inválido: "+ i);
             }
             if (vendaDTO.getItensVenda().get(i).getProduto().getId() <= 0) {
-                throw new Exception("Produto inválido no item da venda");
+                throw new ValidationException("O seguinte produto informado é inválido: "+ i);
             }
-            Produto produto = produtoRepository.findById(vendaDTO.getItensVenda().get(i).getProduto().getId()).orElse(null);
+
+            Produto produto = produtoRepository.findById(
+                    vendaDTO.getItensVenda().get(i).getProduto().getId())
+                    .orElse(null);
+
             if (produto == null) {
-                throw new NotFoundException("Produto não encontrado no item da venda");
+                throw new NotFoundException("O produto informado não pode ser encontrado ou não existe: " + i);
             }
 
 
-            for (int j = i + 1; j < vendaDTO.getItensVenda().size(); j++) {
-                if (vendaDTO.getItensVenda().get(i).getProduto().getId() == vendaDTO.getItensVenda().get(j).getProduto().getId()) {
-                    throw new Exception("Produtos repetidos na venda");
-                }
+            //Verifica se o produto tem estoque
+            if (vendaDTO.getItensVenda().get(i).getQuantidade() <= 0) {
+                throw new StockException("Não há mais estoque para o produto escolhido: "
+                        + vendaDTO.getItensVenda().get(i).getProduto().getDescricao());
             }
-        }
-
-        // Verifica cada item da venda
-        for (ItemVendaDTO item : vendaDTO.getItensVenda()) {
-            // Verifica se o produto do item é válido
-            if (item.getProduto() == null) {
-                throw new Exception("Produto inválido no item da venda");
-            }
-            if (item.getProduto().getId() <= 0) {
-                throw new Exception("Produto inválido no item da venda");
-            }
-
-            // Verifica se a quantidade do item é maior que zero
-            if (item.getQuantidade() <= 0) {
-                throw new Exception("A quantidade do item da venda deve ser maior que zero");
-            }
-        }
-        // Verifica se a data da venda é válida
-        if (vendaDTO.getData() == null || vendaDTO.getData().isEmpty()) {
-            throw new Exception("Data da venda inválida");
         }
     }
+
 }

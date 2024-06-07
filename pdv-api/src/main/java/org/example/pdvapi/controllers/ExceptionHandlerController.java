@@ -1,9 +1,6 @@
 package org.example.pdvapi.controllers;
 
-import org.example.pdvapi.exceptions.ApiExceptionDTO;
-import org.example.pdvapi.exceptions.NotFoundException;
-import org.example.pdvapi.exceptions.UnauthorizedException;
-import org.example.pdvapi.exceptions.ValidationException;
+import org.example.pdvapi.exceptions.*;
 import org.springframework.http.HttpStatus;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
