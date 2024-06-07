@@ -24,6 +24,7 @@ public class JFrameConsultaProduto extends javax.swing.JFrame {
     private List<ProdutoDTO> produtos;
     private JframeVenda frameVenda;
     
+    
     public JFrameConsultaProduto(JframeVenda frameVenda) {
         this.frameVenda = frameVenda;
         initComponents();
@@ -460,11 +461,11 @@ public class JFrameConsultaProduto extends javax.swing.JFrame {
         sorter.setRowFilter(rowFilter);
     }
     
-    private void atualizarLista() throws ApiException, InterruptedException {
+    private void atualizarLista(){
         ProdutoService produtoService = new ProdutoService();
         
-        List<ProdutoDTO> listaProdutos = produtoService.findAll(GlobalVariables.acessToken);
-        this.produtos = listaProdutos;
+        List<ProdutoDTO> listaProdutos = GlobalVariables.produtos; /*produtoService.findAll(GlobalVariables.acessToken);*/
+        //this.produtos = listaProdutos;
         
         ProdutoTableModel model = 
                new ProdutoTableModel(listaProdutos);
