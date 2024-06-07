@@ -20,7 +20,7 @@ public interface IProdutoRequest {
     Call<ProdutoDTO> findById(@Path("id") Integer id, @Header("Authorization") String token);
 
     @GET("produto/all")
-    Call<List<ProdutoDTO>> findAll(@Header("Authorization") String token);
+    Call<List<ProdutoDTO>> findAll(@Header("Authorization")String token);
 
     @GET("produto/{descricao}")
     Call<List<ProdutoDTO>> findByDesc(@Path("descricao") String descricao, @Header("Authorization") String token);

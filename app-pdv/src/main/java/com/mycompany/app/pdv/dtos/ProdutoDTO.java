@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package com.mycompany.app.pdv.dtos;
 
 /**
@@ -17,18 +13,22 @@ public class ProdutoDTO {
 
     private int quantidade;
     
+    private double valor;
+    
     private CategoriaDTO categoria;
 
     public ProdutoDTO(){
     }
 
-    public ProdutoDTO(int id, String descricao, double valorUnitario, int quantidade, CategoriaDTO categoria) {
+    public ProdutoDTO(int id, String descricao, double valorUnitario, int quantidade, double valor, CategoriaDTO categoria) {
         this.id = id;
         this.descricao = descricao;
         this.valorUnitario = valorUnitario;
         this.quantidade = quantidade;
+        this.valor = valor;
         this.categoria = categoria;
     }
+
 
     public int getId() {
         return id;
@@ -70,9 +70,17 @@ public class ProdutoDTO {
         this.categoria = categoria;
     }
 
+    public double getValor() {
+        return valor;
+    }
+
+    public void setValor(double valor) {
+        this.valor = valor;
+    }
+
     @Override
     public String toString() {
-        return "ProdutoDTO{" + "id=" + id + ", descricao=" + descricao + ", valorUnitario=" + valorUnitario + ", quantidade=" + quantidade + ", categoria=" + categoria + '}';
+        return "ProdutoDTO{" + "id=" + id + ", descricao=" + descricao + ", valorUnitario=" + valorUnitario + ", quantidade=" + quantidade + ", valor=" + valor + ", categoria=" + categoria + '}';
     }
     
 }

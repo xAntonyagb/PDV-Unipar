@@ -20,16 +20,17 @@ import javax.swing.table.DefaultTableCellRenderer;
  */
 public class TableDark extends JTable {
 
+    private static final Color DEFAULT_BACKGROUND = new Color(25,35,45); 
+    private static final Color TABLE_BORDER = new Color(19,27,35); 
     private static final Color HEADER_BACKGROUND = new Color(22, 31, 40);
     private static final Color HEADER_FOREGROUND = new Color(204, 204, 204);
     private static final Color EVEN_ROW_BACKGROUND = new Color(40, 46, 56);
-    private static final Color ODD_ROW_BACKGROUND = new Color(22, 31, 40);
+    private static final Color ODD_ROW_BACKGROUND = new Color(19,27,35);
     private static final Color SELECTED_EVEN_ROW_BACKGROUND = new Color(33, 103, 153);
     private static final Color SELECTED_ODD_ROW_BACKGROUND = new Color(29, 86, 127);
     private static final Color CELL_FOREGROUND = new Color(204, 204, 204);
-    private static final Color SCROLL_BACKGROUND = new Color(22, 31, 40);
     private static final Color SCROLL_BORDER_COLOR = new Color(40, 46, 56);
-
+ 
     private TableDarkHeader header;
     private TableDarkCell cell;
 
@@ -37,12 +38,12 @@ public class TableDark extends JTable {
         header = new TableDarkHeader();
         cell = new TableDarkCell();
         getTableHeader().setDefaultRenderer(header);
-        getTableHeader().setPreferredSize(new Dimension(0, 35));
+        getTableHeader().setPreferredSize(new Dimension(0, 45));
         setDefaultRenderer(Object.class, cell);
-        setRowHeight(30);
+        setRowHeight(35);
         setShowGrid(false); // Remove grid lines
         setIntercellSpacing(new Dimension(0, 0)); // Remove spacing between cells
-        setBackground(SCROLL_BACKGROUND); // Set table background color
+        setBackground(DEFAULT_BACKGROUND); // Set table background color
     }
 
     public void setColumnAlignment(int column, int align) {
@@ -64,11 +65,9 @@ public class TableDark extends JTable {
     public void fixTable(JScrollPane scroll) {
         scroll.setVerticalScrollBar(new ScrollBarCustom());
         JPanel panel = new JPanel();
-        panel.setBackground(SCROLL_BACKGROUND);
-        panel.setForeground(SCROLL_BACKGROUND);
         scroll.setCorner(JScrollPane.UPPER_RIGHT_CORNER, panel);
-        scroll.getViewport().setBackground(SCROLL_BACKGROUND);
-        scroll.setBorder(BorderFactory.createLineBorder(SCROLL_BORDER_COLOR, 2));
+        scroll.getViewport().setBackground(DEFAULT_BACKGROUND);
+        scroll.setBorder(BorderFactory.createLineBorder(TABLE_BORDER ,2));
     }
 
     private class TableDarkHeader extends DefaultTableCellRenderer {

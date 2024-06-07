@@ -18,9 +18,12 @@ public class JframeVenda extends javax.swing.JFrame {
     private ClienteDTO cliente;
     private VendaDTO venda;
     private double vlTotal;
+    private double vlTotalDesconto;
     
     public JframeVenda() {   
         initComponents();
+        tableItens.fixTable(jScrollPane2);
+        
         setExtendedState(JFrame.MAXIMIZED_BOTH);
         setTitle("Menu PDV");
     }
@@ -624,7 +627,7 @@ public class JframeVenda extends javax.swing.JFrame {
         ItemVendaTableModel model = new ItemVendaTableModel(this.listaItemVenda);
         tableItens.setModel(model);
         
-        exibirValorTotal();
+        exibirValores();
     }
     
     private void removerFocoPricipal(JFrame frame) {
@@ -648,17 +651,23 @@ public class JframeVenda extends javax.swing.JFrame {
         ItemVendaTableModel model = new ItemVendaTableModel(this.listaItemVenda);
         tableItens.setModel(model);
         
-        exibirValorTotal();
+        exibirValores();
     }
     
-    private void exibirValorTotal() {
-        double total = 0;
-        for(ItemVendaDTO item : listaItemVenda) {
-            total += item.getValorTotal();
-        }
-        this.vlTotal = total;
+    private void exibirValores() {
+        double vlTotal = 0;
+        double vlTotalUnit = 0;
         
-        jLabelSubtotal.setText(Double.toString(total));
+        for(ItemVendaDTO item : listaItemVenda) {
+            vlTotal += item.getValorTotal();
+            vlTotalUnit += item.getValorUnitario();
+        }
+        
+        this.vlTotal = vlTotal;
+        double desconto = vlTotalUnit - vlTotal;
+        
+        jLabelSubtotal.setText(Double.toString(vlTotal));
+        jLabelDescontos.setText(Double.toString(desconto));
     }
     
     public void setCliente(ClienteDTO cliente) {
@@ -672,7 +681,7 @@ public class JframeVenda extends javax.swing.JFrame {
     private javax.swing.JButton btAddProdutos;
     private javax.swing.JButton btAddProdutos1;
     private javax.swing.JButton btFinalizar;
-    private javax.swing.JButton btNovo;
+    public javax.swing.JButton btNovo;
     private javax.swing.JButton btSelecionarCliente;
     private javax.swing.JTextField jFieldCliente;
     private javax.swing.JLabel jLabel10;

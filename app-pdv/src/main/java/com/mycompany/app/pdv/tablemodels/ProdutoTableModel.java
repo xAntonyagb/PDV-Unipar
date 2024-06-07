@@ -10,6 +10,8 @@ public class ProdutoTableModel extends DefaultTableModel {
     public ProdutoTableModel() {
         this.addColumn("ID");
         this.addColumn("Descrição");
+        this.addColumn("Qtd");
+        this.addColumn("Categoria");
         this.addColumn("Valor unitário");
     }
     
@@ -20,6 +22,8 @@ public class ProdutoTableModel extends DefaultTableModel {
             this.addRow(new String[] {
                 Integer.toString(produto.getId()),
                 produto.getDescricao(),
+                Double.toString(produto.getQuantidade()),
+                produto.getCategoria().getDescricao(),
                 Double.toString(produto.getValorUnitario())});
         }
     }

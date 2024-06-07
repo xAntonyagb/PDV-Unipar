@@ -11,25 +11,20 @@ public class ClienteTableModel extends DefaultTableModel {
     public ClienteTableModel() {
         this.addColumn("ID");
         this.addColumn("Nome");
+        this.addColumn("Email");
         this.addColumn("Telefone");
-        this.addColumn("CPF");
     }
     
     public ClienteTableModel(List<ClienteDTO> listCliente) {
         this();
         
         for (ClienteDTO cliente : listCliente) {
-//            this.addRow(new String[] {
-//                Integer.toString(cliente.getId()),
-//                cliente.getNome(),
-//                cliente.getTelefone(),
-//                cliente.getCpf()});
             
             this.addRow(new String[] {
                 Integer.toString(cliente.getId()),
                 cliente.getNome(),
-                cliente.getTelefone(),
-                cliente.getEmail()
+                cliente.getEmail(),
+                cliente.getTelefone()
             });
         }
     }

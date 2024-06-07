@@ -69,8 +69,12 @@ public class JFrameFinalizarVenda extends javax.swing.JFrame {
         jFieldDescontoFinal = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setPreferredSize(null);
+
+        jPanel1.setBackground(new java.awt.Color(25, 35, 45));
 
         btFinalizarVenda.setBackground(new java.awt.Color(0, 102, 0));
+        btFinalizarVenda.setForeground(new java.awt.Color(204, 204, 204));
         btFinalizarVenda.setText("Finalizar");
         btFinalizarVenda.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -79,6 +83,7 @@ public class JFrameFinalizarVenda extends javax.swing.JFrame {
         });
 
         btCancelarVenda.setBackground(new java.awt.Color(153, 0, 0));
+        btCancelarVenda.setForeground(new java.awt.Color(204, 204, 204));
         btCancelarVenda.setText("Cancelar");
         btCancelarVenda.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -86,30 +91,48 @@ public class JFrameFinalizarVenda extends javax.swing.JFrame {
             }
         });
 
+        jComboBoxMetodoPgmt.setBackground(new java.awt.Color(40, 46, 56));
+        jComboBoxMetodoPgmt.setForeground(new java.awt.Color(204, 204, 204));
         jComboBoxMetodoPgmt.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Crédito", "Débito", "Dinheiro" }));
 
+        jLabel1.setForeground(new java.awt.Color(204, 204, 204));
         jLabel1.setText("Método de pagamento:");
 
+        jLabel2.setForeground(new java.awt.Color(204, 204, 204));
         jLabel2.setText("Valor Total: R$");
 
+        jFieldVlTotal.setBackground(new java.awt.Color(40, 46, 56));
+        jFieldVlTotal.setForeground(new java.awt.Color(204, 204, 204));
         jFieldVlTotal.setEnabled(false);
 
+        jLabel3.setForeground(new java.awt.Color(204, 204, 204));
         jLabel3.setText("Descontos: R$");
 
+        jLabel4.setForeground(new java.awt.Color(204, 204, 204));
         jLabel4.setText("SubTotal:");
 
+        jLabel5.setForeground(new java.awt.Color(204, 204, 204));
         jLabel5.setText("-------------------------------------");
 
+        jFieldSubTotal.setBackground(new java.awt.Color(40, 46, 56));
+        jFieldSubTotal.setForeground(new java.awt.Color(204, 204, 204));
         jFieldSubTotal.setEnabled(false);
 
+        jFieldDescontoTotal.setBackground(new java.awt.Color(40, 46, 56));
+        jFieldDescontoTotal.setForeground(new java.awt.Color(204, 204, 204));
         jFieldDescontoTotal.setEnabled(false);
 
         jLabel6.setFont(new java.awt.Font("Segoe UI", 0, 30)); // NOI18N
+        jLabel6.setForeground(new java.awt.Color(204, 204, 204));
         jLabel6.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel6.setText("Finalizar Venda");
         jLabel6.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
 
+        jLabel7.setForeground(new java.awt.Color(204, 204, 204));
         jLabel7.setText("Desconto:");
+
+        jFieldDescontoFinal.setBackground(new java.awt.Color(40, 46, 56));
+        jFieldDescontoFinal.setForeground(new java.awt.Color(204, 204, 204));
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
