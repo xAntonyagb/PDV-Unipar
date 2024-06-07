@@ -185,8 +185,8 @@ public class JFrameConsultaCliente extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_jButtonSelecionarActionPerformed
 
-    private void atualizarLista() throws InterruptedException, ApiException {
-        List<ClienteDTO> listaClientes = clienteService.findAll(GlobalVariables.acessToken);
+    private void atualizarLista() {
+        List<ClienteDTO> listaClientes = GlobalVariables.clientes;/*clienteService.findAll(GlobalVariables.acessToken);*/
         this.clientes = listaClientes;
         
          ClienteTableModel model = 

@@ -2,8 +2,10 @@ package com.mycompany.app.pdv.views;
 
 import com.mycompany.app.pdv.dtos.ClienteDTO;
 import com.mycompany.app.pdv.dtos.ItemVendaDTO;
+import com.mycompany.app.pdv.dtos.ProdutoDTO;
 import com.mycompany.app.pdv.dtos.VendaDTO;
 import com.mycompany.app.pdv.tablemodels.ItemVendaTableModel;
+import com.mycompany.app.pdvutils.GlobalVariables;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.util.ArrayList;
@@ -671,8 +673,14 @@ public class JframeVenda extends javax.swing.JFrame {
     public void setCliente(ClienteDTO cliente) {
         this.cliente = cliente;
         jFieldCliente.setText(cliente == null ? "" : cliente.getNome());
+    
     }
     
+    @Override
+    public void dispose(){
+        GlobalVariables.shutdownScheduler();
+        super.dispose();
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel Divisor;
@@ -710,4 +718,6 @@ public class JframeVenda extends javax.swing.JFrame {
     private javax.swing.JTextField jTextField1;
     private com.mycompany.app.pdv.views.components.TableDark tableItens;
     // End of variables declaration//GEN-END:variables
+
+
 }

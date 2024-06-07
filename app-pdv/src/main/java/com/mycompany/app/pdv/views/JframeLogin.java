@@ -1,15 +1,24 @@
 package com.mycompany.app.pdv.views;
 
+import com.mycompany.app.pdv.dtos.ClienteDTO;
+import com.mycompany.app.pdv.dtos.ProdutoDTO;
 import com.mycompany.app.pdv.dtos.UsuarioDTO;
 import com.mycompany.app.pdv.exceptions.ApiException;
+import com.mycompany.app.pdv.services.ClienteService;
+import com.mycompany.app.pdv.services.ProdutoService;
 import com.mycompany.app.pdv.services.TokenService;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import com.mycompany.app.pdv.views.JframeVenda;
+import com.mycompany.app.pdvutils.GlobalVariables;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionAdapter;
+import java.util.List;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
 
 /**
  *
@@ -267,6 +276,7 @@ public class JframeLogin extends javax.swing.JFrame {
     }//GEN-LAST:event_btEntrarActionPerformed
 
     private void btSairActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btSairActionPerformed
+        GlobalVariables.shutdownScheduler();
         dispose();
     }//GEN-LAST:event_btSairActionPerformed
 
@@ -313,6 +323,9 @@ public class JframeLogin extends javax.swing.JFrame {
 
             TokenService tokenService = new TokenService();
             tokenService.doLogin(user);
+            
+            // Inicia o agendamento da tarefa
+            startScheduledTask(GlobalVariables.acessToken);
 
             JOptionPane.showMessageDialog(this, "Login realizado com sucesso!", "Sucesso!", JOptionPane.INFORMATION_MESSAGE);
             abrirFrameVenda();
@@ -323,6 +336,30 @@ public class JframeLogin extends javax.swing.JFrame {
         }
         
     }
+        // Método para iniciar o agendamento
+    public void startScheduledTask(String token) {
+        GlobalVariables.scheduler = Executors.newScheduledThreadPool(1);
+        Runnable task = new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    ProdutoService produtoService = new ProdutoService();
+                    List<ProdutoDTO> produtos =  produtoService.findAll(token);
+                    ClienteService clienteService = new ClienteService();
+                    List<ClienteDTO> clientes = clienteService.findAll(token);
+                    GlobalVariables.produtos = produtos;
+                    GlobalVariables.clientes = clientes;   
+                } catch (ApiException | InterruptedException e) {
+                    e.printStackTrace(); // ou trate a exceção conforme necessário
+                }
+            }
+        };
+
+        // Executa a tarefa imediatamente, depois a cada 5 minutos
+        GlobalVariables.scheduler.scheduleAtFixedRate(task, 0, 5, TimeUnit.MINUTES);
+    }
+
+   
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btEntrar;
