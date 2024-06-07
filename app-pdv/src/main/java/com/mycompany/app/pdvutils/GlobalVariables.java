@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package com.mycompany.app.pdvutils;
 
 import com.mycompany.app.pdv.dtos.ClienteDTO;
@@ -42,8 +38,9 @@ public class GlobalVariables {
         
         return null;
     }
+   
      // Método para encerrar o agendamento
-    public void shutdownScheduler() {
+    public static void shutdownScheduler() {
         if (scheduler != null) {
             scheduler.shutdown();
             try {
@@ -58,8 +55,5 @@ public class GlobalVariables {
             }
         }
     }
-   
-    
-    
    
 }

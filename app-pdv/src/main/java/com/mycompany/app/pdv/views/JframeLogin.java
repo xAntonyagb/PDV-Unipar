@@ -17,7 +17,6 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionAdapter;
 import java.util.List;
 import java.util.concurrent.Executors;
-import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -325,7 +324,7 @@ public class JframeLogin extends javax.swing.JFrame {
             tokenService.doLogin(user);
             
             // Inicia o agendamento da tarefa
-            startScheduledTask(GlobalVariables.acessToken);
+            startScheduledTask();
 
             JOptionPane.showMessageDialog(this, "Login realizado com sucesso!", "Sucesso!", JOptionPane.INFORMATION_MESSAGE);
             abrirFrameVenda();
@@ -336,17 +335,18 @@ public class JframeLogin extends javax.swing.JFrame {
         }
         
     }
-        // Método para iniciar o agendamento
-    public void startScheduledTask(String token) {
+    
+    // Método para iniciar o agendamento
+    public void startScheduledTask() {
         GlobalVariables.scheduler = Executors.newScheduledThreadPool(1);
         Runnable task = new Runnable() {
             @Override
             public void run() {
                 try {
                     ProdutoService produtoService = new ProdutoService();
-                    List<ProdutoDTO> produtos =  produtoService.findAll(token);
+                    List<ProdutoDTO> produtos =  produtoService.findAll(GlobalVariables.acessToken);
                     ClienteService clienteService = new ClienteService();
-                    List<ClienteDTO> clientes = clienteService.findAll(token);
+                    List<ClienteDTO> clientes = clienteService.findAll(GlobalVariables.acessToken);
                     GlobalVariables.produtos = produtos;
                     GlobalVariables.clientes = clientes;   
                 } catch (ApiException | InterruptedException e) {

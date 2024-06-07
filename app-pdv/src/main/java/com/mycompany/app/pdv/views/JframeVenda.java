@@ -2,7 +2,6 @@ package com.mycompany.app.pdv.views;
 
 import com.mycompany.app.pdv.dtos.ClienteDTO;
 import com.mycompany.app.pdv.dtos.ItemVendaDTO;
-import com.mycompany.app.pdv.dtos.ProdutoDTO;
 import com.mycompany.app.pdv.dtos.VendaDTO;
 import com.mycompany.app.pdv.tablemodels.ItemVendaTableModel;
 import com.mycompany.app.pdvutils.GlobalVariables;
@@ -61,12 +60,14 @@ public class JframeVenda extends javax.swing.JFrame {
         jScrollPane2 = new javax.swing.JScrollPane();
         tableItens = new com.mycompany.app.pdv.views.components.TableDark();
         jMenuBar1 = new javax.swing.JMenuBar();
+        jMenu4 = new javax.swing.JMenu();
+        jMenuItemHistorico = new javax.swing.JMenuItem();
         jMenu1 = new javax.swing.JMenu();
-        jMenuItem3 = new javax.swing.JMenuItem();
+        jMenuItemCategoria = new javax.swing.JMenuItem();
         jMenu2 = new javax.swing.JMenu();
-        jMenuItem2 = new javax.swing.JMenuItem();
+        jMenuItemProduto = new javax.swing.JMenuItem();
         jMenu3 = new javax.swing.JMenu();
-        jMenuItem1 = new javax.swing.JMenuItem();
+        jMenuItemCliente = new javax.swing.JMenuItem();
 
         jTextField1.setText("jTextField1");
 
@@ -487,19 +488,39 @@ public class JframeVenda extends javax.swing.JFrame {
         jMenuBar1.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         jMenuBar1.setRequestFocusEnabled(false);
 
+        jMenu4.setBackground(new java.awt.Color(0, 0, 0));
+        jMenu4.setForeground(new java.awt.Color(204, 204, 204));
+        jMenu4.setText("Historico");
+        jMenu4.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
+        jMenu4.setMargin(new java.awt.Insets(3, 16, 12, 16));
+
+        jMenuItemHistorico.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_F3, 0));
+        jMenuItemHistorico.setBackground(new java.awt.Color(40, 46, 56));
+        jMenuItemHistorico.setForeground(new java.awt.Color(204, 204, 204));
+        jMenuItemHistorico.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Historico.png"))); // NOI18N
+        jMenuItemHistorico.setText("Acessar Histórico");
+        jMenuItemHistorico.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItemHistoricoActionPerformed(evt);
+            }
+        });
+        jMenu4.add(jMenuItemHistorico);
+
+        jMenuBar1.add(jMenu4);
+
         jMenu1.setBackground(new java.awt.Color(0, 0, 0));
         jMenu1.setForeground(new java.awt.Color(204, 204, 204));
         jMenu1.setText("Categorias");
         jMenu1.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
         jMenu1.setMargin(new java.awt.Insets(3, 16, 12, 16));
 
-        jMenuItem3.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_F1, 0));
-        jMenuItem3.setBackground(new java.awt.Color(40, 46, 56));
-        jMenuItem3.setForeground(new java.awt.Color(204, 204, 204));
-        jMenuItem3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/META-INF/Novo.png"))); // NOI18N
-        jMenuItem3.setText("Gerenciar Categorias");
-        jMenuItem3.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
-        jMenu1.add(jMenuItem3);
+        jMenuItemCategoria.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_F1, 0));
+        jMenuItemCategoria.setBackground(new java.awt.Color(40, 46, 56));
+        jMenuItemCategoria.setForeground(new java.awt.Color(204, 204, 204));
+        jMenuItemCategoria.setIcon(new javax.swing.ImageIcon(getClass().getResource("/META-INF/Novo.png"))); // NOI18N
+        jMenuItemCategoria.setText("Gerenciar Categorias");
+        jMenuItemCategoria.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
+        jMenu1.add(jMenuItemCategoria);
 
         jMenuBar1.add(jMenu1);
 
@@ -509,12 +530,12 @@ public class JframeVenda extends javax.swing.JFrame {
         jMenu2.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
         jMenu2.setMargin(new java.awt.Insets(3, 16, 12, 16));
 
-        jMenuItem2.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_F2, 0));
-        jMenuItem2.setBackground(new java.awt.Color(40, 46, 56));
-        jMenuItem2.setForeground(new java.awt.Color(204, 204, 204));
-        jMenuItem2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/META-INF/adicionar-sacola-de-compras (1).png"))); // NOI18N
-        jMenuItem2.setText("Gerenciar Produtos");
-        jMenu2.add(jMenuItem2);
+        jMenuItemProduto.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_F2, 0));
+        jMenuItemProduto.setBackground(new java.awt.Color(40, 46, 56));
+        jMenuItemProduto.setForeground(new java.awt.Color(204, 204, 204));
+        jMenuItemProduto.setIcon(new javax.swing.ImageIcon(getClass().getResource("/META-INF/adicionar-sacola-de-compras (1).png"))); // NOI18N
+        jMenuItemProduto.setText("Gerenciar Produtos");
+        jMenu2.add(jMenuItemProduto);
 
         jMenuBar1.add(jMenu2);
 
@@ -524,17 +545,17 @@ public class JframeVenda extends javax.swing.JFrame {
         jMenu3.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
         jMenu3.setMargin(new java.awt.Insets(3, 16, 12, 16));
 
-        jMenuItem1.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_F3, 0));
-        jMenuItem1.setBackground(new java.awt.Color(40, 46, 56));
-        jMenuItem1.setForeground(new java.awt.Color(204, 204, 204));
-        jMenuItem1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/META-INF/Clientes.png"))); // NOI18N
-        jMenuItem1.setText("Gerenciar Clientes");
-        jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
+        jMenuItemCliente.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_F3, 0));
+        jMenuItemCliente.setBackground(new java.awt.Color(40, 46, 56));
+        jMenuItemCliente.setForeground(new java.awt.Color(204, 204, 204));
+        jMenuItemCliente.setIcon(new javax.swing.ImageIcon(getClass().getResource("/META-INF/Clientes.png"))); // NOI18N
+        jMenuItemCliente.setText("Gerenciar Clientes");
+        jMenuItemCliente.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem1ActionPerformed(evt);
+                jMenuItemClienteActionPerformed(evt);
             }
         });
-        jMenu3.add(jMenuItem1);
+        jMenu3.add(jMenuItemCliente);
 
         jMenuBar1.add(jMenu3);
 
@@ -609,13 +630,17 @@ public class JframeVenda extends javax.swing.JFrame {
         frame.setVisible(true);
     }//GEN-LAST:event_btAddProdutosActionPerformed
 
-    private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
+    private void jMenuItemClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemClienteActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jMenuItem1ActionPerformed
+    }//GEN-LAST:event_jMenuItemClienteActionPerformed
 
     private void btRemoverProdutoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btRemoverProdutoActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_btRemoverProdutoActionPerformed
+
+    private void jMenuItemHistoricoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemHistoricoActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jMenuItemHistoricoActionPerformed
     
     public void limparVenda() {
         this.cliente = null;
@@ -700,10 +725,12 @@ public class JframeVenda extends javax.swing.JFrame {
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenu jMenu3;
+    private javax.swing.JMenu jMenu4;
     private javax.swing.JMenuBar jMenuBar1;
-    private javax.swing.JMenuItem jMenuItem1;
-    private javax.swing.JMenuItem jMenuItem2;
-    private javax.swing.JMenuItem jMenuItem3;
+    private javax.swing.JMenuItem jMenuItemCategoria;
+    private javax.swing.JMenuItem jMenuItemCliente;
+    private javax.swing.JMenuItem jMenuItemHistorico;
+    private javax.swing.JMenuItem jMenuItemProduto;
     private javax.swing.JPanel jPanel10;
     private javax.swing.JPanel jPanel11;
     private javax.swing.JPanel jPanel12;
