@@ -60,6 +60,7 @@ public class ProdutoService {
     }
      
     public List<ProdutoDTO> findAll(String token) throws ApiException, InterruptedException {
+        
         final List<ProdutoDTO>[] produtoList = new List[1];
         final CountDownLatch latch = new CountDownLatch(1);
         final Throwable[] throwable = new Throwable[1];
@@ -145,6 +146,8 @@ public class ProdutoService {
         }
 
         return produtoList[0];
-    }    
+    }  
+    
+    
     
 }
