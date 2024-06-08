@@ -95,32 +95,78 @@ public class VendaResponseDTO {
 
     public VendaResponseDTO fromRequest(VendaRequestDTO vendaRequestDTO) {
         VendaResponseDTO vendaResponseDTO = new VendaResponseDTO();
-        vendaResponseDTO.setObservacao(vendaRequestDTO.getObservacao());
-        vendaResponseDTO.setData(vendaRequestDTO.getData());
-        vendaResponseDTO.setCliente(new ClienteResponseDTO().fromRequest(vendaRequestDTO.getCliente()));
-        vendaResponseDTO.setItensVenda(new ItemVendaResponseDTO().fromRequestList(vendaRequestDTO.getItensVenda()));
+
+        if (vendaRequestDTO != null) {
+            vendaResponseDTO.setObservacao(vendaRequestDTO.getObservacao());
+
+            if(vendaRequestDTO.getData() != null){
+                Instant converter = Instant.parse(vendaRequestDTO.getData());
+                vendaResponseDTO.setData(Timestamp.from(converter));
+            }
+
+            vendaResponseDTO.setCliente(vendaRequestDTO.getCliente() != null
+                    ? new ClienteResponseDTO().fromRequest(vendaRequestDTO.getCliente())
+                    : null
+            );
+
+            vendaResponseDTO.setItensVenda(vendaRequestDTO.getItensVenda() != null
+                    ? new ItemVendaResponseDTO().fromRequestList(vendaRequestDTO.getItensVenda())
+                    : null
+            );
+        }
+
         return vendaResponseDTO;
     }
 
     public Venda toEntity(VendaResponseDTO vendaResponseDTO) {
         Venda venda = new Venda();
-        venda.setObservacao(vendaResponseDTO.getObservacao());
-        venda.setData(vendaResponseDTO.getData());
-        venda.setValorTotal(vendaResponseDTO.getValorTotal());
-        venda.setCliente(new ClienteResponseDTO().toEntity(vendaResponseDTO.getCliente()));
-        venda.setItensVenda(new ItemVendaResponseDTO().toEntityList(vendaResponseDTO.getItensVenda()));
+
+        if (vendaResponseDTO != null) {
+            venda.setObservacao(vendaResponseDTO.getObservacao());
+            venda.setValorTotal(vendaResponseDTO.getValorTotal());
+
+            if(vendaResponseDTO.getData() != null){
+                venda.setData(vendaResponseDTO.getData());
+            }
+
+            venda.setCliente(vendaResponseDTO.getCliente() != null
+                    ? new ClienteResponseDTO().toEntity(vendaResponseDTO.getCliente())
+                    : null
+            );
+
+            venda.setItensVenda(vendaResponseDTO.getItensVenda() != null
+                    ? new ItemVendaResponseDTO().toEntityList(vendaResponseDTO.getItensVenda())
+                    : null
+            );
+        }
+
         return venda;
     }
 
     public VendaResponseDTO fromEntity(Venda venda) {
         VendaResponseDTO vendaResponseDTO = new VendaResponseDTO();
-        vendaResponseDTO.setId(venda.getId());
-        vendaResponseDTO.setObservacao(venda.getObservacao());
-        vendaResponseDTO.setData(venda.getData());
-        vendaResponseDTO.setValorTotal(venda.getValorTotal());
-        vendaResponseDTO.setCliente(new ClienteResponseDTO().fromEntity(venda.getCliente()));
-        vendaResponseDTO.setItensVenda(new ItemVendaResponseDTO().fromEntityList(venda.getItensVenda()));
-        return vendaResponseDTO;
 
+        if (venda != null) {
+            vendaResponseDTO.setId(venda.getId());
+            vendaResponseDTO.setObservacao(venda.getObservacao());
+            vendaResponseDTO.setValorTotal(venda.getValorTotal());
+
+            if(venda.getData() != null){
+                vendaResponseDTO.setData(venda.getData());
+            }
+
+            vendaResponseDTO.setCliente(venda.getCliente() != null
+                    ? new ClienteResponseDTO().fromEntity(venda.getCliente())
+                    : null
+            );
+
+            vendaResponseDTO.setItensVenda(venda.getItensVenda() != null
+                    ? new ItemVendaResponseDTO().fromEntityList(venda.getItensVenda())
+                    : null
+            );
+        }
+
+        return vendaResponseDTO;
     }
+
 }

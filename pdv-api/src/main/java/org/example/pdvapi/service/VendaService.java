@@ -34,9 +34,7 @@ public class VendaService {
 
 
     public VendaResponseDTO doCalc(VendaRequestDTO vendaRequestDTO) throws ValidationException, NotFoundException {
-        validate(vendaRequestDTO);
-        // Converte o DTO de venda para um DTO de resposta
-        VendaResponseDTO vendaResponseDTO = new VendaResponseDTO().fromRequest(vendaRequestDTO);
+        VendaResponseDTO vendaResponseDTO = validate(vendaRequestDTO);
 
         // Calcula o valor total da venda
         List<ItemVendaResponseDTO> itensVendaCalculados = new ArrayList<>();
@@ -66,8 +64,8 @@ public class VendaService {
     }
 
     public VendaResponseDTO insert(VendaRequestDTO vendaRequestDTO) throws ValidationException, NotFoundException {
-        VendaResponseDTO vendaResponseDTO = new VendaResponseDTO();
-        vendaResponseDTO = doCalc(vendaRequestDTO); //Validações e cálculos
+        // Calcula a venda
+        VendaResponseDTO vendaResponseDTO = doCalc(vendaRequestDTO);
 
         // Insere a venda no banco de dados
         Venda venda = new VendaResponseDTO().toEntity(vendaResponseDTO);
@@ -106,7 +104,9 @@ public class VendaService {
     }
 
 
-    public VendaRequestDTO validate(VendaRequestDTO vendaRequestDTO) throws ValidationException, NotFoundException {
+    public VendaResponseDTO validate(VendaRequestDTO vendaRequestDTO) throws ValidationException, NotFoundException {
+        VendaResponseDTO vendaResponseDTO = new VendaResponseDTO().fromRequest(vendaRequestDTO);
+
         // ------------------------------ CLIENTE ------------------------------
         // Verifica se o cliente é válido
         if (vendaRequestDTO.getCliente() == null) {
@@ -131,6 +131,8 @@ public class VendaService {
         }
 
         Set<Long> produtosIds = new HashSet<>(); // Armazenar os produtos já verificados
+
+        List<ItemVendaResponseDTO> itensVendaRetorno = new ItemVendaResponseDTO().fromRequestList(vendaRequestDTO.getItensVenda());
 
         for (int i = 0; i < vendaRequestDTO.getItensVenda().size(); i++) {
             // Verificar repetido
@@ -157,13 +159,21 @@ public class VendaService {
                 throw new NotFoundException("O produto informado não pode ser encontrado ou não existe: " + i);
             }
 
+            itensVendaRetorno.get(i).setProduto(produto.toDTO());
+
 
             //Verifica se o produto tem estoque
             if (vendaRequestDTO.getItensVenda().get(i).getQuantidade() <= 0) {
                 throw new ValidationException("Quantidade de produtos é menor ou inferior a 0 para o produto: "
                         + vendaRequestDTO.getItensVenda().get(i).getProduto().getId());
             }
+
         }
-        return vendaRequestDTO;
+
+        ClienteResponseDTO clienteRetorno = new ClienteResponseDTO().fromEntity(cliente);
+        vendaResponseDTO.setCliente(clienteRetorno);
+        vendaResponseDTO.setItensVenda(itensVendaRetorno);
+
+        return vendaResponseDTO;
     }
 }

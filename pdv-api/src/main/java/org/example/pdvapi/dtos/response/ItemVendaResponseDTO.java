@@ -93,40 +93,58 @@ public class ItemVendaResponseDTO {
                 '}';
     }
 
-    public List<ItemVendaResponseDTO> fromRequestList(List<ItemVendaRequestDTO> itensVenda) {
+    public static List<ItemVendaResponseDTO> fromRequestList(List<ItemVendaRequestDTO> itensVenda) {
         List<ItemVendaResponseDTO> itemVendaResponseDTO = new ArrayList<>();
+
         for (ItemVendaRequestDTO itemVenda : itensVenda) {
             ItemVendaResponseDTO itemVendaResponseDTO1 = new ItemVendaResponseDTO();
-            itemVendaResponseDTO1.setQuantidade(itemVenda.getQuantidade());
-            itemVendaResponseDTO1.setDesconto(itemVenda.getDesconto());
-            itemVendaResponseDTO1.setProduto(new ProdutoResponseDTO().fromRequest(itemVenda.getProduto()));
+            itemVendaResponseDTO1.setQuantidade(itemVenda != null ? itemVenda.getQuantidade() : 0);
+            itemVendaResponseDTO1.setDesconto(itemVenda != null ? itemVenda.getDesconto() : 0.0);
+
+            itemVendaResponseDTO1.setProduto(itemVenda != null && itemVenda.getProduto() != null
+                    ? new ProdutoResponseDTO().fromRequest(itemVenda.getProduto())
+                    : null);
+
             itemVendaResponseDTO.add(itemVendaResponseDTO1);
         }
+
         return itemVendaResponseDTO;
     }
 
-    public List<ItemVenda> toEntityList(List<ItemVendaResponseDTO> itensVenda) {
+    public static List<ItemVenda> toEntityList(List<ItemVendaResponseDTO> itensVenda) {
         List<ItemVenda> itemVendaList = new ArrayList<>();
+
         for (ItemVendaResponseDTO itemVenda : itensVenda) {
             ItemVenda itemVenda1 = new ItemVenda();
-            itemVenda1.setQuantidade(itemVenda.getQuantidade());
-            itemVenda1.setDesconto(itemVenda.getDesconto());
-            itemVenda1.setProduto(new ProdutoResponseDTO().toEntity(itemVenda.getProduto()));
+            itemVenda1.setQuantidade(itemVenda != null ? itemVenda.getQuantidade() : 0);
+            itemVenda1.setDesconto(itemVenda != null ? itemVenda.getDesconto() : 0.0);
+
+            itemVenda1.setProduto(itemVenda != null && itemVenda.getProduto() != null
+                    ? new ProdutoResponseDTO().toEntity(itemVenda.getProduto())
+                    : null);
+
             itemVendaList.add(itemVenda1);
         }
+
         return itemVendaList;
     }
 
-    public List<ItemVendaResponseDTO> fromEntityList(List<ItemVenda> itensVenda) {
+    public static List<ItemVendaResponseDTO> fromEntityList(List<ItemVenda> itensVenda) {
         List<ItemVendaResponseDTO> itemVendaResponseDTO = new ArrayList<>();
+
         for (ItemVenda itemVenda : itensVenda) {
             ItemVendaResponseDTO itemVendaResponseDTO1 = new ItemVendaResponseDTO();
-            itemVendaResponseDTO1.setId(itemVenda.getId());
-            itemVendaResponseDTO1.setQuantidade(itemVenda.getQuantidade());
-            itemVendaResponseDTO1.setDesconto(itemVenda.getDesconto());
-            itemVendaResponseDTO1.setProduto(new ProdutoResponseDTO().fromEntity(itemVenda.getProduto()));
+            itemVendaResponseDTO1.setId(itemVenda != null ? itemVenda.getId() : 0);
+            itemVendaResponseDTO1.setQuantidade(itemVenda != null ? itemVenda.getQuantidade() : 0);
+            itemVendaResponseDTO1.setDesconto(itemVenda != null ? itemVenda.getDesconto() : 0.0);
+
+            itemVendaResponseDTO1.setProduto(itemVenda != null && itemVenda.getProduto() != null
+                    ? new ProdutoResponseDTO().fromEntity(itemVenda.getProduto())
+                    : null);
+
             itemVendaResponseDTO.add(itemVendaResponseDTO1);
         }
+
         return itemVendaResponseDTO;
     }
 }
