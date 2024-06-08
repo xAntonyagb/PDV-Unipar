@@ -5,6 +5,7 @@ import com.mycompany.app.pdv.dtos.response.ItemVendaResponseDTO;
 import com.mycompany.app.pdv.dtos.response.VendaResponseDTO;
 import com.mycompany.app.pdv.reports.ReportUtils;
 import com.mycompany.app.pdv.services.VendaService;
+import com.mycompany.app.pdv.utils.TimeUtils;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
@@ -254,9 +255,13 @@ public class JFrameFinalizarVenda extends javax.swing.JFrame {
 //                item.setVenda(this.venda);
             }
             
+            
             VendaService vendaService = new VendaService();
-            VendaResponseDTO retorno = vendaService.insert(
-                    VendaRequestDTO.toVendaRequestDTO(venda));
+            VendaRequestDTO vendaRequest = VendaRequestDTO.toVendaRequestDTO(venda);
+            vendaRequest.setData(TimeUtils.getStringNow());
+            vendaRequest.setObservacao("Teste");
+            
+            VendaResponseDTO retorno = vendaService.insert(vendaRequest);
             
             JOptionPane.showMessageDialog(null, "Venda feita com sucesso: "+ retorno.getId(), "Sucesso", JOptionPane.INFORMATION_MESSAGE);
             this.frameVenda.limparVenda();

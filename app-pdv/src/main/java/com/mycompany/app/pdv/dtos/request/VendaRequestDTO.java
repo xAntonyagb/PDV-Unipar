@@ -13,16 +13,18 @@ public class VendaRequestDTO {
     private List<ItemVendaRequestDTO> itensVenda;
     private ClienteRequestDTO cliente;
     private String data;
+    private String observacao;
 
     public VendaRequestDTO() {
         this.itensVenda = new ArrayList<>();
         this.cliente = new ClienteRequestDTO();
     }
 
-    public VendaRequestDTO(List<ItemVendaRequestDTO> itensVenda, ClienteRequestDTO cliente, String data) {
+    public VendaRequestDTO(List<ItemVendaRequestDTO> itensVenda, ClienteRequestDTO cliente, String data, String observacao) {
         this.itensVenda = itensVenda;
         this.cliente = cliente;
         this.data = data;
+        this.observacao = observacao;
     }
 
     public static VendaRequestDTO toVendaRequestDTO(VendaResponseDTO vendaResponseDTO) {
@@ -31,7 +33,8 @@ public class VendaRequestDTO {
         return new VendaRequestDTO(
                 ItemVendaRequestDTO.toRequestDTOList(vendaResponseDTO.getItensVenda()),
                 ClienteRequestDTO.toRequestDTO(vendaResponseDTO.getCliente()),
-                data);
+                data,
+                vendaResponseDTO.getObservacao());
     }
 
     public List<ItemVendaRequestDTO> getItensVenda() {
@@ -58,9 +61,17 @@ public class VendaRequestDTO {
         this.data = data;
     }
 
+    public String getObservacao() {
+        return observacao;
+    }
+
+    public void setObservacao(String observacao) {
+        this.observacao = observacao;
+    }
+
     @Override
     public String toString() {
-        return "VendaRequest{" + "itensVenda=" + itensVenda + ", cliente=" + cliente + ", data=" + data + '}';
+        return "VendaRequestDTO{" + "itensVenda=" + itensVenda + ", cliente=" + cliente + ", data=" + data + ", observacao=" + observacao + '}';
     }
-    
+
 }

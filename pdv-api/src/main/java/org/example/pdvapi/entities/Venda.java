@@ -21,7 +21,7 @@ public class Venda {
     private String observacao;
 
     @NotNull
-    @Future
+    @PastOrPresent
     private Timestamp data;
 
     @NotNull
@@ -66,11 +66,11 @@ public class Venda {
         this.observacao = observacao;
     }
 
-    public @NotNull @Future Timestamp getData() {
+    public @NotNull @PastOrPresent Timestamp getData() {
         return data;
     }
 
-    public void setData(@NotNull @Future Timestamp data) {
+    public void setData(@NotNull @PastOrPresent Timestamp data) {
         this.data = data;
     }
 

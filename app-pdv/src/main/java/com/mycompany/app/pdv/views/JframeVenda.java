@@ -10,6 +10,7 @@ import com.mycompany.app.pdv.services.ClienteService;
 import com.mycompany.app.pdv.services.VendaService;
 import com.mycompany.app.pdv.tablemodels.ItemVendaTableModel;
 import com.mycompany.app.pdv.utils.PDVUtils;
+import com.mycompany.app.pdv.utils.TimeUtils;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.util.ArrayList;
@@ -597,10 +598,10 @@ public class JframeVenda extends javax.swing.JFrame {
             frame.setVisible(true);
         }
         catch(ApiException ex) {
-            JOptionPane.showMessageDialog(null, ex.getMessage() + "\nVenda incompleta! Faça os ajustes necessários antes de finaliza-la:", "Erro ao presseguir", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, ex.getMessage() + "\nVenda incompleta! Faça os ajustes necessários antes de finaliza-la.", "Erro ao presseguir", JOptionPane.ERROR_MESSAGE);
         } 
         catch (InterruptedException ex) {
-            JOptionPane.showMessageDialog(this, ex.getMessage() + "\nTempo esgotado! Um erro ocorreu ao finalizar a venda, caso persista, tente novamente mais tarde:", "Erro ao processar", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, ex.getMessage() + "\nTempo esgotado! Um erro ocorreu ao finalizar a venda, caso persista, tente novamente mais tarde.", "Erro ao processar", JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_btFinalizarActionPerformed
 

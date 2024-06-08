@@ -18,9 +18,7 @@ public class TimeUtils {
     
     public static String getStringNow() {
         Instant now = Instant.now();
-        
-        Timestamp timestamp = Timestamp.from(now);
-        return timestamp.toString();
+        return now.toString();
     }
     
     public static Timestamp stringToTimestamp(String data) {
