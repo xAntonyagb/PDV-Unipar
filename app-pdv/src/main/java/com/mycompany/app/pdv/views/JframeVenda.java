@@ -634,7 +634,13 @@ public class JframeVenda extends javax.swing.JFrame {
     }//GEN-LAST:event_btRemoverProdutoActionPerformed
 
     private void jMenuItemHistoricoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemHistoricoActionPerformed
-        // TODO add your handling code here:
+        JFrameConsultaVendas frame = new JFrameConsultaVendas();
+        frame.setResizable(false);
+        frame.setLocationRelativeTo(null);
+        frame.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+
+        removerFocoPricipal(frame);
+        frame.setVisible(true);
     }//GEN-LAST:event_jMenuItemHistoricoActionPerformed
     
     public void limparVenda() {
