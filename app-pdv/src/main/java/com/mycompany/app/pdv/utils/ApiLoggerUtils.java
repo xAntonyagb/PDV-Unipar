@@ -1,4 +1,4 @@
-package com.mycompany.app.pdvutils;
+package com.mycompany.app.pdv.utils;
 
 /**
  *
@@ -9,7 +9,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.time.LocalDateTime;
 
-public class ApiLogger {
+public class ApiLoggerUtils {
 
     private static final String LOG_FILE_PATH = "./api_operations_log.txt";
 

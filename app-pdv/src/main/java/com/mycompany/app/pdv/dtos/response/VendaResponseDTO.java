@@ -2,7 +2,7 @@ package com.mycompany.app.pdv.dtos.response;
 
 
 import com.mycompany.app.pdv.dtos.request.VendaRequestDTO;
-import com.mycompany.app.pdvutils.TimeUtils;
+import com.mycompany.app.pdv.utils.TimeUtils;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
@@ -22,6 +22,7 @@ public class VendaResponseDTO {
     
     public VendaResponseDTO() {
         this.itensVenda = new ArrayList<>();
+        this.cliente = new ClienteResponseDTO();
     }
     
     public VendaResponseDTO(long id, String observacao, Timestamp data, double valorTotal, ClienteResponseDTO cliente, List<ItemVendaResponseDTO> itensVenda) {

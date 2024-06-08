@@ -1,10 +1,11 @@
 package com.mycompany.app.pdv.views;
 
+import com.mycompany.app.pdv.dtos.request.ItemVendaRequestDTO;
 import com.mycompany.app.pdv.dtos.response.ItemVendaResponseDTO;
 import com.mycompany.app.pdv.dtos.response.ProdutoResponseDTO;
 import com.mycompany.app.pdv.services.ProdutoService;
 import com.mycompany.app.pdv.tablemodels.ProdutoTableModel;
-import com.mycompany.app.pdvutils.GlobalVariables;
+import com.mycompany.app.pdv.utils.PDVUtils;
 import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.RowFilter;
@@ -38,7 +39,9 @@ public class JFrameConsultaProduto extends javax.swing.JFrame {
             }
 
             @Override
-            public void removeUpdate(DocumentEvent e) { }
+            public void removeUpdate(DocumentEvent e) { 
+                filtrarTabela(jTextFieldPesquisa.getText());
+            }
 
             @Override
             public void changedUpdate(DocumentEvent e) {
@@ -357,7 +360,7 @@ public class JFrameConsultaProduto extends javax.swing.JFrame {
 
         if (selectedRow != -1) {
             int id = Integer.parseInt((String) jTableProdutos.getValueAt(selectedRow, 0));
-            for (ProdutoResponseDTO produto : GlobalVariables.produtos) {
+            for (ProdutoResponseDTO produto : PDVUtils.produtos) {
                 if (produto.getId() == id) {
                     this.itemVenda = new ItemVendaResponseDTO();
                     this.itemVenda.setProduto(produto);
@@ -365,7 +368,7 @@ public class JFrameConsultaProduto extends javax.swing.JFrame {
                     jTextPaneDSProduto.setText(produto.getDescricao());
                     jTextPaneVlUnit.setText(Double.toString(produto.getValor()));
                     
-                    jTextPaneVlSubtotal.setText("1");
+                    jTextPaneVlSubtotal.setText("0");
                     jTextFieldDesconto.setText("0");
                     atualizarCampos();
                     
@@ -379,8 +382,19 @@ public class JFrameConsultaProduto extends javax.swing.JFrame {
     }//GEN-LAST:event_jButtonSelecionarActionPerformed
 
     private void btConfirmarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btConfirmarActionPerformed
-        this.frameVenda.addNovoItemToTable(itemVenda);
-        jTabbedPane1.setSelectedIndex(0);
+        try {
+            this.itemVenda.setQuantidade(Integer.parseInt(jTextFieldQtd2.getText()));
+            this.itemVenda.setDesconto(Double.parseDouble(jTextFieldDesconto.getText()));
+
+            this.frameVenda.addNovoItemToTable(
+                    ItemVendaRequestDTO.toRequestDTO(itemVenda)
+            );
+
+            jTabbedPane1.setSelectedIndex(0);
+        }
+        catch(Exception ex) {
+            JOptionPane.showMessageDialog(null, "Dados informados de forma inádequada! Porfavor informe números", "Erro ao continuar", JOptionPane.ERROR_MESSAGE);
+        }
     }//GEN-LAST:event_btConfirmarActionPerformed
 
     private void btVoltarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btVoltarActionPerformed
@@ -403,7 +417,7 @@ public class JFrameConsultaProduto extends javax.swing.JFrame {
     private void atualizarLista(){
         ProdutoService produtoService = new ProdutoService();
         
-        List<ProdutoResponseDTO> listaProdutos = GlobalVariables.produtos;
+        List<ProdutoResponseDTO> listaProdutos = PDVUtils.produtos;
         
         ProdutoTableModel model = 
                new ProdutoTableModel(listaProdutos);

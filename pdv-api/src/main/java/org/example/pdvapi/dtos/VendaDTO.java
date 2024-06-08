@@ -87,4 +87,16 @@ public class VendaDTO {
         venda.setItensVenda(ItemVendaDTO.toEntityList(this.itensVenda));
         return venda;
     }
+
+    @Override
+    public String toString() {
+        return "VendaDTO{" +
+                "id=" + id +
+                ", observacao='" + observacao + '\'' +
+                ", data='" + data + '\'' +
+                ", valorTotal=" + valorTotal +
+                ", cliente=" + cliente +
+                ", itensVenda=" + itensVenda +
+                '}';
+    }
 }

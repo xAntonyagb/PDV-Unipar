@@ -4,8 +4,8 @@ import com.mycompany.app.pdv.dtos.response.TokenResponseDTO;
 import com.mycompany.app.pdv.dtos.request.TokenRequestDTO;
 import com.mycompany.app.pdv.exceptions.ApiException;
 import com.mycompany.app.pdv.retrofit.RetrofitConfig;
-import com.mycompany.app.pdvutils.ApiLogger;
-import com.mycompany.app.pdvutils.GlobalVariables;
+import com.mycompany.app.pdv.utils.ApiLoggerUtils;
+import com.mycompany.app.pdv.utils.PDVUtils;
 import java.time.LocalDateTime;
 import java.util.concurrent.CountDownLatch;
 import retrofit2.Call;
@@ -20,7 +20,7 @@ public class TokenService {
     
     public void doLogin(TokenRequestDTO usuarioDTO) throws ApiException, InterruptedException {
         TokenResponseDTO resposta = getToken(usuarioDTO);
-        GlobalVariables.acessToken = resposta.getAcessToken();
+        PDVUtils.acessToken = resposta.getAcessToken();
     }
     
     private TokenResponseDTO getToken(TokenRequestDTO usuarioDTO) throws ApiException, InterruptedException {
@@ -36,17 +36,16 @@ public class TokenService {
             @Override
             public void onResponse(Call<TokenResponseDTO> call, Response<TokenResponseDTO> response) {
                 Integer code =  response.code();
-                ApiLogger.logOperation(LocalDateTime.now(), " GET(getToken) - LOGIN ", code.toString());
+                ApiLoggerUtils.logOperation(LocalDateTime.now(), " GET(getToken) - LOGIN ", code.toString());
                 
                 if (response.isSuccessful()) {
                     tokenDTO[0] = response.body();
                 } else {
                     if(response.code() == 401) {
                         throwable[0] = new ApiException(response.code() + ": Usuário ou senha incorretos!");
-                    } else {
-                        throwable[0] = new ApiException(new Throwable(
-                                "Erro: " + response.code() + 
-                                "\nMensagem:"+ response.message()));
+                    } 
+                    else {
+                        throwable[0] = PDVUtils.getResponseError(response);
                     }
                 }
                 latch.countDown();
@@ -55,7 +54,7 @@ public class TokenService {
             @Override
             public void onFailure(Call<TokenResponseDTO> call, Throwable t) {
                 Integer code = 500;
-                ApiLogger.logOperation(LocalDateTime.now(), " GET(getToken) - LOGIN ", code.toString() + " - " + t.getMessage());
+                ApiLoggerUtils.logOperation(LocalDateTime.now(), " GET(getToken) - LOGIN ", code.toString() + " - " + t.getMessage());
                 
                 throwable[0] = new ApiException("Tempo esgotado: Nenhum retorno recebido do host!");
                 latch.countDown();

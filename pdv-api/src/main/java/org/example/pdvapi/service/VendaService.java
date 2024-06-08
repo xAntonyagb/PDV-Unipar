@@ -7,7 +7,6 @@ import org.example.pdvapi.entities.ItemVenda;
 import org.example.pdvapi.entities.Produto;
 import org.example.pdvapi.entities.Venda;
 import org.example.pdvapi.exceptions.NotFoundException;
-import org.example.pdvapi.exceptions.StockException;
 import org.example.pdvapi.exceptions.ValidationException;
 import org.example.pdvapi.repositories.ClienteRepository;
 import org.example.pdvapi.repositories.ProdutoRepository;
@@ -30,28 +29,37 @@ public class VendaService {
     private ProdutoRepository produtoRepository;
 
 
-    public VendaDTO doCalc(VendaDTO vendaDTO) throws ValidationException, NotFoundException, StockException {
-        validate(vendaDTO);
-        // Calcula o valor total da venda
-        //primeiro calcula o valor total dos itemvenda
-        for (ItemVendaDTO itemVenda : vendaDTO.getItensVenda()) {
-            //busca o produto no banco de dados
-            Produto produto = produtoRepository.findById(itemVenda.getProduto().getId()).orElse(null);
-            //seta o valor unitario do itemvenda
-            itemVenda.setValorUnitario(produto.getValor());
-            //seta o valor total do itemvenda
-            itemVenda.setValorTotal(itemVenda.getQuantidade() * itemVenda.getValorUnitario());
-        }
-        //depois calcula o valor total da venda
-        double valorTotal = 0;
-        for (ItemVendaDTO itemVenda : vendaDTO.getItensVenda()) {
-            valorTotal += itemVenda.getValorTotal();
-        }
-        vendaDTO.setValorTotal(valorTotal);
+    public VendaDTO doCalc(VendaDTO vendaDTO) throws ValidationException, NotFoundException {
+            validate(vendaDTO);
+
+            // Calcula o valor total da venda
+            List<ItemVendaDTO> itensVendaCalculados = new ArrayList<>();
+            double valorTotal = 0;
+
+            for (ItemVendaDTO itemVenda : vendaDTO.getItensVenda()) {
+
+                //busca o produto no banco de dados
+                Produto produto = produtoRepository.findById(itemVenda.getProduto().getId()).orElse(null);
+                itemVenda.setProduto(produto.toDTO());
+
+                //seta o valor unitario do itemvenda
+                itemVenda.setValorUnitario(produto.getValor());
+
+                //seta o valor total do itemvenda e faz o calculo do valor total da venda
+                double calculo = itemVenda.getQuantidade() * itemVenda.getValorUnitario();
+                itemVenda.setValorTotal(calculo);
+                valorTotal += calculo;
+
+                itensVendaCalculados.add(itemVenda);
+            }
+
+            // Retorno
+            vendaDTO.setValorTotal(valorTotal);
+            vendaDTO.setItensVenda(itensVendaCalculados);
         return vendaDTO;
     }
 
-    public VendaDTO insert(VendaDTO vendaDTO) throws ValidationException, NotFoundException, StockException {
+    public VendaDTO insert(VendaDTO vendaDTO) throws ValidationException, NotFoundException {
         vendaDTO = doCalc(vendaDTO); //Validações e cálculos
 
         // Insere a venda no banco de dados
@@ -81,7 +89,7 @@ public class VendaService {
         return venda.toDTO();
     }
 
-    public void validate(VendaDTO vendaDTO) throws ValidationException, NotFoundException, StockException {
+    public void validate(VendaDTO vendaDTO) throws ValidationException, NotFoundException {
         // ------------------------------ CLIENTE ------------------------------
         // Verifica se o cliente é válido
         if (vendaDTO.getCliente() == null) {
@@ -136,7 +144,7 @@ public class VendaService {
 
             //Verifica se o produto tem estoque
             if (vendaDTO.getItensVenda().get(i).getQuantidade() <= 0) {
-                throw new StockException("Não há mais estoque para o produto escolhido: "
+                throw new ValidationException("Quantidade de produtos é menor ou inferior a 0 para o produto: "
                         + vendaDTO.getItensVenda().get(i).getProduto().getDescricao());
             }
         }

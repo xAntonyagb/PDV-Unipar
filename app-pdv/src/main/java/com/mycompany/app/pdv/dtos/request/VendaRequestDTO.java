@@ -16,6 +16,7 @@ public class VendaRequestDTO {
 
     public VendaRequestDTO() {
         this.itensVenda = new ArrayList<>();
+        this.cliente = new ClienteRequestDTO();
     }
 
     public VendaRequestDTO(List<ItemVendaRequestDTO> itensVenda, ClienteRequestDTO cliente, String data) {

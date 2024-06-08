@@ -1,7 +1,6 @@
 package org.example.pdvapi.controllers;
 
 import io.swagger.v3.oas.annotations.Operation;
-import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.enums.SecuritySchemeType;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -13,7 +12,6 @@ import io.swagger.v3.oas.annotations.security.SecuritySchemes;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.example.pdvapi.dtos.VendaDTO;
 import org.example.pdvapi.exceptions.NotFoundException;
-import org.example.pdvapi.exceptions.StockException;
 import org.example.pdvapi.exceptions.ValidationException;
 import org.example.pdvapi.service.VendaService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -46,9 +44,6 @@ public class VendaController {
             @ApiResponse(responseCode = "200", description = "Ok", content =
                     { @Content(mediaType = "application/json", schema =
                     @Schema(implementation = VendaDTO.class)) }),
-            @ApiResponse(responseCode = "202", description = "Venda aceita, mas produto(s) com estoque zerado(s) encontrado(s)", content =
-                    { @Content(mediaType = "application/json", schema =
-                    @Schema(implementation = VendaDTO.class)) }),
             @ApiResponse(responseCode = "400", description = "Venda fora de padrão ou inválida",
                     content = { @Content(mediaType = "application/json") }),
             @ApiResponse(responseCode = "401", description = "Usuário não autorizado / Credenciais inválidas",
@@ -63,22 +58,14 @@ public class VendaController {
 
     @PostMapping("/calc")
     public ResponseEntity<VendaDTO> doCalc(@RequestBody VendaDTO vendaDTO) throws ValidationException, NotFoundException {
-        try {
-            vendaService.doCalc(vendaDTO);
-            return ResponseEntity.ok(vendaDTO);
-        } catch (StockException e) {
-            return ResponseEntity.accepted().body(vendaDTO);
-        }
-
+        vendaDTO = vendaService.doCalc(vendaDTO);
+        return ResponseEntity.ok(vendaDTO);
     }
 
 
     // ----------------------------- FINALIZAR/INSERIR VENDA -----------------------------
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Ok", content =
-                    { @Content(mediaType = "application/json", schema =
-                    @Schema(implementation = VendaDTO.class)) }),
-            @ApiResponse(responseCode = "202", description = "Venda aceita, mas produto(s) com estoque zerado(s) encontrado(s)", content =
                     { @Content(mediaType = "application/json", schema =
                     @Schema(implementation = VendaDTO.class)) }),
             @ApiResponse(responseCode = "400", description = "Venda fora de padrão ou inválida",
@@ -95,12 +82,9 @@ public class VendaController {
 
     @PostMapping
     public ResponseEntity<VendaDTO> insert(@RequestBody VendaDTO vendaDTO) throws ValidationException, NotFoundException {
-        try {
-            vendaService.insert(vendaDTO);
-            return ResponseEntity.ok(vendaDTO);
-        } catch (StockException e) {
-            return ResponseEntity.accepted().body(vendaDTO);
-        }
+        vendaDTO = vendaService.insert(vendaDTO);
+        return ResponseEntity.ok(vendaDTO);
+
     }
 
 }

@@ -1,6 +1,6 @@
 package com.mycompany.app.pdv.dtos.response;
 
-import com.mycompany.app.pdvutils.TimeUtils;
+import com.mycompany.app.pdv.utils.TimeUtils;
 import java.sql.Timestamp;
 
 /**

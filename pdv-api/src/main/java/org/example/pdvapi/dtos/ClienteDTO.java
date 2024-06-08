@@ -62,4 +62,14 @@ public class ClienteDTO {
         cliente.setTelefone(this.telefone);
         return cliente;
     }
+
+    @Override
+    public String toString() {
+        return "ClienteDTO{" +
+                "id=" + id +
+                ", nome='" + nome + '\'' +
+                ", email='" + email + '\'' +
+                ", telefone='" + telefone + '\'' +
+                '}';
+    }
 }

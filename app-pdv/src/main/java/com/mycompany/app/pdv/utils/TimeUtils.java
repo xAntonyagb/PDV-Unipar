@@ -1,4 +1,4 @@
-package com.mycompany.app.pdvutils;
+package com.mycompany.app.pdv.utils;
 
 import java.sql.Timestamp;
 import java.time.Instant;

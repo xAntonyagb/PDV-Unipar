@@ -1,15 +1,18 @@
 package com.mycompany.app.pdv.views;
 
+import com.mycompany.app.pdv.dtos.request.ItemVendaRequestDTO;
 import com.mycompany.app.pdv.dtos.request.VendaRequestDTO;
 import com.mycompany.app.pdv.dtos.response.ClienteResponseDTO;
 import com.mycompany.app.pdv.dtos.response.ItemVendaResponseDTO;
 import com.mycompany.app.pdv.dtos.response.VendaResponseDTO;
 import com.mycompany.app.pdv.exceptions.ApiException;
+import com.mycompany.app.pdv.services.ClienteService;
 import com.mycompany.app.pdv.services.VendaService;
 import com.mycompany.app.pdv.tablemodels.ItemVendaTableModel;
-import com.mycompany.app.pdvutils.GlobalVariables;
+import com.mycompany.app.pdv.utils.PDVUtils;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
@@ -594,10 +597,10 @@ public class JframeVenda extends javax.swing.JFrame {
             frame.setVisible(true);
         }
         catch(ApiException ex) {
-            JOptionPane.showMessageDialog(null, "Venda incompleta! Faça os ajustes necessários antes de finaliza-la:\n\n" + ex.getMessage(), "Erro ao processar", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, ex.getMessage() + "\nVenda incompleta! Faça os ajustes necessários antes de finaliza-la:", "Erro ao presseguir", JOptionPane.ERROR_MESSAGE);
         } 
         catch (InterruptedException ex) {
-            JOptionPane.showMessageDialog(this, "Tempo esgotado! Um erro ocorreu ao finalizar a venda, caso persista, tente novamente mais tarde:\n\n" + ex.getMessage(), "Erro ao processar", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, ex.getMessage() + "\nTempo esgotado! Um erro ocorreu ao finalizar a venda, caso persista, tente novamente mais tarde:", "Erro ao processar", JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_btFinalizarActionPerformed
 
@@ -616,6 +619,19 @@ public class JframeVenda extends javax.swing.JFrame {
     }//GEN-LAST:event_btSelecionarClienteActionPerformed
 
     private void btAddProdutosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btAddProdutosActionPerformed
+        // Verificar cliente
+        try {
+            ClienteService clienteService = new ClienteService();
+            ClienteResponseDTO consulta = clienteService.findById(this.venda.getCliente().getId());
+            this.venda.setCliente(consulta);
+        } catch (ApiException ex) {
+            JOptionPane.showMessageDialog(null, ex.getMessage() + "\nPorfavor selecione um cliente! Faça os ajustes necessários antes de continuar.", "Erro ao presseguir", JOptionPane.ERROR_MESSAGE);
+            return;
+        } catch (InterruptedException ex) {
+            JOptionPane.showMessageDialog(this, ex.getMessage() + "\nTempo esgotado! Um erro ocorreu ao continuar selecionando produtos, caso persista, tente novamente mais tarde.", "Erro ao processar", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        
         JFrameConsultaProduto frame = new JFrameConsultaProduto(this);
         frame.setResizable(false);
         frame.setLocationRelativeTo(null);
@@ -651,23 +667,27 @@ public class JframeVenda extends javax.swing.JFrame {
         
         jLabelSubtotal.setText("0.0");
         jLabelDescontos.setText("0.0"); 
+        jFieldCliente.setText(""); 
         
     }
     
-    public void addNovoItemToTable(ItemVendaResponseDTO item) {
+    public void addNovoItemToTable(ItemVendaRequestDTO item) {
         try {
-            VendaResponseDTO novaVenda = this.venda;
-            novaVenda.getItensVenda().add(item);
+            VendaRequestDTO requisicao = VendaRequestDTO.toVendaRequestDTO(this.venda);
+            List<ItemVendaRequestDTO> itensVenda = new ArrayList<>();
+            itensVenda.addAll(requisicao.getItensVenda());
+            itensVenda.add(item);
             
-            VendaRequestDTO requisicao = VendaRequestDTO.toVendaRequestDTO(novaVenda);
+            requisicao.setItensVenda(itensVenda);
             applyVenda(vendaService.doCalc(requisicao));
+
             JOptionPane.showMessageDialog(null, "Produto adicionado com sucesso!", "Produto adicionado", JOptionPane.INFORMATION_MESSAGE);
         }
         catch(ApiException ex) {
-            JOptionPane.showMessageDialog(this, "Um erro ocorreu no processo de venda:\n\n" + ex.getMessage(), "Erro ao processar", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Um erro ocorreu no processo de venda:\n" + ex.getMessage(), "Erro ao processar", JOptionPane.ERROR_MESSAGE);
         } 
         catch (InterruptedException ex) {
-            JOptionPane.showMessageDialog(this, "Tempo esgotado! Tente novamente mais tarde.\n\n" + ex.getMessage(), "Erro ao processar", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, ex.getMessage() + "\nTempo esgotado! Tente novamente mais tarde.", "Erro ao processar", JOptionPane.ERROR_MESSAGE);
         }
     }
     
@@ -720,7 +740,7 @@ public class JframeVenda extends javax.swing.JFrame {
     //Parar thread de requisições
     @Override
     public void dispose(){
-        GlobalVariables.shutdownScheduler();
+        PDVUtils.shutdownScheduler();
         super.dispose();
     }
 

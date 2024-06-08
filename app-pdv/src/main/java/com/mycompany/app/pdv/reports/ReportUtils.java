@@ -7,7 +7,7 @@ import com.google.zxing.client.j2se.MatrixToImageWriter;
 import com.google.zxing.common.BitMatrix;
 import com.mycompany.app.pdv.dtos.response.ItemVendaResponseDTO;
 import com.mycompany.app.pdv.dtos.response.VendaResponseDTO;
-import com.mycompany.app.pdvutils.GlobalVariables;
+import com.mycompany.app.pdv.utils.PDVUtils;
 import java.awt.Desktop;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
@@ -61,7 +61,7 @@ public class ReportUtils {
     private static void fillPDF(InputStream reportResource, File caminho, Map<String, Object> parametros) throws JRException {
         try{
             //Objeto jasper para construir o relatório irport
-            JasperPrint jasperPrint = JasperFillManager.fillReport(reportResource, parametros, GlobalVariables.getConexao());
+            JasperPrint jasperPrint = JasperFillManager.fillReport(reportResource, parametros, PDVUtils.getConexao());
 
             //Gerenciador do jasper para exportar o jasperPrint em pdf - Se der ruim é pq está aberto no ireport
             try { 

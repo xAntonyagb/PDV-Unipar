@@ -2,6 +2,7 @@ package org.example.pdvapi.entities;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
+import org.example.pdvapi.dtos.ProdutoDTO;
 import org.example.pdvapi.enums.CategoriaEnum;
 import org.hibernate.validator.constraints.Length;
 import org.springframework.format.annotation.NumberFormat;
@@ -81,5 +82,9 @@ public class Produto {
                 ", valor=" + valor +
                 ", categoria=" + categoria +
                 '}';
+    }
+
+    public ProdutoDTO toDTO() {
+        return new ProdutoDTO(getId(), getDescricao(), getValor(), getCategoria());
     }
 }

@@ -10,8 +10,8 @@ import com.mycompany.app.pdv.services.TokenService;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import com.mycompany.app.pdv.views.JframeVenda;
-import com.mycompany.app.pdvutils.ApiLogger;
-import com.mycompany.app.pdvutils.GlobalVariables;
+import com.mycompany.app.pdv.utils.ApiLoggerUtils;
+import com.mycompany.app.pdv.utils.PDVUtils;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
@@ -276,7 +276,7 @@ public class JframeLogin extends javax.swing.JFrame {
     }//GEN-LAST:event_btEntrarActionPerformed
 
     private void btSairActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btSairActionPerformed
-        GlobalVariables.shutdownScheduler();
+        PDVUtils.shutdownScheduler();
         dispose();
     }//GEN-LAST:event_btSairActionPerformed
 
@@ -339,17 +339,17 @@ public class JframeLogin extends javax.swing.JFrame {
     
     // Método para iniciar o agendamento
     public void startScheduledTask() {
-        GlobalVariables.scheduler = Executors.newScheduledThreadPool(1);
+        PDVUtils.scheduler = Executors.newScheduledThreadPool(1);
         Runnable task = new Runnable() {
             @Override
             public void run() {
                 try {
                     ProdutoService produtoService = new ProdutoService();
-                    List<ProdutoResponseDTO> produtos =  produtoService.findAll(GlobalVariables.acessToken);
+                    List<ProdutoResponseDTO> produtos =  produtoService.findAll();
                     ClienteService clienteService = new ClienteService();
-                    List<ClienteResponseDTO> clientes = clienteService.findAll(GlobalVariables.acessToken);
-                    GlobalVariables.produtos = produtos;
-                    GlobalVariables.clientes = clientes;   
+                    List<ClienteResponseDTO> clientes = clienteService.findAll();
+                    PDVUtils.produtos = produtos;
+                    PDVUtils.clientes = clientes;   
                 } catch (ApiException | InterruptedException e) {
                     e.printStackTrace(); // ou trate a exceção conforme necessário
                 }
@@ -357,7 +357,7 @@ public class JframeLogin extends javax.swing.JFrame {
         };
 
         // Executa a tarefa imediatamente, depois a cada 5 minutos
-        GlobalVariables.scheduler.scheduleAtFixedRate(task, 0, 5, TimeUnit.MINUTES);
+        PDVUtils.scheduler.scheduleAtFixedRate(task, 0, 5, TimeUnit.MINUTES);
     }
 
    

@@ -5,7 +5,7 @@ import com.mycompany.app.pdv.dtos.response.ClienteResponseDTO;
 import com.mycompany.app.pdv.dtos.response.VendaResponseDTO;
 import com.mycompany.app.pdv.services.ClienteService;
 import com.mycompany.app.pdv.tablemodels.ClienteTableModel;
-import com.mycompany.app.pdvutils.GlobalVariables;
+import com.mycompany.app.pdv.utils.PDVUtils;
 import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.RowFilter;
@@ -184,7 +184,7 @@ public class JFrameConsultaCliente extends javax.swing.JFrame {
     }//GEN-LAST:event_jButtonSelecionarActionPerformed
 
     private void atualizarLista() {
-        List<ClienteResponseDTO> listaClientes = GlobalVariables.clientes;
+        List<ClienteResponseDTO> listaClientes = PDVUtils.clientes;
         this.clientes = listaClientes;
         
          ClienteTableModel model = 
