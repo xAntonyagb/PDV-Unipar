@@ -1,8 +1,8 @@
 package com.mycompany.app.pdv.views;
 
-import com.mycompany.app.pdv.dtos.ClienteDTO;
-import com.mycompany.app.pdv.dtos.ProdutoDTO;
-import com.mycompany.app.pdv.dtos.UsuarioDTO;
+import com.mycompany.app.pdv.dtos.response.ClienteResponseDTO;
+import com.mycompany.app.pdv.dtos.response.ProdutoResponseDTO;
+import com.mycompany.app.pdv.dtos.request.TokenRequestDTO;
 import com.mycompany.app.pdv.exceptions.ApiException;
 import com.mycompany.app.pdv.services.ClienteService;
 import com.mycompany.app.pdv.services.ProdutoService;
@@ -10,6 +10,7 @@ import com.mycompany.app.pdv.services.TokenService;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import com.mycompany.app.pdv.views.JframeVenda;
+import com.mycompany.app.pdvutils.ApiLogger;
 import com.mycompany.app.pdvutils.GlobalVariables;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
@@ -318,7 +319,7 @@ public class JframeLogin extends javax.swing.JFrame {
     
     private void realizarSignIn(String usuario, String senha) {
         try {
-            UsuarioDTO user = new UsuarioDTO(usuario, senha);
+            TokenRequestDTO user = new TokenRequestDTO(usuario, senha);
 
             TokenService tokenService = new TokenService();
             tokenService.doLogin(user);
@@ -344,9 +345,9 @@ public class JframeLogin extends javax.swing.JFrame {
             public void run() {
                 try {
                     ProdutoService produtoService = new ProdutoService();
-                    List<ProdutoDTO> produtos =  produtoService.findAll(GlobalVariables.acessToken);
+                    List<ProdutoResponseDTO> produtos =  produtoService.findAll(GlobalVariables.acessToken);
                     ClienteService clienteService = new ClienteService();
-                    List<ClienteDTO> clientes = clienteService.findAll(GlobalVariables.acessToken);
+                    List<ClienteResponseDTO> clientes = clienteService.findAll(GlobalVariables.acessToken);
                     GlobalVariables.produtos = produtos;
                     GlobalVariables.clientes = clientes;   
                 } catch (ApiException | InterruptedException e) {

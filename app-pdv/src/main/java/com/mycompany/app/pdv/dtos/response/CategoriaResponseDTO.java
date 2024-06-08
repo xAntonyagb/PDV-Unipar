@@ -1,17 +1,17 @@
-package com.mycompany.app.pdv.dtos;
+package com.mycompany.app.pdv.dtos.response;
 
 /**
  *
  * @author Antony
  */
-public class CategoriaDTO {
+public class CategoriaResponseDTO {
     private long id;
     private String descricao;
 
-    public CategoriaDTO() {
+    public CategoriaResponseDTO() {
     }
 
-    public CategoriaDTO(long id, String descricao) {
+    public CategoriaResponseDTO(long id, String descricao) {
         this.id = id;
         this.descricao = descricao;
     }

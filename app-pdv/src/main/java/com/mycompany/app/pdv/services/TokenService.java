@@ -1,7 +1,7 @@
 package com.mycompany.app.pdv.services;
 
-import com.mycompany.app.pdv.dtos.TokenDTO;
-import com.mycompany.app.pdv.dtos.UsuarioDTO;
+import com.mycompany.app.pdv.dtos.response.TokenResponseDTO;
+import com.mycompany.app.pdv.dtos.request.TokenRequestDTO;
 import com.mycompany.app.pdv.exceptions.ApiException;
 import com.mycompany.app.pdv.retrofit.RetrofitConfig;
 import com.mycompany.app.pdvutils.ApiLogger;
@@ -18,26 +18,25 @@ import retrofit2.Response;
  */
 public class TokenService {
     
-    public void doLogin(UsuarioDTO usuarioDTO) throws ApiException, InterruptedException {
-        TokenDTO resposta = getToken(usuarioDTO);
+    public void doLogin(TokenRequestDTO usuarioDTO) throws ApiException, InterruptedException {
+        TokenResponseDTO resposta = getToken(usuarioDTO);
         GlobalVariables.acessToken = resposta.getAcessToken();
     }
     
-    private TokenDTO getToken(UsuarioDTO usuarioDTO) throws ApiException, InterruptedException {
-        final TokenDTO[] tokenDTO = new TokenDTO[1];
+    private TokenResponseDTO getToken(TokenRequestDTO usuarioDTO) throws ApiException, InterruptedException {
+        final TokenResponseDTO[] tokenDTO = new TokenResponseDTO[1];
         final CountDownLatch latch = new CountDownLatch(1);
         final Throwable[] throwable = new Throwable[1];
 
-        Call<TokenDTO> call = new RetrofitConfig()
+        Call<TokenResponseDTO> call = new RetrofitConfig()
                 .tokenRequest().login(usuarioDTO); //Informando usuário
         
         //Fazer a chamada
-        call.enqueue(new Callback<TokenDTO>() {
+        call.enqueue(new Callback<TokenResponseDTO>() {
             @Override
-            public void onResponse(Call<TokenDTO> call, Response<TokenDTO> response) {
-                ApiLogger apiLogger = new ApiLogger();
+            public void onResponse(Call<TokenResponseDTO> call, Response<TokenResponseDTO> response) {
                 Integer code =  response.code();
-                apiLogger.logOperation(LocalDateTime.now(), " GET(getToken) - LOGIN ", code.toString());
+                ApiLogger.logOperation(LocalDateTime.now(), " GET(getToken) - LOGIN ", code.toString());
                 
                 if (response.isSuccessful()) {
                     tokenDTO[0] = response.body();
@@ -45,19 +44,20 @@ public class TokenService {
                     if(response.code() == 401) {
                         throwable[0] = new ApiException(response.code() + ": Usuário ou senha incorretos!");
                     } else {
-                        throwable[0] = new ApiException(new Throwable("Error: " + response.code()));
+                        throwable[0] = new ApiException(new Throwable(
+                                "Erro: " + response.code() + 
+                                "\nMensagem:"+ response.message()));
                     }
                 }
                 latch.countDown();
             }
 
             @Override
-            public void onFailure(Call<TokenDTO> call, Throwable t) {
-                ApiLogger apiLogger = new ApiLogger();
+            public void onFailure(Call<TokenResponseDTO> call, Throwable t) {
                 Integer code = 500;
-                apiLogger.logOperation(LocalDateTime.now(), " GET(getToken) - LOGIN ", code.toString() + " - " + t.getMessage());
+                ApiLogger.logOperation(LocalDateTime.now(), " GET(getToken) - LOGIN ", code.toString() + " - " + t.getMessage());
                 
-                throwable[0] = new ApiException("Não foi possivel estabelecer conexão com o host!");
+                throwable[0] = new ApiException("Tempo esgotado: Nenhum retorno recebido do host!");
                 latch.countDown();
             }
         });

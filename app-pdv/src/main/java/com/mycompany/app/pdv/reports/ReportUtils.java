@@ -5,8 +5,8 @@ import com.google.zxing.EncodeHintType;
 import com.google.zxing.MultiFormatWriter;
 import com.google.zxing.client.j2se.MatrixToImageWriter;
 import com.google.zxing.common.BitMatrix;
-import com.mycompany.app.pdv.dtos.ItemVendaDTO;
-import com.mycompany.app.pdv.dtos.VendaDTO;
+import com.mycompany.app.pdv.dtos.response.ItemVendaResponseDTO;
+import com.mycompany.app.pdv.dtos.response.VendaResponseDTO;
 import com.mycompany.app.pdvutils.GlobalVariables;
 import java.awt.Desktop;
 import java.awt.image.BufferedImage;
@@ -40,7 +40,7 @@ public class ReportUtils {
         return is;
     }
     
-    public static void relatorioVenda(VendaDTO venda) throws JRException {
+    public static void relatorioVenda(VendaResponseDTO venda) throws JRException {
         if(!caminho.exists()) {
             new File("temp").mkdirs();
             caminho = new File("temp\\relatorio.pdf");
@@ -99,11 +99,11 @@ public class ReportUtils {
         return new ByteArrayInputStream(outputStream.toByteArray());
     }
     
-    private static String getConteudoQrCode(VendaDTO venda) {
+    private static String getConteudoQrCode(VendaResponseDTO venda) {
         String conteudo = "Venda ID: "+ venda.getId() +", \n"
                 + "Produtos {";
         
-        for(ItemVendaDTO item : venda.getItemVenda()) {
+        for(ItemVendaResponseDTO item : venda.getItensVenda()) {
             conteudo += "\n    ["+ item.toString() + "],";
         }
         conteudo = conteudo.substring(0, conteudo.length()-1);
@@ -119,8 +119,8 @@ public class ReportUtils {
         
         conteudo += "\n}, \n" 
             + "Total: " + venda.getValorTotal() + ", \n"
-            + "Quantidade itens: " + venda.getQuantidadeItens() + ", \n"
-            + "Desconto total: " + venda.getValorDesconto() + ", \n"
+//            + "Quantidade itens: " + venda.getQuantidade()+ ", \n"
+//            + "Desconto total: " + venda.getValorDesconto() + ", \n"
             + "Cliente: " + venda.getCliente().getNome() + "\n";
         
         return conteudo;

@@ -1,7 +1,7 @@
 package com.mycompany.app.pdv.services;
 
 import com.mycompany.app.pdv.exceptions.ApiException;
-import com.mycompany.app.pdv.dtos.ClienteDTO;
+import com.mycompany.app.pdv.dtos.response.ClienteResponseDTO;
 import com.mycompany.app.pdv.retrofit.RetrofitConfig;
 import com.mycompany.app.pdvutils.ApiLogger;
 import java.time.LocalDateTime;
@@ -19,19 +19,18 @@ public class ClienteService {
         return new ClienteRepositoryImp(EntityManagerUtil.getManager()).insert(cliente);
     }
     */
-    public ClienteDTO findById(Integer id, String token) throws ApiException, InterruptedException {
-        final ClienteDTO[] clienteDTO = new ClienteDTO[1];
+    public ClienteResponseDTO findById(Integer id, String token) throws ApiException, InterruptedException {
+        final ClienteResponseDTO[] clienteDTO = new ClienteResponseDTO[1];
         final CountDownLatch latch = new CountDownLatch(1);
         final Throwable[] throwable = new Throwable[1];
 
-        Call<ClienteDTO> call = new RetrofitConfig()
+        Call<ClienteResponseDTO> call = new RetrofitConfig()
                 .clienteRequest().findById(id,"Bearer "+ token);
-        call.enqueue(new Callback<ClienteDTO>(){
+        call.enqueue(new Callback<ClienteResponseDTO>(){
             @Override
-            public void onResponse(Call<ClienteDTO> call, Response<ClienteDTO> response) {
-                ApiLogger apiLogger = new ApiLogger();
+            public void onResponse(Call<ClienteResponseDTO> call, Response<ClienteResponseDTO> response) {
                 Integer code =  response.code();
-                apiLogger.logOperation(LocalDateTime.now(), " GET(findById) - CLIENTE ", code.toString());
+                ApiLogger.logOperation(LocalDateTime.now(), " GET(findById) - CLIENTE ", code.toString());
                 if (response.isSuccessful()) {                 
                     clienteDTO[0] = response.body();
                 }
@@ -39,17 +38,18 @@ public class ClienteService {
                     throwable[0] = new ApiException(response.code() + ": Seu login expirou!");
                 } 
                 else {
-                    throwable[0] = new ApiException(new Throwable("Error: " + response.code()));
+                    throwable[0] = new ApiException(new Throwable(
+                                "Erro: " + response.code() + 
+                                "\nMensagem:"+ response.message()));
                 }
                 latch.countDown();
             }
 
             @Override
-            public void onFailure(Call<ClienteDTO> call, Throwable t) {
-                ApiLogger apiLogger = new ApiLogger();
+            public void onFailure(Call<ClienteResponseDTO> call, Throwable t) {
                 Integer code = 500;
-                apiLogger.logOperation(LocalDateTime.now(), " GET(findById) - CLIENTE ", code.toString() + " - " + t.getMessage());
-                throwable[0] = new ApiException("Não foi possivel estabelecer conexão com o host!");
+                ApiLogger.logOperation(LocalDateTime.now(), " GET(findById) - CLIENTE ", code.toString() + " - " + t.getMessage());
+                throwable[0] = new ApiException("Tempo esgotado: Nenhum retorno recebido do host!");
                 latch.countDown();
             }
         });
@@ -63,19 +63,18 @@ public class ClienteService {
         return clienteDTO[0];
     }
 
-    public List<ClienteDTO> findAll(String token) throws ApiException, InterruptedException {
-        final List<ClienteDTO>[] clienteList = new List[1];
+    public List<ClienteResponseDTO> findAll(String token) throws ApiException, InterruptedException {
+        final List<ClienteResponseDTO>[] clienteList = new List[1];
         final CountDownLatch latch = new CountDownLatch(1);
         final Throwable[] throwable = new Throwable[1];
 
-        Call<List<ClienteDTO>> call = new RetrofitConfig()
+        Call<List<ClienteResponseDTO>> call = new RetrofitConfig()
                 .clienteRequest().findAll("Bearer "+ token);
-        call.enqueue(new Callback<List<ClienteDTO>>() {
+        call.enqueue(new Callback<List<ClienteResponseDTO>>() {
             @Override
-            public void onResponse(Call<List<ClienteDTO>> call, Response<List<ClienteDTO>> response) {
-                ApiLogger apiLogger = new ApiLogger();
+            public void onResponse(Call<List<ClienteResponseDTO>> call, Response<List<ClienteResponseDTO>> response) {
                 Integer code =  response.code();
-                apiLogger.logOperation(LocalDateTime.now(), " GET(findAll) - CLIENTE ", code.toString());
+                ApiLogger.logOperation(LocalDateTime.now(), " GET(findAll) - CLIENTE ", code.toString());
                 if (response.isSuccessful()) {
                     clienteList[0] = response.body();
                 }
@@ -83,17 +82,18 @@ public class ClienteService {
                     throwable[0] = new ApiException(response.code() + ": Seu login expirou!");
                 } 
                 else {
-                    throwable[0] = new ApiException(new Throwable("Error: " + response.code()));
+                    throwable[0] = new ApiException(new Throwable(
+                                "Erro: " + response.code() + 
+                                "\nMensagem:"+ response.message()));
                 }
                 latch.countDown();
             }
 
             @Override
-            public void onFailure(Call<List<ClienteDTO>> call, Throwable t) {
-                ApiLogger apiLogger = new ApiLogger();
+            public void onFailure(Call<List<ClienteResponseDTO>> call, Throwable t) {
                 Integer code = 500;
-                apiLogger.logOperation(LocalDateTime.now(), " GET(findAll) - CLIENTE ", code.toString() + " - " + t.getMessage());
-                throwable[0] = new ApiException("Não foi possivel estabelecer conexão com o host!");
+                ApiLogger.logOperation(LocalDateTime.now(), " GET(findAll) - CLIENTE ", code.toString() + " - " + t.getMessage());
+                throwable[0] = new ApiException("Tempo esgotado: Nenhum retorno recebido do host!");
                 latch.countDown();
             }
         });
@@ -107,19 +107,18 @@ public class ClienteService {
         return clienteList[0];
     }
 
-    public List<ClienteDTO> findByName(String name, String token) throws ApiException, InterruptedException {
-        final List<ClienteDTO>[] clienteList = new List[1];
+    public List<ClienteResponseDTO> findByName(String name, String token) throws ApiException, InterruptedException {
+        final List<ClienteResponseDTO>[] clienteList = new List[1];
         final CountDownLatch latch = new CountDownLatch(1);
         final Throwable[] throwable = new Throwable[1];
 
-        Call<List<ClienteDTO>> call = new RetrofitConfig()
+        Call<List<ClienteResponseDTO>> call = new RetrofitConfig()
                 .clienteRequest().findByName(name,"Bearer " + token);
-        call.enqueue(new Callback<List<ClienteDTO>>() {
+        call.enqueue(new Callback<List<ClienteResponseDTO>>() {
             @Override
-            public void onResponse(Call<List<ClienteDTO>> call, Response<List<ClienteDTO>> response) {
-                ApiLogger apiLogger = new ApiLogger();
+            public void onResponse(Call<List<ClienteResponseDTO>> call, Response<List<ClienteResponseDTO>> response) {
                 Integer code =  response.code();
-                apiLogger.logOperation(LocalDateTime.now(), " GET(findByName) - CLIENTE ", code.toString());
+                ApiLogger.logOperation(LocalDateTime.now(), " GET(findByName) - CLIENTE ", code.toString());
                 if (response.isSuccessful()) {
                     clienteList[0] = response.body();
                 } 
@@ -127,17 +126,18 @@ public class ClienteService {
                     throwable[0] = new ApiException(response.code() + ": Seu login expirou!");
                 } 
                 else {
-                    throwable[0] = new ApiException(new Throwable("Error: " + response.code()));
+                    throwable[0] = new ApiException(new Throwable(
+                                "Erro: " + response.code() + 
+                                "\nMensagem:"+ response.message()));
                 }
                 latch.countDown();
             }
 
             @Override
-            public void onFailure(Call<List<ClienteDTO>> call, Throwable t) {
-                ApiLogger apiLogger = new ApiLogger();
+            public void onFailure(Call<List<ClienteResponseDTO>> call, Throwable t) {
                 Integer code = 500;
-                apiLogger.logOperation(LocalDateTime.now(), " GET(findByName) - CLIENTE ", code.toString() + " - " + t.getMessage());
-                throwable[0] = new ApiException("Não foi possivel estabelecer conexão com o host!");
+                ApiLogger.logOperation(LocalDateTime.now(), " GET(findByName) - CLIENTE ", code.toString() + " - " + t.getMessage());
+                throwable[0] = new ApiException("Tempo esgotado: Nenhum retorno recebido do host!");
                 latch.countDown();
             }
         });

@@ -1,7 +1,8 @@
 package com.mycompany.app.pdv.views;
 
-import com.mycompany.app.pdv.dtos.ItemVendaDTO;
-import com.mycompany.app.pdv.dtos.VendaDTO;
+import com.mycompany.app.pdv.dtos.request.VendaRequestDTO;
+import com.mycompany.app.pdv.dtos.response.ItemVendaResponseDTO;
+import com.mycompany.app.pdv.dtos.response.VendaResponseDTO;
 import com.mycompany.app.pdv.reports.ReportUtils;
 import com.mycompany.app.pdv.services.VendaService;
 import java.util.logging.Level;
@@ -17,10 +18,10 @@ import net.sf.jasperreports.engine.JRException;
  */
 public class JFrameFinalizarVenda extends javax.swing.JFrame {
     
-    private VendaDTO venda;
+    private VendaResponseDTO venda;
     private JframeVenda frameVenda;
 
-    public JFrameFinalizarVenda(VendaDTO venda, JframeVenda frameVenda) {
+    public JFrameFinalizarVenda(VendaResponseDTO venda, JframeVenda frameVenda) {
         this.venda = venda;
         this.frameVenda = frameVenda;
         initComponents();
@@ -244,17 +245,18 @@ public class JFrameFinalizarVenda extends javax.swing.JFrame {
         try{
             double descontoFinal = Double.parseDouble(descontoText);
             
-            this.venda.setValorTotal(Double.parseDouble(jFieldVlTotal.getText()));
-            this.venda.setValorDesconto(Double.parseDouble(jFieldDescontoTotal.getText()));
+//            this.venda.setValorTotal(Double.parseDouble(jFieldVlTotal.getText()));
+//            this.venda.setValorDesconto(Double.parseDouble(jFieldDescontoTotal.getText()));
             Object selectedItem = jComboBoxMetodoPgmt.getSelectedItem();
             // this.venda.setMetodoPagamento(selectedItem != null ? selectedItem.toString() : null);
             
-            for(ItemVendaDTO item : this.venda.getItemVenda()) {
-                item.setVenda(this.venda);
+            for(ItemVendaResponseDTO item : this.venda.getItensVenda()) {
+//                item.setVenda(this.venda);
             }
             
             VendaService vendaService = new VendaService();
-            VendaDTO retorno = vendaService.insert(this.venda);
+            VendaResponseDTO retorno = vendaService.insert(
+                    VendaRequestDTO.toVendaRequestDTO(venda));
             
             JOptionPane.showMessageDialog(null, "Venda feita com sucesso: "+ retorno.getId(), "Sucesso", JOptionPane.INFORMATION_MESSAGE);
             this.frameVenda.limparVenda();
@@ -296,8 +298,8 @@ public class JFrameFinalizarVenda extends javax.swing.JFrame {
         double vlDescontoTotal = vlTotalVenda - subtotal;
         
         double vlDescontoProdutos = 0;
-        for(ItemVendaDTO item : this.venda.getItemVenda()) {
-            vlDescontoProdutos += ((item.getDescontoProduto() / 100) * item.getValorUnitario()) * item.getQuantidade();
+        for(ItemVendaResponseDTO item : this.venda.getItensVenda()) {
+//            vlDescontoProdutos += ((item.getDescontoProduto() / 100) * item.getValorUnitario()) * item.getQuantidade();
         }
         
         vlDescontoTotal += vlDescontoProdutos;

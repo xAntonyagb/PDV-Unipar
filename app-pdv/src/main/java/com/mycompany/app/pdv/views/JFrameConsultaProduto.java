@@ -1,8 +1,7 @@
 package com.mycompany.app.pdv.views;
 
-import com.mycompany.app.pdv.dtos.ItemVendaDTO;
-import com.mycompany.app.pdv.dtos.ProdutoDTO;
-import com.mycompany.app.pdv.exceptions.ApiException;
+import com.mycompany.app.pdv.dtos.response.ItemVendaResponseDTO;
+import com.mycompany.app.pdv.dtos.response.ProdutoResponseDTO;
 import com.mycompany.app.pdv.services.ProdutoService;
 import com.mycompany.app.pdv.tablemodels.ProdutoTableModel;
 import com.mycompany.app.pdvutils.GlobalVariables;
@@ -20,8 +19,7 @@ import javax.swing.table.TableRowSorter;
  */
 public class JFrameConsultaProduto extends javax.swing.JFrame {
 
-    private ItemVendaDTO itemVenda;
-    private List<ProdutoDTO> produtos;
+    private ItemVendaResponseDTO itemVenda;
     private JframeVenda frameVenda;
     
     
@@ -151,7 +149,7 @@ public class JFrameConsultaProduto extends javax.swing.JFrame {
                         .addComponent(jButtonCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 185, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jButtonSelecionar, javax.swing.GroupLayout.PREFERRED_SIZE, 185, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jScrollPane6, javax.swing.GroupLayout.DEFAULT_SIZE, 534, Short.MAX_VALUE))
+                    .addComponent(jScrollPane6, javax.swing.GroupLayout.DEFAULT_SIZE, 536, Short.MAX_VALUE))
                 .addContainerGap())
         );
         jPanel2Layout.setVerticalGroup(
@@ -186,11 +184,7 @@ public class JFrameConsultaProduto extends javax.swing.JFrame {
         jTextPaneVlSubtotal.setBackground(new java.awt.Color(40, 46, 56));
         jTextPaneVlSubtotal.setForeground(new java.awt.Color(204, 204, 204));
         jTextPaneVlSubtotal.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(40, 46, 56)));
-        jTextPaneVlSubtotal.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyReleased(java.awt.event.KeyEvent evt) {
-                jTextPaneVlSubtotalKeyReleased(evt);
-            }
-        });
+        jTextPaneVlSubtotal.setEnabled(false);
 
         jLabelDesconto.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jLabelDesconto.setForeground(new java.awt.Color(204, 204, 204));
@@ -235,47 +229,23 @@ public class JFrameConsultaProduto extends javax.swing.JFrame {
         jTextPaneVlTotal.setBackground(new java.awt.Color(40, 46, 56));
         jTextPaneVlTotal.setForeground(new java.awt.Color(204, 204, 204));
         jTextPaneVlTotal.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(40, 46, 56)));
-        jTextPaneVlTotal.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyReleased(java.awt.event.KeyEvent evt) {
-                jTextPaneVlTotalKeyReleased(evt);
-            }
-        });
+        jTextPaneVlTotal.setEnabled(false);
 
         jTextFieldQtd2.setBackground(new java.awt.Color(40, 46, 56));
         jTextFieldQtd2.setForeground(new java.awt.Color(204, 204, 204));
         jTextFieldQtd2.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(40, 46, 56)));
-        jTextFieldQtd2.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyReleased(java.awt.event.KeyEvent evt) {
-                jTextFieldQtd2KeyReleased(evt);
-            }
-        });
 
         jTextPaneVlUnit.setBackground(new java.awt.Color(40, 46, 56));
         jTextPaneVlUnit.setForeground(new java.awt.Color(204, 204, 204));
         jTextPaneVlUnit.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(40, 46, 56)));
-        jTextPaneVlUnit.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyReleased(java.awt.event.KeyEvent evt) {
-                jTextPaneVlUnitKeyReleased(evt);
-            }
-        });
 
         jTextFieldDesconto.setBackground(new java.awt.Color(40, 46, 56));
         jTextFieldDesconto.setForeground(new java.awt.Color(204, 204, 204));
         jTextFieldDesconto.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(40, 46, 56)));
-        jTextFieldDesconto.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyReleased(java.awt.event.KeyEvent evt) {
-                jTextFieldDescontoKeyReleased(evt);
-            }
-        });
 
         jTextPaneDSProduto.setBackground(new java.awt.Color(40, 46, 56));
         jTextPaneDSProduto.setForeground(new java.awt.Color(204, 204, 204));
         jTextPaneDSProduto.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(40, 46, 56)));
-        jTextPaneDSProduto.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyReleased(java.awt.event.KeyEvent evt) {
-                jTextPaneDSProdutoKeyReleased(evt);
-            }
-        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -292,7 +262,7 @@ public class JFrameConsultaProduto extends javax.swing.JFrame {
                             .addComponent(jTextPaneDSProduto)
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addComponent(btVoltar, javax.swing.GroupLayout.PREFERRED_SIZE, 185, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 158, Short.MAX_VALUE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 160, Short.MAX_VALUE)
                                 .addComponent(btConfirmar, javax.swing.GroupLayout.PREFERRED_SIZE, 185, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -387,13 +357,13 @@ public class JFrameConsultaProduto extends javax.swing.JFrame {
 
         if (selectedRow != -1) {
             int id = Integer.parseInt((String) jTableProdutos.getValueAt(selectedRow, 0));
-            for (ProdutoDTO produto : this.produtos) {
+            for (ProdutoResponseDTO produto : GlobalVariables.produtos) {
                 if (produto.getId() == id) {
-                    this.itemVenda = new ItemVendaDTO();
+                    this.itemVenda = new ItemVendaResponseDTO();
                     this.itemVenda.setProduto(produto);
                     
                     jTextPaneDSProduto.setText(produto.getDescricao());
-                    jTextPaneVlUnit.setText(Double.toString(produto.getValorUnitario()));
+                    jTextPaneVlUnit.setText(Double.toString(produto.getValor()));
                     
                     jTextPaneVlSubtotal.setText("1");
                     jTextFieldDesconto.setText("0");
@@ -409,15 +379,8 @@ public class JFrameConsultaProduto extends javax.swing.JFrame {
     }//GEN-LAST:event_jButtonSelecionarActionPerformed
 
     private void btConfirmarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btConfirmarActionPerformed
-        try {
-            this.frameVenda.addNovoItemToTable(itemVenda);
-            
-            JOptionPane.showMessageDialog(null, "Produto adicionado com sucesso!", "Produto adicionado", JOptionPane.INFORMATION_MESSAGE);
-            jTabbedPane1.setSelectedIndex(0);
-        }
-        catch(Exception ex) {
-            JOptionPane.showMessageDialog(null, ex.getMessage(), "Input inválido", JOptionPane.ERROR_MESSAGE);
-        }
+        this.frameVenda.addNovoItemToTable(itemVenda);
+        jTabbedPane1.setSelectedIndex(0);
     }//GEN-LAST:event_btConfirmarActionPerformed
 
     private void btVoltarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btVoltarActionPerformed
@@ -427,30 +390,6 @@ public class JFrameConsultaProduto extends javax.swing.JFrame {
     private void jButtonCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonCancelarActionPerformed
         dispose();
     }//GEN-LAST:event_jButtonCancelarActionPerformed
-
-    private void jTextPaneVlSubtotalKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextPaneVlSubtotalKeyReleased
-        atualizarCampos();
-    }//GEN-LAST:event_jTextPaneVlSubtotalKeyReleased
-
-    private void jTextPaneVlTotalKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextPaneVlTotalKeyReleased
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jTextPaneVlTotalKeyReleased
-
-    private void jTextFieldQtd2KeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextFieldQtd2KeyReleased
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jTextFieldQtd2KeyReleased
-
-    private void jTextPaneVlUnitKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextPaneVlUnitKeyReleased
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jTextPaneVlUnitKeyReleased
-
-    private void jTextFieldDescontoKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextFieldDescontoKeyReleased
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jTextFieldDescontoKeyReleased
-
-    private void jTextPaneDSProdutoKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextPaneDSProdutoKeyReleased
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jTextPaneDSProdutoKeyReleased
 
     private void filtrarTabela(String termoPesquisa) {
         DefaultTableModel model = (DefaultTableModel) jTableProdutos.getModel();
@@ -464,8 +403,7 @@ public class JFrameConsultaProduto extends javax.swing.JFrame {
     private void atualizarLista(){
         ProdutoService produtoService = new ProdutoService();
         
-        List<ProdutoDTO> listaProdutos = GlobalVariables.produtos; /*produtoService.findAll(GlobalVariables.acessToken);*/
-        //this.produtos = listaProdutos;
+        List<ProdutoResponseDTO> listaProdutos = GlobalVariables.produtos;
         
         ProdutoTableModel model = 
                new ProdutoTableModel(listaProdutos);
@@ -487,7 +425,7 @@ public class JFrameConsultaProduto extends javax.swing.JFrame {
             
             jTextPaneVlSubtotal.setText(Double.toString(subtotal));
             jTextPaneVlTotal.setText(Double.toString(total));
-            this.itemVenda.setDescontoProduto(desconto);
+//            this.itemVenda.setDescontoProduto(desconto);
             this.itemVenda.setQuantidade(qtd);
             this.itemVenda.setValorTotal(total);
             this.itemVenda.setValorUnitario(vlUnit);

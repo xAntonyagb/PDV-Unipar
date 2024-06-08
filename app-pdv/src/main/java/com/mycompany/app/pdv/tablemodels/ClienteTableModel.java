@@ -1,6 +1,6 @@
 package com.mycompany.app.pdv.tablemodels;
 
-import com.mycompany.app.pdv.dtos.ClienteDTO;
+import com.mycompany.app.pdv.dtos.response.ClienteResponseDTO;
 import java.util.List;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
@@ -15,10 +15,10 @@ public class ClienteTableModel extends DefaultTableModel {
         this.addColumn("Telefone");
     }
     
-    public ClienteTableModel(List<ClienteDTO> listCliente) {
+    public ClienteTableModel(List<ClienteResponseDTO> listCliente) {
         this();
         
-        for (ClienteDTO cliente : listCliente) {
+        for (ClienteResponseDTO cliente : listCliente) {
             
             this.addRow(new String[] {
                 Integer.toString(cliente.getId()),
@@ -29,12 +29,12 @@ public class ClienteTableModel extends DefaultTableModel {
         }
     }
     
-    public ClienteDTO getSelectedCliente(JTable table, List<ClienteDTO> clientes) {
+    public ClienteResponseDTO getSelectedCliente(JTable table, List<ClienteResponseDTO> clientes) {
         int selectedRow = table.getSelectedRow();
 
         if (selectedRow != -1) {
             int id = Integer.parseInt((String) table.getValueAt(selectedRow, 0));
-            for (ClienteDTO cliente : clientes) {
+            for (ClienteResponseDTO cliente : clientes) {
                 if (cliente.getId() == id) {
                     return cliente;
                 }

@@ -1,20 +1,21 @@
-package com.mycompany.app.pdv.dtos;
+package com.mycompany.app.pdv.dtos.response;
 
-import java.time.Instant;
+import com.mycompany.app.pdvutils.TimeUtils;
+import java.sql.Timestamp;
 
 /**
  *
  * @author Antony
  */
-public class TokenDTO {
+public class TokenResponseDTO {
     private String acessToken;
     private long expiresIn;
-    private Instant createdAt;
+    private Timestamp createdAt;
 
-    public TokenDTO() {
+    public TokenResponseDTO() {
     }
 
-    public TokenDTO(String acessToken, long expiresIn, Instant createdAt) {
+    public TokenResponseDTO(String acessToken, long expiresIn, Timestamp createdAt) {
         this.acessToken = acessToken;
         this.expiresIn = expiresIn;
         this.createdAt = createdAt;
@@ -36,16 +37,16 @@ public class TokenDTO {
         this.expiresIn = expiresIn;
     }
 
-    public Instant getCreatedAt() {
+    public Timestamp getCreatedAt() {
         return createdAt;
     }
 
-    public void setCreatedAt(Instant createdAt) {
+    public void setCreatedAt(Timestamp createdAt) {
         this.createdAt = createdAt;
     }
 
     public void setCreatedAt(String createdAt) {
-        this.createdAt = Instant.parse(createdAt);
+        this.createdAt = TimeUtils.stringToTimestamp(createdAt);
     }
 
     @Override

@@ -1,32 +1,161 @@
 package com.mycompany.app.pdv.services;
 
-import com.mycompany.app.pdv.dtos.VendaDTO;
-import java.util.ArrayList;
+import com.mycompany.app.pdv.dtos.request.VendaRequestDTO;
+import com.mycompany.app.pdv.dtos.response.VendaResponseDTO;
+import com.mycompany.app.pdv.exceptions.ApiException;
+import com.mycompany.app.pdv.retrofit.RetrofitConfig;
+import com.mycompany.app.pdvutils.ApiLogger;
+import com.mycompany.app.pdvutils.GlobalVariables;
+import java.time.LocalDateTime;
 import java.util.List;
+import java.util.concurrent.CountDownLatch;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 
 public class VendaService {
     
-    public VendaDTO insert(VendaDTO venda) throws Exception{
-        return new VendaDTO();
+    public VendaResponseDTO insert(VendaRequestDTO venda) throws ApiException, InterruptedException {
+        final VendaResponseDTO[] vendaDTO = new VendaResponseDTO[1];
+        final CountDownLatch latch = new CountDownLatch(1);
+        final Throwable[] throwable = new Throwable[1];
+
+        Call<VendaResponseDTO> call = new RetrofitConfig()
+                .vendaRequest().insert(venda, "Bearer " + GlobalVariables.acessToken);
+        
+        //Fazer a chamada
+        call.enqueue(new Callback<VendaResponseDTO>() {
+            @Override
+            public void onResponse(Call<VendaResponseDTO> call, Response<VendaResponseDTO> response) {
+                Integer code =  response.code();
+                ApiLogger.logOperation(LocalDateTime.now(), " POST(insert) - VENDA ", code.toString());
+                
+                if (response.isSuccessful()) {
+                    vendaDTO[0] = response.body();
+                } else {
+                    if(response.code() == 401) {
+                        throwable[0] = new ApiException(response.code() + ": Seu login expirou!");
+                    } else {
+                        throwable[0] = new ApiException(new Throwable(
+                                "Erro: " + response.code() + 
+                                "\nMensagem:"+ response.message()));
+                    }
+                }
+                latch.countDown();
+            }
+
+            @Override
+            public void onFailure(Call<VendaResponseDTO> call, Throwable t) {
+                Integer code = 500;
+                ApiLogger.logOperation(LocalDateTime.now(), " POST(insert) - VENDA ", code.toString() + " - " + t.getMessage());
+                
+                throwable[0] = new ApiException("Tempo esgotado: Nenhum retorno recebido do host!");
+                latch.countDown();
+            }
+        });
+
+        latch.await(); // Espera até que a chamada assíncrona seja concluída
+
+        if (throwable[0] != null) {
+            throw (ApiException) throwable[0];
+        }
+
+        return vendaDTO[0];
     }
     
-    public VendaDTO findById(Integer id){
-        return new VendaDTO();
+    
+    public VendaResponseDTO doCalc(VendaRequestDTO venda) throws ApiException, InterruptedException {
+        final VendaResponseDTO[] vendaDTO = new VendaResponseDTO[1];
+        final CountDownLatch latch = new CountDownLatch(1);
+        final Throwable[] throwable = new Throwable[1];
+
+        Call<VendaResponseDTO> call = new RetrofitConfig()
+                .vendaRequest().doCalc(venda, "Bearer " + GlobalVariables.acessToken); 
+        
+        //Fazer a chamada
+        call.enqueue(new Callback<VendaResponseDTO>() {
+            @Override
+            public void onResponse(Call<VendaResponseDTO> call, Response<VendaResponseDTO> response) {
+                Integer code =  response.code();
+                ApiLogger.logOperation(LocalDateTime.now(), " POST(doCalc) - VENDA ", code.toString());
+                
+                if (response.isSuccessful()) {
+                    vendaDTO[0] = response.body();
+                } else {
+                    if(response.code() == 401) {
+                        throwable[0] = new ApiException(response.code() + ": Seu login expirou!");
+                    } else {
+                        throwable[0] = new ApiException(new Throwable(
+                                "Erro: " + response.code() + 
+                                "\nMensagem:"+ response.message()));
+                    }
+                }
+                latch.countDown();
+            }
+
+            @Override
+            public void onFailure(Call<VendaResponseDTO> call, Throwable t) {
+                Integer code = 500;
+                ApiLogger.logOperation(LocalDateTime.now(), " POST(doCalc) - VENDA ", code.toString() + " - " + t.getMessage());
+                
+                throwable[0] = new ApiException("Tempo esgotado: Nenhum retorno recebido do host!");
+                latch.countDown();
+            }
+        });
+
+        latch.await(); // Espera até que a chamada assíncrona seja concluída
+
+        if (throwable[0] != null) {
+            throw (ApiException) throwable[0];
+        }
+
+        return vendaDTO[0];
     }
     
-    public List<VendaDTO> findAll() {
-        ArrayList<VendaDTO> vendas = new ArrayList();
-        List<VendaDTO> vendasList = null;
-        vendasList.addAll(vendas);
-        return vendasList;
+    
+    public List<VendaResponseDTO> findAll() throws ApiException, InterruptedException {
+        final List<VendaResponseDTO>[] vendaList = new List[1];
+        final CountDownLatch latch = new CountDownLatch(1);
+        final Throwable[] throwable = new Throwable[1];
+
+        Call<List<VendaResponseDTO>> call = new RetrofitConfig()
+                .vendaRequest().findAll("Bearer " + GlobalVariables.acessToken);
+        call.enqueue(new Callback<List<VendaResponseDTO>>() {
+            @Override
+            public void onResponse(Call<List<VendaResponseDTO>> call, Response<List<VendaResponseDTO>> response) {
+                Integer code =  response.code();
+                ApiLogger.logOperation(LocalDateTime.now(), " GET(findAll) - VENDA ", code.toString());
+                if (response.isSuccessful()) {
+                    vendaList[0] = response.body();
+                }
+                else if(response.code() == 401) {
+                    throwable[0] = new ApiException(response.code() + ": Seu login expirou!");
+                } 
+                else {
+                    throwable[0] = new ApiException(new Throwable(
+                                "Erro: " + response.code() + 
+                                "\nMensagem:"+ response.message()));
+                }
+                latch.countDown();
+            }
+
+            @Override
+            public void onFailure(Call<List<VendaResponseDTO>> call, Throwable t) {
+                Integer code = 500;
+                ApiLogger.logOperation(LocalDateTime.now(), " GET(findAll) - VENDA ", code.toString() + " - " + t.getMessage());
+                throwable[0] = new ApiException("Tempo esgotado: Nenhum retorno recebido do host!");
+                latch.countDown();
+            }
+        });
+
+        latch.await(); // Espera até que a chamada assíncrona seja concluída
+
+        if (throwable[0] != null) {
+            throw (ApiException) throwable[0];
+        }
+
+        return vendaList[0];
     }
     
-    public VendaDTO update(VendaDTO venda) throws Exception{
-        return new VendaDTO();
-    }
-    
-    public boolean delete(VendaDTO venda) throws Exception{
-        return true;
-    }
 }

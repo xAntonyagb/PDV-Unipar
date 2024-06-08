@@ -52,7 +52,8 @@ public class VendaService {
     }
 
     public VendaDTO insert(VendaDTO vendaDTO) throws ValidationException, NotFoundException, StockException {
-        validate(vendaDTO);
+        vendaDTO = doCalc(vendaDTO); //Validações e cálculos
+
         // Insere a venda no banco de dados
         Venda venda = vendaDTO.toEntity();
         for (ItemVenda itemVenda : venda.getItensVenda()) {

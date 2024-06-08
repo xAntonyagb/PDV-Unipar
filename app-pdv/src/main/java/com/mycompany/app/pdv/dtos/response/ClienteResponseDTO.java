@@ -1,26 +1,29 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
-package com.mycompany.app.pdv.dtos;
+package com.mycompany.app.pdv.dtos.response;
 
+import com.mycompany.app.pdv.dtos.request.ClienteRequestDTO;
 
-
-public class ClienteDTO {
+public class ClienteResponseDTO {
 
     private int id;
     private String nome;
     private String email;
     private String telefone;
 
-    public ClienteDTO() {
+    public ClienteResponseDTO() {
     }
 
-    public ClienteDTO(int id, String nome, String email, String telefone) {
+    public ClienteResponseDTO(int id, String nome, String email, String telefone) {
         this.id = id;
         this.nome = nome;
         this.email = email;
         this.telefone = telefone;
+    }
+
+    public static ClienteResponseDTO toResponseDTO(ClienteRequestDTO clienteRequestDTO) {
+        ClienteResponseDTO clienteResponseDTO = new ClienteResponseDTO();
+        clienteResponseDTO.setId(clienteRequestDTO.getId());
+
+        return clienteResponseDTO;
     }
 
     public int getId() {

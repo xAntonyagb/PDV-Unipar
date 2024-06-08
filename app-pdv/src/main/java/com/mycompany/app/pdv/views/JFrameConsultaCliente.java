@@ -1,7 +1,8 @@
 package com.mycompany.app.pdv.views;
 
-import com.mycompany.app.pdv.dtos.ClienteDTO;
-import com.mycompany.app.pdv.exceptions.ApiException;
+import com.mycompany.app.pdv.dtos.request.VendaRequestDTO;
+import com.mycompany.app.pdv.dtos.response.ClienteResponseDTO;
+import com.mycompany.app.pdv.dtos.response.VendaResponseDTO;
 import com.mycompany.app.pdv.services.ClienteService;
 import com.mycompany.app.pdv.tablemodels.ClienteTableModel;
 import com.mycompany.app.pdvutils.GlobalVariables;
@@ -20,14 +21,11 @@ import javax.swing.table.TableRowSorter;
 public class JFrameConsultaCliente extends javax.swing.JFrame {
 
     private JframeVenda frameVenda;
-    private List<ClienteDTO> clientes;
-    private String tipoPessoa;
-    private ClienteService clienteService = new ClienteService();
+    private List<ClienteResponseDTO> clientes;
     
-    public JFrameConsultaCliente(JframeVenda frameVenda, String tipoPessoa) {
+    public JFrameConsultaCliente(JframeVenda frameVenda) {
         try {
             this.frameVenda = frameVenda;
-            this.tipoPessoa = tipoPessoa;
             
             initComponents();
             jTableClientes.fixTable(jScrollPane2);
@@ -170,30 +168,29 @@ public class JFrameConsultaCliente extends javax.swing.JFrame {
 
         if (selectedRow != -1) {
             int id = Integer.parseInt((String) jTableClientes.getValueAt(selectedRow, 0));
-            for (ClienteDTO cliente : this.clientes) {
+            for (ClienteResponseDTO cliente : this.clientes) {
                 if (cliente.getId() == id) {
-
-                    if(this.tipoPessoa.equals("C")) {
-                        this.frameVenda.setCliente(cliente);
-                    }
+                    VendaResponseDTO venda = this.frameVenda.getVenda();
+                    
+                    venda.setCliente(cliente);
+                    this.frameVenda.applyVenda(venda);
                 }
             }
             dispose();
         }
         else {
-            JOptionPane.showMessageDialog(null, "Por favor selecione algum cliente/vendedor!", "Erro ao continuar", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Por favor selecione algum cliente!", "Erro ao continuar", JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_jButtonSelecionarActionPerformed
 
     private void atualizarLista() {
-        List<ClienteDTO> listaClientes = GlobalVariables.clientes;/*clienteService.findAll(GlobalVariables.acessToken);*/
+        List<ClienteResponseDTO> listaClientes = GlobalVariables.clientes;
         this.clientes = listaClientes;
         
          ClienteTableModel model = 
                 new ClienteTableModel(listaClientes);
         
         jTableClientes.setModel(model);
-        
     }
     
     private void filtrarTabela(String termoPesquisa) {

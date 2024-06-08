@@ -1,13 +1,15 @@
 package com.mycompany.app.pdv.views;
 
-import com.mycompany.app.pdv.dtos.ClienteDTO;
-import com.mycompany.app.pdv.dtos.ItemVendaDTO;
-import com.mycompany.app.pdv.dtos.VendaDTO;
+import com.mycompany.app.pdv.dtos.request.VendaRequestDTO;
+import com.mycompany.app.pdv.dtos.response.ClienteResponseDTO;
+import com.mycompany.app.pdv.dtos.response.ItemVendaResponseDTO;
+import com.mycompany.app.pdv.dtos.response.VendaResponseDTO;
+import com.mycompany.app.pdv.exceptions.ApiException;
+import com.mycompany.app.pdv.services.VendaService;
 import com.mycompany.app.pdv.tablemodels.ItemVendaTableModel;
 import com.mycompany.app.pdvutils.GlobalVariables;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
-import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
@@ -15,14 +17,13 @@ import javax.swing.JOptionPane;
 
 public class JframeVenda extends javax.swing.JFrame {
     
-    private List<ItemVendaDTO> listaItemVenda = new ArrayList<>();
-    private ClienteDTO cliente;
-    private VendaDTO venda;
-    private double vlTotal;
+    private VendaResponseDTO venda;
+    private VendaService vendaService = new VendaService();
     
     public JframeVenda() {   
         initComponents();
         tableItens.fixTable(jScrollPane2);
+        this.venda = new VendaResponseDTO();
         
         setExtendedState(JFrame.MAXIMIZED_BOTH);
         setTitle("Menu PDV");
@@ -581,18 +582,9 @@ public class JframeVenda extends javax.swing.JFrame {
 
     private void btFinalizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btFinalizarActionPerformed
         try {
-            int qtdItens = 0;
-            for(ItemVendaDTO item : this.listaItemVenda) {
-                qtdItens += item.getQuantidade();
-            }
-
-            this.venda = new VendaDTO();
-
-            this.venda.setCliente(cliente);
-            this.venda.setItemVenda(listaItemVenda);
-            this.venda.setQuantidadeItens(qtdItens);
-            this.venda.setValorTotal(vlTotal);
-
+            VendaRequestDTO requisicao = VendaRequestDTO.toVendaRequestDTO(this.venda);
+            applyVenda(vendaService.doCalc(requisicao));
+            
             JFrameFinalizarVenda frame = new JFrameFinalizarVenda(this.venda, this);
             frame.setResizable(false);
             frame.setLocationRelativeTo(null);
@@ -601,8 +593,11 @@ public class JframeVenda extends javax.swing.JFrame {
             removerFocoPricipal(frame);
             frame.setVisible(true);
         }
-        catch(Exception ex) {
-            JOptionPane.showMessageDialog(null, ex.getMessage(), "Venda incompleta", JOptionPane.ERROR_MESSAGE);
+        catch(ApiException ex) {
+            JOptionPane.showMessageDialog(null, "Venda incompleta! Faça os ajustes necessários antes de finaliza-la:\n\n" + ex.getMessage(), "Erro ao processar", JOptionPane.ERROR_MESSAGE);
+        } 
+        catch (InterruptedException ex) {
+            JOptionPane.showMessageDialog(this, "Tempo esgotado! Um erro ocorreu ao finalizar a venda, caso persista, tente novamente mais tarde:\n\n" + ex.getMessage(), "Erro ao processar", JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_btFinalizarActionPerformed
 
@@ -611,7 +606,7 @@ public class JframeVenda extends javax.swing.JFrame {
     }//GEN-LAST:event_btNovoActionPerformed
 
     private void btSelecionarClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btSelecionarClienteActionPerformed
-        JFrameConsultaCliente frameClientes = new JFrameConsultaCliente(this, "C");
+        JFrameConsultaCliente frameClientes = new JFrameConsultaCliente(this);
         frameClientes.setResizable(false);
         frameClientes.setLocationRelativeTo(null);
         frameClientes.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
@@ -643,17 +638,63 @@ public class JframeVenda extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenuItemHistoricoActionPerformed
     
     public void limparVenda() {
-        this.cliente = null;
-        setCliente(this.cliente);
+        this.venda = new VendaResponseDTO();
         
-        this.venda = null;
-        this.listaItemVenda = new ArrayList<>();
-        
-        ItemVendaTableModel model = new ItemVendaTableModel(this.listaItemVenda);
+        ItemVendaTableModel model = new ItemVendaTableModel();
         tableItens.setModel(model);
         
-        exibirValores();
+        jLabelSubtotal.setText("0.0");
+        jLabelDescontos.setText("0.0"); 
+        
     }
+    
+    public void addNovoItemToTable(ItemVendaResponseDTO item) {
+        try {
+            VendaResponseDTO novaVenda = this.venda;
+            novaVenda.getItensVenda().add(item);
+            
+            VendaRequestDTO requisicao = VendaRequestDTO.toVendaRequestDTO(novaVenda);
+            applyVenda(vendaService.doCalc(requisicao));
+            JOptionPane.showMessageDialog(null, "Produto adicionado com sucesso!", "Produto adicionado", JOptionPane.INFORMATION_MESSAGE);
+        }
+        catch(ApiException ex) {
+            JOptionPane.showMessageDialog(this, "Um erro ocorreu no processo de venda:\n\n" + ex.getMessage(), "Erro ao processar", JOptionPane.ERROR_MESSAGE);
+        } 
+        catch (InterruptedException ex) {
+            JOptionPane.showMessageDialog(this, "Tempo esgotado! Tente novamente mais tarde.\n\n" + ex.getMessage(), "Erro ao processar", JOptionPane.ERROR_MESSAGE);
+        }
+    }
+    
+    
+    public void applyVenda(VendaResponseDTO venda) {
+        this.venda = venda;
+        
+        //Cliente
+        ClienteResponseDTO cliente = venda.getCliente();
+        jFieldCliente.setText(cliente == null ? "" : cliente.getNome());
+        
+        //ItensVenda
+        List<ItemVendaResponseDTO> itensVenda = venda.getItensVenda();
+        ItemVendaTableModel model = new ItemVendaTableModel(itensVenda);
+        tableItens.setModel(model);
+        
+        //Total
+        double total = venda.getValorTotal();
+        jLabelSubtotal.setText(Double.toString(total));
+        
+        //Descontos
+        double descontos = venda.getValorTotal(); // atualizar dps
+        jLabelDescontos.setText(Double.toString(descontos)); 
+    }
+    
+    public VendaResponseDTO getVenda() {
+        return venda;
+    }
+
+    public void setVenda(VendaResponseDTO venda) {
+        this.venda = venda;
+    }
+    
     
     private void removerFocoPricipal(JFrame frame) {
         frame.addWindowListener(new WindowAdapter() {
@@ -670,37 +711,7 @@ public class JframeVenda extends javax.swing.JFrame {
         });
     }
     
-    public void addNovoItemToTable(ItemVendaDTO item) {
-        this.listaItemVenda.add(item);
-        
-        ItemVendaTableModel model = new ItemVendaTableModel(this.listaItemVenda);
-        tableItens.setModel(model);
-        
-        exibirValores();
-    }
-    
-    private void exibirValores() {
-        double vlTotal = 0;
-        double vlTotalUnit = 0;
-        
-        for(ItemVendaDTO item : listaItemVenda) {
-            vlTotal += item.getValorTotal();
-            vlTotalUnit += item.getValorUnitario();
-        }
-        
-        this.vlTotal = vlTotal;
-        double desconto = vlTotalUnit - vlTotal;
-        
-        jLabelSubtotal.setText(Double.toString(vlTotal));
-        jLabelDescontos.setText(Double.toString(desconto));
-    }
-    
-    public void setCliente(ClienteDTO cliente) {
-        this.cliente = cliente;
-        jFieldCliente.setText(cliente == null ? "" : cliente.getNome());
-    
-    }
-    
+    //Parar thread de requisições
     @Override
     public void dispose(){
         GlobalVariables.shutdownScheduler();

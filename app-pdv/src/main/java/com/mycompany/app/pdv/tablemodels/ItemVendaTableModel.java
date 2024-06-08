@@ -1,6 +1,6 @@
 package com.mycompany.app.pdv.tablemodels;
 
-import com.mycompany.app.pdv.dtos.ItemVendaDTO;
+import com.mycompany.app.pdv.dtos.response.ItemVendaResponseDTO;
 import java.util.List;
 import javax.swing.table.DefaultTableModel;
 
@@ -11,19 +11,19 @@ public class ItemVendaTableModel extends DefaultTableModel {
         this.addColumn("Produto");
         this.addColumn("Valor Unit.");
         this.addColumn("Qtd.");
-        this.addColumn("Desconto");
+//        this.addColumn("Desconto");
         this.addColumn("Valor Total");
     }
     
-    public ItemVendaTableModel(List<ItemVendaDTO> listItemVenda) {
+    public ItemVendaTableModel(List<ItemVendaResponseDTO> listItemVenda) {
         this();
         
-        for (ItemVendaDTO itemVenda : listItemVenda) {
+        for (ItemVendaResponseDTO itemVenda : listItemVenda) {
             this.addRow(new String[] {
                 itemVenda.getProduto().getDescricao(),
                 Double.toString(itemVenda.getValorUnitario()),
                 Double.toString(itemVenda.getQuantidade()),
-                Double.toString(itemVenda.getDescontoProduto()),
+//                Double.toString(itemVenda.getDescontoProduto()),
                 Double.toString(itemVenda.getValorTotal())});
         }
     }

@@ -1,7 +1,7 @@
 package com.mycompany.app.pdvutils;
 
-import com.mycompany.app.pdv.dtos.ClienteDTO;
-import com.mycompany.app.pdv.dtos.ProdutoDTO;
+import com.mycompany.app.pdv.dtos.response.ClienteResponseDTO;
+import com.mycompany.app.pdv.dtos.response.ProdutoResponseDTO;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.util.List;
@@ -14,8 +14,8 @@ import java.util.concurrent.TimeUnit;
  */
 public class GlobalVariables {
    public static String acessToken;
-   public static List<ProdutoDTO> produtos;
-   public static List<ClienteDTO> clientes;
+   public static List<ProdutoResponseDTO> produtos;
+   public static List<ClienteResponseDTO> clientes;
    public static ScheduledExecutorService scheduler;
    
    private static final String USUARIO = "postgres";
