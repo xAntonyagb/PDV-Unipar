@@ -1,4 +1,4 @@
-package org.example.pdvapi.dtos;
+package org.example.pdvapi.dtos.response;
 
 import java.time.Instant;
 
