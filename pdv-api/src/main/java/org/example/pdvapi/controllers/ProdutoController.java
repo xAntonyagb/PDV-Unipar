@@ -10,19 +10,14 @@ import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.security.SecurityScheme;
 import io.swagger.v3.oas.annotations.security.SecuritySchemes;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import jakarta.validation.Valid;
-import org.example.pdvapi.dtos.ProdutoDTO;
+import org.example.pdvapi.dtos.response.ProdutoResponseDTO;
 import org.example.pdvapi.exceptions.NotFoundException;
 import org.example.pdvapi.service.ProdutoService;
 import org.example.pdvapi.entities.Cliente;
-import org.example.pdvapi.entities.Produto;
-import org.example.pdvapi.service.ProdutoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.util.UriComponentsBuilder;
 
-import java.net.URI;
 import java.util.List;
 
 @SecuritySchemes(value = {
@@ -58,9 +53,8 @@ public class ProdutoController {
     @SecurityRequirement(name = "token")
 
     @GetMapping("/{id}")
-    public ResponseEntity<ProdutoDTO> getById(@PathVariable int id) throws NotFoundException {
-        ProdutoDTO produto = ProdutoDTO.toDTO(produtoService.getById(id));
-        return ResponseEntity.ok(produto);
+    public ResponseEntity<ProdutoResponseDTO> getById(@PathVariable int id) throws NotFoundException {
+        return ResponseEntity.ok(produtoService.getById(id));
     }
 
 
@@ -79,40 +73,8 @@ public class ProdutoController {
     @SecurityRequirement(name = "token")
 
     @GetMapping("/all")
-    public ResponseEntity<List<ProdutoDTO>> getAll() throws NotFoundException {
-        List<ProdutoDTO> produtos = ProdutoDTO.toDTOList(produtoService.getAll());
-        return ResponseEntity.ok(produtos);
+    public ResponseEntity<List<ProdutoResponseDTO>> getAll() throws NotFoundException {
+        return ResponseEntity.ok(produtoService.getAll());
     }
-
-
-
-//    @PostMapping
-//    public ResponseEntity<Produto> insert(@RequestBody @Valid Produto produto,
-//                                          UriComponentsBuilder builder) {
-//
-//        produtoService.insert(produto);
-//
-//        URI uri =
-//                builder.path("/produto/{id}").
-//                        buildAndExpand(produto.getId()).toUri();
-//
-//        return ResponseEntity.created(uri).body(produto);
-//
-//    }
-//
-//    @PutMapping("/{id}")
-//    public ResponseEntity<Produto> update(@PathVariable int id,
-//                                          @RequestBody Produto produto) {
-//        produtoService.update(produto);
-//
-//        return ResponseEntity.ok(produto);
-//    }
-//
-//    @DeleteMapping("/{id}")
-//    public ResponseEntity<Void> delete(@PathVariable Long id) {
-//        produtoService.delete(id);
-//        return ResponseEntity.noContent().build();
-//    }
-
 
 }

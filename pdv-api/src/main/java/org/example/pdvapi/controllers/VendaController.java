@@ -10,7 +10,8 @@ import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.security.SecurityScheme;
 import io.swagger.v3.oas.annotations.security.SecuritySchemes;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import org.example.pdvapi.dtos.VendaDTO;
+import org.example.pdvapi.dtos.request.VendaRequestDTO;
+import org.example.pdvapi.dtos.response.VendaResponseDTO;
 import org.example.pdvapi.exceptions.NotFoundException;
 import org.example.pdvapi.exceptions.ValidationException;
 import org.example.pdvapi.service.VendaService;
@@ -43,7 +44,7 @@ public class VendaController {
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Ok", content =
                     { @Content(mediaType = "application/json", schema =
-                    @Schema(implementation = VendaDTO.class)) }),
+                    @Schema(implementation = VendaRequestDTO.class)) }),
             @ApiResponse(responseCode = "400", description = "Venda fora de padrão ou inválida",
                     content = { @Content(mediaType = "application/json") }),
             @ApiResponse(responseCode = "401", description = "Usuário não autorizado / Credenciais inválidas",
@@ -57,9 +58,11 @@ public class VendaController {
     @SecurityRequirement(name = "token")
 
     @PostMapping("/calc")
-    public ResponseEntity<VendaDTO> doCalc(@RequestBody VendaDTO vendaDTO) throws ValidationException, NotFoundException {
-        vendaDTO = vendaService.doCalc(vendaDTO);
-        return ResponseEntity.ok(vendaDTO);
+
+    public ResponseEntity<VendaResponseDTO> doCalc(@RequestBody VendaRequestDTO vendaRequestDTO) throws ValidationException, NotFoundException {
+        VendaResponseDTO vendaResponseDTO = new VendaResponseDTO();
+        vendaResponseDTO = vendaService.doCalc(vendaRequestDTO);
+        return ResponseEntity.ok(vendaResponseDTO);
     }
 
 
@@ -67,7 +70,8 @@ public class VendaController {
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Ok", content =
                     { @Content(mediaType = "application/json", schema =
-                    @Schema(implementation = VendaDTO.class)) }),
+
+                    @Schema(implementation = VendaRequestDTO.class)) }),
             @ApiResponse(responseCode = "400", description = "Venda fora de padrão ou inválida",
                     content = { @Content(mediaType = "application/json") }),
             @ApiResponse(responseCode = "401", description = "Usuário não autorizado / Credenciais inválidas",
@@ -81,10 +85,10 @@ public class VendaController {
     @SecurityRequirement(name = "token")
 
     @PostMapping
-    public ResponseEntity<VendaDTO> insert(@RequestBody VendaDTO vendaDTO) throws ValidationException, NotFoundException {
-        vendaDTO = vendaService.insert(vendaDTO);
-        return ResponseEntity.ok(vendaDTO);
-
+    public ResponseEntity<VendaResponseDTO> insert(@RequestBody VendaRequestDTO vendaRequestDTO) throws ValidationException, NotFoundException {
+        VendaResponseDTO vendaResponseDTO = new VendaResponseDTO();
+        vendaResponseDTO = vendaService.insert(vendaRequestDTO);
+        return ResponseEntity.ok(vendaResponseDTO);
     }
 
 }

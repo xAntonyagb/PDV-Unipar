@@ -1,7 +1,7 @@
 package org.example.pdvapi.entities;
 
 import jakarta.persistence.*;
-import org.example.pdvapi.dtos.LoginRequestDTO;
+import org.example.pdvapi.dtos.request.LoginRequestDTO;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.util.List;
