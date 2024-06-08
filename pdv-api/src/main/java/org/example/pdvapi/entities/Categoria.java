@@ -15,12 +15,18 @@ public class Categoria {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    @NotBlank
-    @NotEmpty
     private String descricao;
 
     @OneToMany(mappedBy = "categoria")
     private List<Produto> produtos;
+
+    public Categoria() {
+    }
+
+    public Categoria(int id, String descricao) {
+        this.id = id;
+        this.descricao = descricao;
+    }
 
     public int getId() {
         return id;
@@ -30,11 +36,11 @@ public class Categoria {
         this.id = id;
     }
 
-    public @NotBlank @NotEmpty String getDescricao() {
+    public  String getDescricao() {
         return descricao;
     }
 
-    public void setDescricao(@NotBlank @NotEmpty String descricao) {
+    public void setDescricao(String descricao) {
         this.descricao = descricao;
     }
 

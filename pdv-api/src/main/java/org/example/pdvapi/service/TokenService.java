@@ -1,7 +1,7 @@
 package org.example.pdvapi.service;
 
-import org.example.pdvapi.dtos.LoginRequestDTO;
-import org.example.pdvapi.dtos.LoginResponseDTO;
+import org.example.pdvapi.dtos.request.LoginRequestDTO;
+import org.example.pdvapi.dtos.response.LoginResponseDTO;
 import org.example.pdvapi.entities.Role;
 import org.example.pdvapi.exceptions.UnauthorizedException;
 import org.example.pdvapi.repositories.UserRepository;

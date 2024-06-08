@@ -2,11 +2,8 @@ package org.example.pdvapi.entities;
 
 import jakarta.persistence.*;
 
-import org.example.pdvapi.dtos.ClienteDTO;
-import org.example.pdvapi.dtos.ItemVendaDTO;
-import org.example.pdvapi.dtos.VendaDTO;
-
 import jakarta.validation.constraints.*;
+import org.hibernate.annotations.Cascade;
 import org.springframework.format.annotation.NumberFormat;
 
 
@@ -20,8 +17,7 @@ public class Venda {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    @NotBlank
-    @NotEmpty
+    @Column(nullable = true)
     private String observacao;
 
     @NotNull
@@ -38,7 +34,7 @@ public class Venda {
     @NotNull
     private Cliente cliente;
 
-    @OneToMany
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @NotNull
     @JoinColumn(name = "venda_id")
     private List<ItemVenda> itensVenda;
@@ -62,7 +58,7 @@ public class Venda {
         this.id = id;
     }
 
-    public @NotNull @NotBlank @NotEmpty String getObservacao() {
+    public /*@NotNull @NotBlank @NotEmpty*/ String getObservacao() {
         return observacao;
     }
 
@@ -97,10 +93,6 @@ public class Venda {
         this.cliente = cliente;
     }
 
-
-    public VendaDTO toDTO() {
-        return new VendaDTO(this.id, this.observacao, this.data.toString(), this.valorTotal, (ClienteDTO) this.cliente.toDTO(), (List<ItemVendaDTO>) ItemVendaDTO.toDTOList(this.itensVenda));
-    }
     @NotNull 
     public List<ItemVenda> getItensVenda() {
         return itensVenda;

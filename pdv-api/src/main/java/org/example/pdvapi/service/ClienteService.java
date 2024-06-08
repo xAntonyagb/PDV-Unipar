@@ -1,6 +1,7 @@
 package org.example.pdvapi.service;
 
 
+import org.example.pdvapi.dtos.response.ClienteResponseDTO;
 import org.example.pdvapi.entities.Cliente;
 import org.example.pdvapi.exceptions.NotFoundException;
 import org.example.pdvapi.repositories.ClienteRepository;
@@ -16,35 +17,28 @@ public class ClienteService {
     @Autowired
     private ClienteRepository repository;
 
-    public Cliente insert(Cliente cliente) {
-        return repository.save(cliente);
-    }
-
-    public Cliente getById(int id) throws NotFoundException {
+    public ClienteResponseDTO getById(int id) throws NotFoundException {
         Optional<Cliente> cliente = repository.findById(id);
         if (cliente.isEmpty()) {
             throw new NotFoundException("Cliente não encontrado");
         }
-        return cliente.get();
+        return new ClienteResponseDTO().fromEntity(cliente.get());
     }
     
-    public List<Cliente> getAll() throws NotFoundException{
+    public List<ClienteResponseDTO> getAll() throws NotFoundException{
         List<Cliente> clientes = repository.findAll();
         if (clientes.isEmpty()) {
             throw new NotFoundException("Nenhum cliente foi encontrado");
         }
-        return clientes;
+        return new ClienteResponseDTO().fromEntityList(clientes);
     }
 
-    public Cliente update(Cliente cliente) {
-        return repository.save(cliente);
+    public List<ClienteResponseDTO> findByNome(String nome) throws NotFoundException{
+        List<Cliente> clientes = repository.findByNomeIsContainingIgnoreCase(nome);
+        if (clientes.isEmpty()) {
+            throw new NotFoundException("Nenhum cliente foi encontrado");
+        }
+        return new ClienteResponseDTO().fromEntityList(clientes);
     }
 
-    public List<Cliente> findByNome(String nome) {
-        return repository.findByNomeIsContainingIgnoreCase(nome);
-    }
-
-    public void delete(int id) {
-        repository.deleteById(id);
-    }
 }

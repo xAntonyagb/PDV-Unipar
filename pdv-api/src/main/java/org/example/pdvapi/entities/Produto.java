@@ -2,7 +2,6 @@ package org.example.pdvapi.entities;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
-import org.example.pdvapi.enums.CategoriaEnum;
 import org.hibernate.validator.constraints.Length;
 import org.springframework.format.annotation.NumberFormat;
 
@@ -14,28 +13,32 @@ public class Produto {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    @NotNull
+    /*@NotNull
     @NotBlank
     @NotEmpty
-    @Length(min = 5, max = 60)
+    @Length(min = 5, max = 60)*/
     private String descricao;
 
-    @NotNull
+    /*@NotNull
     @NotBlank
     @NotEmpty
     @DecimalMin(value = "0.0")
-    @NumberFormat(pattern = "#.##")
+    @NumberFormat(pattern = "#.##")*/
     private double valor;
 
-    @NotNull
+    /*@NotNull*/
     @ManyToOne
     private Categoria categoria;
-
+    
     public Produto() {
     }
 
-
-
+    public Produto(int id, String descricao, double valor, Categoria categoria) {
+        this.id = id;
+        this.descricao = descricao;
+        this.valor = valor;
+        this.categoria = categoria;
+    }
     public int getId() {
         return id;
     }
@@ -44,28 +47,28 @@ public class Produto {
         this.id = id;
     }
 
-    public @NotNull @NotBlank @NotEmpty @Length(min = 5, max = 60) String getDescricao() {
+    public /*@NotNull @NotBlank @NotEmpty @Length(min = 5, max = 60) */String getDescricao() {
         return descricao;
     }
 
-    public void setDescricao(@NotNull @NotBlank @NotEmpty @Length(min = 5, max = 60) String descricao) {
+    public void setDescricao(/*@NotNull @NotBlank @NotEmpty @Length(min = 5, max = 60)*/ String descricao) {
         this.descricao = descricao;
     }
 
-    @NotNull
+    /*@NotNull
     @NotBlank
     @NotEmpty
     @DecimalMin(value = "0.0")
-    @NumberFormat(pattern = "#.##")
+    @NumberFormat(pattern = "#.##")*/
     public double getValor() {
         return valor;
     }
 
-    public void setValor(@NotNull @NotBlank @NotEmpty @DecimalMin(value = "0.0") @NumberFormat(pattern = "#.##") double valor) {
+    public void setValor(/*@NotNull @NotBlank @NotEmpty @DecimalMin(value = "0.0") @NumberFormat(pattern = "#.##")*/ double valor) {
         this.valor = valor;
     }
 
-    public @NotNull Categoria getCategoria() {
+    public /*@NotNull*/ Categoria getCategoria() {
         return categoria;
     }
 

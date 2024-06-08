@@ -11,6 +11,7 @@ import io.swagger.v3.oas.annotations.security.SecurityScheme;
 import io.swagger.v3.oas.annotations.security.SecuritySchemes;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
+import org.example.pdvapi.dtos.response.ClienteResponseDTO;
 import org.example.pdvapi.service.ClienteService;
 import org.example.pdvapi.entities.Cliente;
 import org.example.pdvapi.repositories.ClienteRepository;
@@ -54,7 +55,7 @@ public class ClienteController {
     @SecurityRequirement(name = "token")
 
     @GetMapping("/{id}")
-    public ResponseEntity<Cliente> getById(@PathVariable int id) throws Exception {
+    public ResponseEntity<ClienteResponseDTO> getById(@PathVariable int id) throws Exception {
         return ResponseEntity.ok(clienteService.getById(id));
     }
 
@@ -72,38 +73,9 @@ public class ClienteController {
     @SecurityRequirement(name = "token")
 
     @GetMapping("/all")
-    public ResponseEntity<List<Cliente>> getAll()  throws Exception{
+    public ResponseEntity<List<ClienteResponseDTO>> getAll()  throws Exception{
         return ResponseEntity.ok(clienteService.getAll());
 
     }
-//    @PostMapping
-//    public ResponseEntity<Cliente> insert(@RequestBody @Valid Cliente cliente,
-//                                          UriComponentsBuilder builder) {
-//
-//        clienteService.insert(cliente);
-//
-//        URI uri =
-//                builder.path("/cliente/{id}").
-//                        buildAndExpand(cliente.getId()).toUri();
-//
-//        return ResponseEntity.created(uri).body(cliente);
-//
-//    }
-//
-//    @PutMapping("/{id}")
-//    public ResponseEntity<Cliente> update(@PathVariable int id,
-//                                          @RequestBody Cliente cliente) {
-//        clienteService.update(cliente);
-//
-//        return ResponseEntity.ok(cliente);
-//    }
-//
-//    @DeleteMapping("/{id}")
-//    public ResponseEntity<Void> delete(@PathVariable Long id) {
-//        clienteService.delete(id);
-//        return ResponseEntity.noContent().build();
-//    }
-
-
 
 }
