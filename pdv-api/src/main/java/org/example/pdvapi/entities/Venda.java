@@ -31,6 +31,12 @@ public class Venda {
     private double valorTotal;
 
     @NotNull
+    @Column(name = "subtotal")
+    @DecimalMin(value = "0.0")
+    @NumberFormat(pattern = "#.##")
+    private double valorSubtotal;
+
+    @NotNull
     @Column(name = "desconto_total")
     @DecimalMin(value = "0.0")
     @NumberFormat(pattern = "#.##")
@@ -48,11 +54,12 @@ public class Venda {
     public Venda() {
     }
 
-    public Venda(int id, String observacao, Timestamp data, double valorTotal, double descontoTotal, Cliente cliente, List<ItemVenda> itensVenda) {
+    public Venda(int id, String observacao, Timestamp data, double valorTotal, double valorSubtotal, double descontoTotal, Cliente cliente, List<ItemVenda> itensVenda) {
         this.id = id;
         this.observacao = observacao;
         this.data = data;
         this.valorTotal = valorTotal;
+        this.valorSubtotal = valorSubtotal;
         this.descontoTotal = descontoTotal;
         this.cliente = cliente;
         this.itensVenda = itensVenda;
@@ -120,6 +127,16 @@ public class Venda {
         this.descontoTotal = descontoTotal;
     }
 
+    @NotNull
+    @DecimalMin(value = "0.0")
+    public double getValorSubtotal() {
+        return valorSubtotal;
+    }
+
+    public void setValorSubtotal(@NotNull @DecimalMin(value = "0.0") double valorSubtotal) {
+        this.valorSubtotal = valorSubtotal;
+    }
+
     @Override
     public String toString() {
         return "Venda{" +
@@ -127,6 +144,7 @@ public class Venda {
                 ", observacao='" + observacao + '\'' +
                 ", data=" + data +
                 ", valorTotal=" + valorTotal +
+                ", valorSubtotal=" + valorSubtotal +
                 ", descontoTotal=" + descontoTotal +
                 ", cliente=" + cliente +
                 ", itensVenda=" + itensVenda +

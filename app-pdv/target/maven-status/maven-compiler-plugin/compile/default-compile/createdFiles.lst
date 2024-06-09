@@ -68,6 +68,7 @@ com\mycompany\app\pdv\utils\ApiLoggerUtils.class
 com\mycompany\app\pdv\views\JframeLogin$3.class
 com\mycompany\app\pdv\views\components\ScrollBarCustom.class
 com\mycompany\app\pdv\services\ClienteService$3.class
+com\mycompany\app\pdv\views\JFrameConsultaProduto$6.class
 com\mycompany\app\pdv\views\JFrameConsultaVendas$1.class
 com\mycompany\app\pdv\views\components\TableDark.class
 com\mycompany\app\pdv\views\JFrameConsultaCliente$3.class

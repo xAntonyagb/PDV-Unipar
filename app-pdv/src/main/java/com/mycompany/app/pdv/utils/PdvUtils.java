@@ -5,7 +5,6 @@ import com.mycompany.app.pdv.dtos.response.ClienteResponseDTO;
 import com.mycompany.app.pdv.dtos.response.ErrorResponseDTO;
 import com.mycompany.app.pdv.dtos.response.ProdutoResponseDTO;
 import com.mycompany.app.pdv.exceptions.ApiException;
-import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.util.List;
@@ -56,7 +55,7 @@ public class PDVUtils {
             t = new ApiException(
                     "Erro " + response.code() + ": " + errorResponse.getErrors());
         } 
-        catch (IOException e) {
+        catch (Exception e) {
             //Caso não consiga ler o erro
             t = new ApiException(
                     "Erro: " + response.code() +

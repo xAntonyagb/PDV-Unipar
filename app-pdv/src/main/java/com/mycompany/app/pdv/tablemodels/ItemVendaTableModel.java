@@ -1,6 +1,7 @@
 package com.mycompany.app.pdv.tablemodels;
 
 import com.mycompany.app.pdv.dtos.response.ItemVendaResponseDTO;
+import java.text.DecimalFormat;
 import java.util.List;
 import javax.swing.table.DefaultTableModel;
 
@@ -20,22 +21,16 @@ public class ItemVendaTableModel extends DefaultTableModel {
         this();
         
         for (ItemVendaResponseDTO itemVenda : listItemVenda) {
-            
-            String vlSubtotal = Double.toString(itemVenda.getValorSubtotal());
-            vlSubtotal = vlSubtotal.substring(0, vlSubtotal.indexOf(".")+3);
-
-            String vlTotal = Double.toString(itemVenda.getValorTotal());
-            vlTotal = vlTotal.substring(0, vlTotal.indexOf(".")+3);
-
-            String vlDesconto = Double.toString(itemVenda.getDesconto());
-            vlDesconto = vlDesconto.substring(0, vlDesconto.indexOf(".")+3);
+            DecimalFormat df = new DecimalFormat("#.###");
+            String vlSubtotal = df.format(itemVenda.getValorSubtotal());
+            String vlTotal = df.format(itemVenda.getValorTotal());
+            String vlDesconto = df.format(itemVenda.getDesconto());
             
             this.addRow(new String[] {
-                
                 itemVenda.getProduto().getDescricao(),
                 Double.toString(itemVenda.getValorUnitario()),
-                vlSubtotal,
                 Double.toString(itemVenda.getQuantidade()),
+                vlSubtotal,
                 vlDesconto,
                 vlTotal});
         }

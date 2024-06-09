@@ -12,6 +12,7 @@ import com.mycompany.app.pdv.tablemodels.ItemVendaTableModel;
 import com.mycompany.app.pdv.utils.PDVUtils;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JFrame;
@@ -843,20 +844,23 @@ public class JframeVenda extends javax.swing.JFrame {
         ItemVendaTableModel model = new ItemVendaTableModel(itensVenda);
         tableItens.setModel(model);
         
-        //Subtotal
-        String subtotal = Double.toString(venda.getValorSubtotal());
-        subtotal = subtotal.substring(0, subtotal.indexOf(".")+3);
+        // Arredondar
+        DecimalFormat df = new DecimalFormat("#.###");
+
+        // Subtotal
+        double valorSubtotal = venda.getValorSubtotal();
+        String subtotal = df.format(valorSubtotal);
         jLabelSubtotal.setText(subtotal);
-        
-        //Total
-        String total = Double.toString(venda.getValorTotal());
-        total = total.substring(0, total.indexOf(".")+3);
-        jLabelSubtotal.setText(total);
-        
-        //Descontos
-        String descontos = Double.toString(venda.getDescontoTotal());
-        descontos = descontos.substring(0, descontos.indexOf(".")+3);
-        jLabelSubtotal.setText(descontos);
+
+        // Total
+        double valorTotal = venda.getValorTotal();
+        String total = df.format(valorTotal);
+        jLabelTotal.setText(total);
+
+        // Descontos
+        double descontoTotal = venda.getDescontoTotal();
+        String descontos = df.format(descontoTotal);
+        jLabelDescontos.setText(descontos);
     }
     
     public VendaResponseDTO getVenda() {
