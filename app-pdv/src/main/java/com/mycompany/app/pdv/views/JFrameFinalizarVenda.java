@@ -259,7 +259,7 @@ public class JFrameFinalizarVenda extends javax.swing.JFrame {
             VendaService vendaService = new VendaService();
             VendaRequestDTO vendaRequest = VendaRequestDTO.toVendaRequestDTO(venda);
             vendaRequest.setData(TimeUtils.getStringNow());
-            vendaRequest.setObservacao("Teste");
+            vendaRequest.setObservacao(selectedItem != null ? selectedItem.toString() : "N/A");
             
             VendaResponseDTO retorno = vendaService.insert(vendaRequest);
             
