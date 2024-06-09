@@ -17,7 +17,8 @@ public class VendaResponseDTO {
     private String observacao;
     private Timestamp data;
     private double valorTotal;
-    
+    private double descontoTotal;
+
     private ClienteResponseDTO cliente;
     private List<ItemVendaResponseDTO> itensVenda;
 
@@ -25,16 +26,16 @@ public class VendaResponseDTO {
     public VendaResponseDTO() {
         this.itensVenda = new ArrayList<>();
     }
-    
-    public VendaResponseDTO(long id, String observacao, Timestamp data, double valorTotal, ClienteResponseDTO cliente, List<ItemVendaResponseDTO> itensVenda) {
+
+    public VendaResponseDTO(long id, String observacao, Timestamp data, double valorTotal, double descontoTotal, ClienteResponseDTO cliente, List<ItemVendaResponseDTO> itensVenda) {
         this.id = id;
         this.observacao = observacao;
         this.data = data;
         this.valorTotal = valorTotal;
+        this.descontoTotal = descontoTotal;
         this.cliente = cliente;
         this.itensVenda = itensVenda;
     }
-
 
     public void setId(long id) {
         this.id = id;
@@ -88,9 +89,25 @@ public class VendaResponseDTO {
         return itensVenda;
     }
 
+    public double getDescontoTotal() {
+        return descontoTotal;
+    }
+
+    public void setDescontoTotal(double descontoTotal) {
+        this.descontoTotal = descontoTotal;
+    }
+
     @Override
     public String toString() {
-        return "VendaResponse{" + "id=" + id + ", observacao=" + observacao + ", data=" + data + ", valorTotal=" + valorTotal + ", cliente=" + cliente + ", itensVenda=" + itensVenda + '}';
+        return "VendaResponseDTO{" +
+                "id=" + id +
+                ", observacao='" + observacao + '\'' +
+                ", data=" + data +
+                ", valorTotal=" + valorTotal +
+                ", descontoTotal=" + descontoTotal +
+                ", cliente=" + cliente +
+                ", itensVenda=" + itensVenda +
+                '}';
     }
 
     public VendaResponseDTO fromRequest(VendaRequestDTO vendaRequestDTO) {
@@ -124,6 +141,7 @@ public class VendaResponseDTO {
         if (vendaResponseDTO != null) {
             venda.setObservacao(vendaResponseDTO.getObservacao());
             venda.setValorTotal(vendaResponseDTO.getValorTotal());
+            venda.setDescontoTotal(vendaResponseDTO.getDescontoTotal());
 
             if(vendaResponseDTO.getData() != null){
                 venda.setData(vendaResponseDTO.getData());
@@ -150,6 +168,7 @@ public class VendaResponseDTO {
             vendaResponseDTO.setId(venda.getId());
             vendaResponseDTO.setObservacao(venda.getObservacao());
             vendaResponseDTO.setValorTotal(venda.getValorTotal());
+            vendaResponseDTO.setDescontoTotal(venda.getDescontoTotal());
 
             if(venda.getData() != null){
                 vendaResponseDTO.setData(venda.getData());

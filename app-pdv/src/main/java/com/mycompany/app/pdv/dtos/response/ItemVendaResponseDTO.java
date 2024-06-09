@@ -12,6 +12,7 @@ public class ItemVendaResponseDTO {
     private int quantidade;
     private double valorUnitario;
     private double valorTotal;
+    private double valorSubtotal;
     private ProdutoResponseDTO produto;
 
     private double desconto;
@@ -20,11 +21,12 @@ public class ItemVendaResponseDTO {
     public ItemVendaResponseDTO() {
     }
 
-    public ItemVendaResponseDTO(long id, int quantidade, double valorUnitario, double valorTotal, ProdutoResponseDTO produto, double desconto) {
+    public ItemVendaResponseDTO(long id, int quantidade, double valorUnitario, double valorTotal, double valorSubtotal, ProdutoResponseDTO produto, double desconto) {
         this.id = id;
         this.quantidade = quantidade;
         this.valorUnitario = valorUnitario;
         this.valorTotal = valorTotal;
+        this.valorSubtotal = valorSubtotal;
         this.produto = produto;
         this.desconto = desconto;
     }
@@ -93,16 +95,17 @@ public class ItemVendaResponseDTO {
         this.desconto = desconto;
     }
 
+    public double getValorSubtotal() {
+        return valorSubtotal;
+    }
+
+    public void setValorSubtotal(double valorSubtotal) {
+        this.valorSubtotal = valorSubtotal;
+    }
+
     @Override
     public String toString() {
-        return "ItemVendaResponseDTO{" +
-                "id=" + id +
-                ", quantidade=" + quantidade +
-                ", valorUnitario=" + valorUnitario +
-                ", valorTotal=" + valorTotal +
-                ", produto=" + produto +
-                ", desconto=" + desconto +
-                '}';
+        return "ItemVendaResponseDTO{" + "id=" + id + ", quantidade=" + quantidade + ", valorUnitario=" + valorUnitario + ", valorTotal=" + valorTotal + ", valorSubtotal=" + valorSubtotal + ", produto=" + produto + ", desconto=" + desconto + '}';
     }
 
 }

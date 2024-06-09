@@ -34,11 +34,12 @@ public class VendaService {
 
 
     public VendaResponseDTO doCalc(VendaRequestDTO vendaRequestDTO) throws ValidationException, NotFoundException {
-        VendaResponseDTO vendaResponseDTO = validate(vendaRequestDTO);
+        VendaResponseDTO vendaResponseDTO = validateRequest(vendaRequestDTO);
 
         // Calcula o valor total da venda
         List<ItemVendaResponseDTO> itensVendaCalculados = new ArrayList<>();
         double valorTotal = 0;
+        double descontoTotal = 0;
 
         for (ItemVendaResponseDTO itemVenda : vendaResponseDTO.getItensVenda()) {
 
@@ -50,16 +51,26 @@ public class VendaService {
             itemVenda.setValorUnitario(produto.getValor());
 
             //seta o valor total do itemvenda e faz o calculo do valor total da venda
-            double calculo = itemVenda.getQuantidade() * itemVenda.getValorUnitario();
-            itemVenda.setValorTotal(calculo);
-            valorTotal += calculo;
+            double calculoTotal = itemVenda.getQuantidade() * itemVenda.getValorUnitario();
+            itemVenda.setValorTotal(calculoTotal);
+            valorTotal += calculoTotal;
+
+            //seta o desconto do itemvenda e faz o calculo do desconto total da venda
+            double calculoDesconto = (itemVenda.getDesconto() / 100 ) * calculoTotal;
+            itemVenda.setDesconto(calculoDesconto);
+            descontoTotal += calculoDesconto;
 
             itensVendaCalculados.add(itemVenda);
         }
 
         // Retorno
         vendaResponseDTO.setValorTotal(valorTotal);
+        vendaResponseDTO.setDescontoTotal(descontoTotal);
         vendaResponseDTO.setItensVenda(itensVendaCalculados);
+
+        if (vendaResponseDTO.getValorTotal() <= 0)
+            throw new ValidationException("O valor total da venda deve ser maior que 0");
+
         return vendaResponseDTO;
     }
 
@@ -104,7 +115,7 @@ public class VendaService {
     }
 
 
-    public VendaResponseDTO validate(VendaRequestDTO vendaRequestDTO) throws ValidationException, NotFoundException {
+    public VendaResponseDTO validateRequest(VendaRequestDTO vendaRequestDTO) throws ValidationException, NotFoundException {
         VendaResponseDTO vendaResponseDTO = new VendaResponseDTO().fromRequest(vendaRequestDTO);
 
         // ------------------------------ CLIENTE ------------------------------
@@ -124,6 +135,7 @@ public class VendaService {
             throw new NotFoundException("O cliente informado não pode ser encontrado ou não existe");
         }
 
+
         // ------------------------------ VENDA ------------------------------
         // Verifica se a lista de itens da venda não está vazia
         if (vendaRequestDTO.getItensVenda() == null || vendaRequestDTO.getItensVenda().isEmpty()) {
@@ -133,22 +145,21 @@ public class VendaService {
         Set<Long> produtosIds = new HashSet<>(); // Armazenar os produtos já verificados
 
         List<ItemVendaResponseDTO> itensVendaRetorno = new ItemVendaResponseDTO().fromRequestList(vendaRequestDTO.getItensVenda());
-
         for (int i = 0; i < vendaRequestDTO.getItensVenda().size(); i++) {
             // Verificar repetido
             long produtoId = vendaRequestDTO.getItensVenda().get(i).getProduto().getId();
 
             // Se não consegue adicionar o ID, ele já foi adicionado
             if (!produtosIds.add(produtoId)) {
-                throw new ValidationException("O produto informado já foi adicionado: " + i);
+                throw new ValidationException("O produto informado já foi adicionado!");
             }
 
             // Verifica se o produto do item é válido
             if (vendaRequestDTO.getItensVenda().get(i).getProduto() == null) {
-                throw new ValidationException("O seguinte produto informado é inválido: "+ i);
+                throw new ValidationException("O produto informado não é um produto válido.");
             }
             if (vendaRequestDTO.getItensVenda().get(i).getProduto().getId() <= 0) {
-                throw new ValidationException("O seguinte produto informado é inválido: "+ i);
+                throw new ValidationException("O produto informado não é um produto válido.");
             }
 
             Produto produto = produtoRepository.findById(
@@ -156,24 +167,36 @@ public class VendaService {
                     .orElse(null);
 
             if (produto == null) {
-                throw new NotFoundException("O produto informado não pode ser encontrado ou não existe: " + i);
+                throw new NotFoundException("O produto informado não pode ser encontrado ou não existe!");
             }
 
             itensVendaRetorno.get(i).setProduto(produto.toDTO());
 
+            //Verifica o desconto
+            if (vendaRequestDTO.getItensVenda().get(i).getDesconto() < 0) {
+                throw new ValidationException("Desconto é menor que 0 para o produto: "
+                        + produto.getDescricao());
+            }
+
+            if (vendaRequestDTO.getItensVenda().get(i).getDesconto() >= 100) {
+                throw new ValidationException("Desconto é maior ou igual a 100 para o produto: "
+                        + produto.getDescricao());
+            }
 
             //Verifica se o produto tem estoque
             if (vendaRequestDTO.getItensVenda().get(i).getQuantidade() <= 0) {
                 throw new ValidationException("Quantidade de produtos é menor ou inferior a 0 para o produto: "
                         + vendaRequestDTO.getItensVenda().get(i).getProduto().getId());
             }
-
         }
 
+
+        // ------------------------------ RETORNO ------------------------------
         ClienteResponseDTO clienteRetorno = new ClienteResponseDTO().fromEntity(cliente);
         vendaResponseDTO.setCliente(clienteRetorno);
         vendaResponseDTO.setItensVenda(itensVendaRetorno);
 
         return vendaResponseDTO;
     }
+
 }

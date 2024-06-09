@@ -78,7 +78,7 @@ public class JFrameConsultaProduto extends javax.swing.JFrame {
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         jTextPaneVlTotal = new javax.swing.JTextField();
-        jTextFieldQtd2 = new javax.swing.JTextField();
+        jTextFieldQtd = new javax.swing.JTextField();
         jTextPaneVlUnit = new javax.swing.JTextField();
         jTextFieldDesconto = new javax.swing.JTextField();
         jTextPaneDSProduto = new javax.swing.JTextField();
@@ -234,9 +234,9 @@ public class JFrameConsultaProduto extends javax.swing.JFrame {
         jTextPaneVlTotal.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(40, 46, 56)));
         jTextPaneVlTotal.setEnabled(false);
 
-        jTextFieldQtd2.setBackground(new java.awt.Color(40, 46, 56));
-        jTextFieldQtd2.setForeground(new java.awt.Color(204, 204, 204));
-        jTextFieldQtd2.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(40, 46, 56)));
+        jTextFieldQtd.setBackground(new java.awt.Color(40, 46, 56));
+        jTextFieldQtd.setForeground(new java.awt.Color(204, 204, 204));
+        jTextFieldQtd.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(40, 46, 56)));
 
         jTextPaneVlUnit.setBackground(new java.awt.Color(40, 46, 56));
         jTextPaneVlUnit.setForeground(new java.awt.Color(204, 204, 204));
@@ -274,7 +274,7 @@ public class JFrameConsultaProduto extends javax.swing.JFrame {
                                 .addGap(18, 18, 18)
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(jLabelQtd)
-                                    .addComponent(jTextFieldQtd2, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addComponent(jTextFieldQtd, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(jTextPaneVlSubtotal, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -313,7 +313,7 @@ public class JFrameConsultaProduto extends javax.swing.JFrame {
                                         .addComponent(jLabelQtd)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                            .addComponent(jTextFieldQtd2, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addComponent(jTextFieldQtd, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                                             .addComponent(jTextPaneVlUnit, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))))
                                 .addGap(88, 88, 88))))
                     .addGroup(jPanel1Layout.createSequentialGroup()
@@ -370,6 +370,7 @@ public class JFrameConsultaProduto extends javax.swing.JFrame {
                     
                     jTextPaneVlSubtotal.setText("0");
                     jTextFieldDesconto.setText("0");
+                    jTextFieldQtd.setText("1");
                     atualizarCampos();
                     
                     jTabbedPane1.setSelectedIndex(1);
@@ -383,7 +384,7 @@ public class JFrameConsultaProduto extends javax.swing.JFrame {
 
     private void btConfirmarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btConfirmarActionPerformed
         try {
-            this.itemVenda.setQuantidade(Integer.parseInt(jTextFieldQtd2.getText()));
+            this.itemVenda.setQuantidade(Integer.parseInt(jTextFieldQtd.getText()));
             this.itemVenda.setDesconto(Double.parseDouble(jTextFieldDesconto.getText()));
 
             this.frameVenda.addNovoItemToTable(
@@ -473,7 +474,7 @@ public class JFrameConsultaProduto extends javax.swing.JFrame {
     private com.mycompany.app.pdv.views.components.TableDark jTableProdutos;
     private javax.swing.JTextField jTextFieldDesconto;
     private javax.swing.JTextField jTextFieldPesquisa;
-    private javax.swing.JTextField jTextFieldQtd2;
+    private javax.swing.JTextField jTextFieldQtd;
     private javax.swing.JTextField jTextPaneDSProduto;
     private javax.swing.JTextField jTextPaneVlSubtotal;
     private javax.swing.JTextField jTextPaneVlTotal;

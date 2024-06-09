@@ -45,7 +45,7 @@ public class PDVUtils {
     
     // Metodo para retornar Erro de API
     public static Throwable getResponseError(Response response) {
-        Throwable t = new Throwable();
+        Throwable t;
                 
         try {
             // Obter a mensagem de erro

@@ -15,6 +15,8 @@ public class VendaResponseDTO {
     private String observacao;
     private Timestamp data;
     private double valorTotal;
+    private double valorSubtotal;
+    private double descontoTotal;
     
     private ClienteResponseDTO cliente;
     private List<ItemVendaResponseDTO> itensVenda;
@@ -24,12 +26,14 @@ public class VendaResponseDTO {
         this.itensVenda = new ArrayList<>();
         this.cliente = new ClienteResponseDTO();
     }
-    
-    public VendaResponseDTO(long id, String observacao, Timestamp data, double valorTotal, ClienteResponseDTO cliente, List<ItemVendaResponseDTO> itensVenda) {
+
+    public VendaResponseDTO(long id, String observacao, Timestamp data, double valorTotal, double valorSubtotal, double descontoTotal, ClienteResponseDTO cliente, List<ItemVendaResponseDTO> itensVenda) {
         this.id = id;
         this.observacao = observacao;
         this.data = data;
         this.valorTotal = valorTotal;
+        this.valorSubtotal = valorSubtotal;
+        this.descontoTotal = descontoTotal;
         this.cliente = cliente;
         this.itensVenda = itensVenda;
     }
@@ -96,9 +100,25 @@ public class VendaResponseDTO {
         return itensVenda;
     }
 
+    public double getDescontoTotal() {
+        return descontoTotal;
+    }
+
+    public void setDescontoTotal(double descontoTotal) {
+        this.descontoTotal = descontoTotal;
+    }
+
+    public double getValorSubtotal() {
+        return valorSubtotal;
+    }
+
+    public void setValorSubtotal(double valorSubtotal) {
+        this.valorSubtotal = valorSubtotal;
+    }
+
     @Override
     public String toString() {
-        return "VendaResponse{" + "id=" + id + ", observacao=" + observacao + ", data=" + data + ", valorTotal=" + valorTotal + ", cliente=" + cliente + ", itensVenda=" + itensVenda + '}';
+        return "VendaResponseDTO{" + "id=" + id + ", observacao=" + observacao + ", data=" + data + ", valorTotal=" + valorTotal + ", valorSubtotal=" + valorSubtotal + ", descontoTotal=" + descontoTotal + ", cliente=" + cliente + ", itensVenda=" + itensVenda + '}';
     }
-   
+
 }

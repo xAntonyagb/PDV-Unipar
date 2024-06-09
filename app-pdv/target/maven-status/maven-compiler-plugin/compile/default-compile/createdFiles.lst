@@ -12,6 +12,7 @@ com\mycompany\app\pdv\services\TokenService$1.class
 com\mycompany\app\pdv\views\components\ModernScrollBarUI$ScrollBarButton.class
 com\mycompany\app\pdv\views\JFrameConsultaProduto$4.class
 com\mycompany\app\pdv\services\VendaService$1.class
+com\mycompany\app\pdv\views\JframeVenda$10.class
 com\mycompany\app\pdv\views\components\TableDark$TableDarkCell.class
 com\mycompany\app\pdv\views\JframeVenda$7.class
 com\mycompany\app\pdv\services\TokenService.class
@@ -38,6 +39,7 @@ com\mycompany\app\pdv\views\JframeVenda$2.class
 com\mycompany\app\pdv\dtos\response\ErrorResponseDTO.class
 com\mycompany\app\pdv\dtos\request\ProdutoRequestDTO.class
 com\mycompany\app\pdv\services\VendaService.class
+com\mycompany\app\pdv\views\JframeVenda$11.class
 com\mycompany\app\pdv\views\JframeVenda.class
 com\mycompany\app\pdv\services\ClienteService.class
 com\mycompany\app\pdv\views\JFrameConsultaVendas.class

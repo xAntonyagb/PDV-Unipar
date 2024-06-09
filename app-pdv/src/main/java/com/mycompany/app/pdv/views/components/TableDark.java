@@ -11,6 +11,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
+import javax.swing.ListSelectionModel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableCellRenderer;
 
@@ -29,7 +30,6 @@ public class TableDark extends JTable {
     private static final Color SELECTED_EVEN_ROW_BACKGROUND = new Color(33, 103, 153);
     private static final Color SELECTED_ODD_ROW_BACKGROUND = new Color(29, 86, 127);
     private static final Color CELL_FOREGROUND = new Color(204, 204, 204);
-    private static final Color SCROLL_BORDER_COLOR = new Color(40, 46, 56);
  
     private TableDarkHeader header;
     private TableDarkCell cell;
@@ -37,13 +37,22 @@ public class TableDark extends JTable {
     public TableDark() {
         header = new TableDarkHeader();
         cell = new TableDarkCell();
+        
+        // Header e colunas
         getTableHeader().setDefaultRenderer(header);
         getTableHeader().setPreferredSize(new Dimension(0, 45));
         setDefaultRenderer(Object.class, cell);
         setRowHeight(35);
-        setShowGrid(false); // Remove grid lines
-        setIntercellSpacing(new Dimension(0, 0)); // Remove spacing between cells
-        setBackground(DEFAULT_BACKGROUND); // Set table background color
+        
+        // Cor e celulas
+        setShowGrid(false);
+        setIntercellSpacing(new Dimension(0, 0));
+        setBackground(DEFAULT_BACKGROUND);
+        
+        // Seleção individual
+        setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+        setRowSelectionAllowed(true);
+        setColumnSelectionAllowed(false);
     }
 
     public void setColumnAlignment(int column, int align) {
