@@ -118,6 +118,9 @@ public class ItemVendaResponseDTO {
             ItemVenda itemVenda1 = new ItemVenda();
             itemVenda1.setQuantidade(itemVenda != null ? itemVenda.getQuantidade() : 0);
             itemVenda1.setDesconto(itemVenda != null ? itemVenda.getDesconto() : 0.0);
+            itemVenda1.setValorUnitario(itemVenda != null ? itemVenda.getValorUnitario() : 0.0);
+            itemVenda1.setValorTotal(itemVenda != null ? itemVenda.getValorTotal() : 0.0);
+            itemVenda1.setDesconto(itemVenda != null ? itemVenda.getDesconto() : 0.0);
 
             itemVenda1.setProduto(itemVenda != null && itemVenda.getProduto() != null
                     ? new ProdutoResponseDTO().toEntity(itemVenda.getProduto())
