@@ -38,8 +38,9 @@ public class VendaService {
 
         // Calcula o valor total da venda
         List<ItemVendaResponseDTO> itensVendaCalculados = new ArrayList<>();
-        double valorTotal = 0;
+        double valorSubtotal = 0;
         double descontoTotal = 0;
+        double valorTotal = 0;
 
         for (ItemVendaResponseDTO itemVenda : vendaResponseDTO.getItensVenda()) {
 
@@ -50,22 +51,25 @@ public class VendaService {
             //seta o valor unitario do itemvenda
             itemVenda.setValorUnitario(produto.getValor());
 
-            //seta o valor total do itemvenda e faz o calculo do valor total da venda
-            double calculoTotal = itemVenda.getQuantidade() * itemVenda.getValorUnitario();
+            //seta o valor total do itemvenda e faz o calculo do subtotal da venda
+            double calculoSubtotal = itemVenda.getQuantidade() * itemVenda.getValorUnitario();
+            itemVenda.setValorSubtotal(calculoSubtotal);
+            valorSubtotal += calculoSubtotal;
+
+            descontoTotal += itemVenda.getDesconto();
+
+            // Calcula o valor total do item e faz o calculo do valor total da venda
+            double calculoTotal = calculoSubtotal - itemVenda.getDesconto();
             itemVenda.setValorTotal(calculoTotal);
             valorTotal += calculoTotal;
-
-            //seta o desconto do itemvenda e faz o calculo do desconto total da venda
-            double calculoDesconto = (itemVenda.getDesconto() / 100 ) * calculoTotal;
-            itemVenda.setDesconto(calculoDesconto);
-            descontoTotal += calculoDesconto;
 
             itensVendaCalculados.add(itemVenda);
         }
 
         // Retorno
-        vendaResponseDTO.setValorTotal(valorTotal);
+        vendaResponseDTO.setValorSubtotal(valorSubtotal);
         vendaResponseDTO.setDescontoTotal(descontoTotal);
+        vendaResponseDTO.setValorTotal(valorTotal);
         vendaResponseDTO.setItensVenda(itensVendaCalculados);
 
         if (vendaResponseDTO.getValorTotal() <= 0)
@@ -178,8 +182,8 @@ public class VendaService {
                         + produto.getDescricao());
             }
 
-            if (vendaRequestDTO.getItensVenda().get(i).getDesconto() >= 100) {
-                throw new ValidationException("Desconto é maior ou igual a 100 para o produto: "
+            if (vendaRequestDTO.getItensVenda().get(i).getDesconto() > (produto.getValor() * vendaRequestDTO.getItensVenda().get(i).getQuantidade())) {
+                throw new ValidationException("Desconto é maior que o valor do produto: "
                         + produto.getDescricao());
             }
 

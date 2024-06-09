@@ -15,6 +15,7 @@ public class ItemVendaResponseDTO {
     private int quantidade;
     private double valorUnitario;
     private double valorTotal;
+    private double valorSubtotal;
     private ProdutoResponseDTO produto;
 
     private double desconto;
@@ -23,11 +24,12 @@ public class ItemVendaResponseDTO {
     public ItemVendaResponseDTO() {
     }
 
-    public ItemVendaResponseDTO(long id, int quantidade, double valorUnitario, double valorTotal, ProdutoResponseDTO produto, double desconto) {
+    public ItemVendaResponseDTO(long id, int quantidade, double valorUnitario, double valorTotal, double valorSubtotal, ProdutoResponseDTO produto, double desconto) {
         this.id = id;
         this.quantidade = quantidade;
         this.valorUnitario = valorUnitario;
         this.valorTotal = valorTotal;
+        this.valorSubtotal = valorSubtotal;
         this.produto = produto;
         this.desconto = desconto;
     }
@@ -81,6 +83,14 @@ public class ItemVendaResponseDTO {
         this.desconto = desconto;
     }
 
+    public double getValorSubtotal() {
+        return valorSubtotal;
+    }
+
+    public void setValorSubtotal(double valorSubtotal) {
+        this.valorSubtotal = valorSubtotal;
+    }
+
     @Override
     public String toString() {
         return "ItemVendaResponseDTO{" +
@@ -88,6 +98,7 @@ public class ItemVendaResponseDTO {
                 ", quantidade=" + quantidade +
                 ", valorUnitario=" + valorUnitario +
                 ", valorTotal=" + valorTotal +
+                ", valorSubtotal=" + valorSubtotal +
                 ", produto=" + produto +
                 ", desconto=" + desconto +
                 '}';
@@ -116,8 +127,12 @@ public class ItemVendaResponseDTO {
 
         for (ItemVendaResponseDTO itemVenda : itensVenda) {
             ItemVenda itemVenda1 = new ItemVenda();
+            itemVenda1.setId((int) itemVenda.getId());
             itemVenda1.setQuantidade(itemVenda != null ? itemVenda.getQuantidade() : 0);
             itemVenda1.setDesconto(itemVenda != null ? itemVenda.getDesconto() : 0.0);
+            itemVenda1.setValorUnitario(itemVenda != null ? itemVenda.getValorUnitario() : 0.0);
+            itemVenda1.setValorTotal(itemVenda != null ? itemVenda.getValorTotal() : 0.0);
+            itemVenda1.setValorSubtotal(itemVenda != null ? itemVenda.getValorSubtotal() : 0.0);
 
             itemVenda1.setProduto(itemVenda != null && itemVenda.getProduto() != null
                     ? new ProdutoResponseDTO().toEntity(itemVenda.getProduto())
@@ -134,9 +149,12 @@ public class ItemVendaResponseDTO {
 
         for (ItemVenda itemVenda : itensVenda) {
             ItemVendaResponseDTO itemVendaResponseDTO1 = new ItemVendaResponseDTO();
-            itemVendaResponseDTO1.setId(itemVenda != null ? itemVenda.getId() : 0);
+            itemVendaResponseDTO1.setId(itemVenda.getId());
             itemVendaResponseDTO1.setQuantidade(itemVenda != null ? itemVenda.getQuantidade() : 0);
             itemVendaResponseDTO1.setDesconto(itemVenda != null ? itemVenda.getDesconto() : 0.0);
+            itemVendaResponseDTO1.setValorUnitario(itemVenda != null ? itemVenda.getValorUnitario() : 0.0);
+            itemVendaResponseDTO1.setValorTotal(itemVenda != null ? itemVenda.getValorTotal() : 0.0);
+            itemVendaResponseDTO1.setValorSubtotal(itemVenda != null ? itemVenda.getValorSubtotal() : 0.0);
 
             itemVendaResponseDTO1.setProduto(itemVenda != null && itemVenda.getProduto() != null
                     ? new ProdutoResponseDTO().fromEntity(itemVenda.getProduto())

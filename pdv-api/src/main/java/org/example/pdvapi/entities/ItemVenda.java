@@ -25,7 +25,14 @@ public class ItemVenda {
     @NotNull
     @DecimalMin(value = "0.0")
     @NumberFormat(pattern = "#.##")
+    @Column(name = "total")
     private double valorTotal;
+
+    @NotNull
+    @DecimalMin(value = "0.0")
+    @NumberFormat(pattern = "#.##")
+    @Column(name = "subtotal")
+    private double valorSubtotal;
 
     @NotNull
     @ManyToOne
@@ -41,15 +48,15 @@ public class ItemVenda {
     public ItemVenda() {
     }
 
-    public ItemVenda(int id, int quantidade, double valorUnitario, double valorTotal, Produto produto, Venda venda, double desconto) {
+    public ItemVenda(int id, int quantidade, double valorUnitario, double valorTotal, double valorSubtotal, Produto produto, Venda venda, double desconto) {
         this.id = id;
         this.quantidade = quantidade;
         this.valorUnitario = valorUnitario;
         this.valorTotal = valorTotal;
+        this.valorSubtotal = valorSubtotal;
         this.produto = produto;
         this.venda = venda;
         this.desconto = desconto;
-
     }
 
     public int getId() {
@@ -114,6 +121,30 @@ public class ItemVenda {
 
     public void setDesconto(double desconto) {
         this.desconto = desconto;
+    }
+
+    @NotNull
+    @DecimalMin(value = "0.0")
+    public double getValorSubtotal() {
+        return valorSubtotal;
+    }
+
+    public void setValorSubtotal(@NotNull @DecimalMin(value = "0.0") double valorSubtotal) {
+        this.valorSubtotal = valorSubtotal;
+    }
+
+    @Override
+    public String toString() {
+        return "ItemVenda{" +
+                "id=" + id +
+                ", quantidade=" + quantidade +
+                ", valorUnitario=" + valorUnitario +
+                ", valorTotal=" + valorTotal +
+                ", valorSubtotal=" + valorSubtotal +
+                ", produto=" + produto +
+                ", venda=" + venda +
+                ", desconto=" + desconto +
+                '}';
     }
 
 }

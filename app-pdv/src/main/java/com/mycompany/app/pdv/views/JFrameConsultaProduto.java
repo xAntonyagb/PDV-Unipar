@@ -3,10 +3,8 @@ package com.mycompany.app.pdv.views;
 import com.mycompany.app.pdv.dtos.request.ItemVendaRequestDTO;
 import com.mycompany.app.pdv.dtos.response.ItemVendaResponseDTO;
 import com.mycompany.app.pdv.dtos.response.ProdutoResponseDTO;
-import com.mycompany.app.pdv.services.ProdutoService;
 import com.mycompany.app.pdv.tablemodels.ProdutoTableModel;
 import com.mycompany.app.pdv.utils.PDVUtils;
-import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.RowFilter;
 import javax.swing.event.DocumentEvent;
@@ -82,6 +80,7 @@ public class JFrameConsultaProduto extends javax.swing.JFrame {
         jTextPaneVlUnit = new javax.swing.JTextField();
         jTextFieldDesconto = new javax.swing.JTextField();
         jTextPaneDSProduto = new javax.swing.JTextField();
+        jButton1 = new javax.swing.JButton();
         jPanel3 = new javax.swing.JPanel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -184,7 +183,7 @@ public class JFrameConsultaProduto extends javax.swing.JFrame {
         jLabelQtd.setLabelFor(jTextPaneVlSubtotal);
         jLabelQtd.setText("Qtd:");
 
-        jTextPaneVlSubtotal.setBackground(new java.awt.Color(40, 46, 56));
+        jTextPaneVlSubtotal.setBackground(new java.awt.Color(44, 49, 58));
         jTextPaneVlSubtotal.setForeground(new java.awt.Color(204, 204, 204));
         jTextPaneVlSubtotal.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(40, 46, 56)));
         jTextPaneVlSubtotal.setEnabled(false);
@@ -192,7 +191,7 @@ public class JFrameConsultaProduto extends javax.swing.JFrame {
         jLabelDesconto.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jLabelDesconto.setForeground(new java.awt.Color(204, 204, 204));
         jLabelDesconto.setLabelFor(jTextFieldDesconto);
-        jLabelDesconto.setText("Desconto (%):");
+        jLabelDesconto.setText("Desconto (R$):");
 
         btVoltar.setBackground(new java.awt.Color(40, 46, 56));
         btVoltar.setForeground(new java.awt.Color(204, 204, 204));
@@ -229,7 +228,7 @@ public class JFrameConsultaProduto extends javax.swing.JFrame {
         jLabel3.setLabelFor(jTextPaneVlTotal);
         jLabel3.setText("Vl. Total");
 
-        jTextPaneVlTotal.setBackground(new java.awt.Color(40, 46, 56));
+        jTextPaneVlTotal.setBackground(new java.awt.Color(44, 49, 58));
         jTextPaneVlTotal.setForeground(new java.awt.Color(204, 204, 204));
         jTextPaneVlTotal.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(40, 46, 56)));
         jTextPaneVlTotal.setEnabled(false);
@@ -238,17 +237,28 @@ public class JFrameConsultaProduto extends javax.swing.JFrame {
         jTextFieldQtd.setForeground(new java.awt.Color(204, 204, 204));
         jTextFieldQtd.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(40, 46, 56)));
 
-        jTextPaneVlUnit.setBackground(new java.awt.Color(40, 46, 56));
+        jTextPaneVlUnit.setBackground(new java.awt.Color(44, 49, 58));
         jTextPaneVlUnit.setForeground(new java.awt.Color(204, 204, 204));
         jTextPaneVlUnit.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(40, 46, 56)));
+        jTextPaneVlUnit.setEnabled(false);
 
         jTextFieldDesconto.setBackground(new java.awt.Color(40, 46, 56));
         jTextFieldDesconto.setForeground(new java.awt.Color(204, 204, 204));
         jTextFieldDesconto.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(40, 46, 56)));
 
-        jTextPaneDSProduto.setBackground(new java.awt.Color(40, 46, 56));
+        jTextPaneDSProduto.setBackground(new java.awt.Color(44, 49, 58));
         jTextPaneDSProduto.setForeground(new java.awt.Color(204, 204, 204));
         jTextPaneDSProduto.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(40, 46, 56)));
+
+        jButton1.setBackground(new java.awt.Color(40, 46, 56));
+        jButton1.setForeground(new java.awt.Color(204, 204, 204));
+        jButton1.setText("Atualizar");
+        jButton1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(40, 46, 56)));
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -262,33 +272,34 @@ public class JFrameConsultaProduto extends javax.swing.JFrame {
                         .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jTextPaneDSProduto)
                             .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(btVoltar, javax.swing.GroupLayout.PREFERRED_SIZE, 185, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 160, Short.MAX_VALUE)
-                                .addComponent(btConfirmar, javax.swing.GroupLayout.PREFERRED_SIZE, 185, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel1)
-                                    .addComponent(jTextPaneVlUnit, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGap(18, 18, 18)
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(jLabelQtd)
+                                    .addComponent(jLabelDesconto, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addGroup(jPanel1Layout.createSequentialGroup()
+                                        .addComponent(jTextFieldDesconto, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(18, 18, 18)
+                                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 58, javax.swing.GroupLayout.PREFERRED_SIZE))
                                     .addComponent(jTextFieldQtd, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(jTextPaneVlSubtotal, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                                         .addComponent(jLabel2)
-                                        .addGap(13, 13, 13))))
+                                        .addGap(13, 13, 13))
+                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(jTextPaneVlTotal, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                            .addComponent(jTextPaneDSProduto)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(btVoltar, javax.swing.GroupLayout.PREFERRED_SIZE, 185, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 158, Short.MAX_VALUE)
+                                .addComponent(btConfirmar, javax.swing.GroupLayout.PREFERRED_SIZE, 185, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabelDesconto, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jTextFieldDesconto, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jTextPaneVlTotal, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                    .addComponent(jLabel1)
+                                    .addComponent(jTextPaneVlUnit, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(0, 0, Short.MAX_VALUE)))
                         .addContainerGap())))
         );
         jPanel1Layout.setVerticalGroup(
@@ -297,27 +308,27 @@ public class JFrameConsultaProduto extends javax.swing.JFrame {
                 .addGap(24, 24, 24)
                 .addComponent(jLabelInfo, javax.swing.GroupLayout.PREFERRED_SIZE, 18, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jTextPaneDSProduto, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(12, 12, 12)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel1)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(26, 26, 26)
+                        .addComponent(jTextPaneVlUnit, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 28, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jTextPaneDSProduto, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 66, Short.MAX_VALUE)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(jLabelDesconto)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jTextFieldDesconto, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel1)
-                                    .addGroup(jPanel1Layout.createSequentialGroup()
-                                        .addComponent(jLabelQtd)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                            .addComponent(jTextFieldQtd, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addComponent(jTextPaneVlUnit, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                                .addGap(88, 88, 88))))
+                        .addGap(12, 12, 12)
+                        .addComponent(jLabelQtd)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jTextFieldQtd, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jLabelDesconto)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jTextFieldDesconto, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
                         .addComponent(jLabel2)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jTextPaneVlSubtotal, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -325,7 +336,7 @@ public class JFrameConsultaProduto extends javax.swing.JFrame {
                         .addComponent(jLabel3)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jTextPaneVlTotal, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 67, Short.MAX_VALUE)
+                .addGap(45, 45, 45)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(btConfirmar, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btVoltar, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -367,11 +378,11 @@ public class JFrameConsultaProduto extends javax.swing.JFrame {
                     
                     jTextPaneDSProduto.setText(produto.getDescricao());
                     jTextPaneVlUnit.setText(Double.toString(produto.getValor()));
-                    
-                    jTextPaneVlSubtotal.setText("0");
-                    jTextFieldDesconto.setText("0");
+                    jTextPaneVlTotal.setText(Double.toString(produto.getValor()));
+                    jTextPaneVlSubtotal.setText(Double.toString(produto.getValor()));
                     jTextFieldQtd.setText("1");
-                    atualizarCampos();
+                    jTextFieldDesconto.setText("0");
+                    
                     
                     jTabbedPane1.setSelectedIndex(1);
                 }
@@ -406,6 +417,10 @@ public class JFrameConsultaProduto extends javax.swing.JFrame {
         dispose();
     }//GEN-LAST:event_jButtonCancelarActionPerformed
 
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        
+    }//GEN-LAST:event_jButton1ActionPerformed
+
     private void filtrarTabela(String termoPesquisa) {
         DefaultTableModel model = (DefaultTableModel) jTableProdutos.getModel();
         TableRowSorter<DefaultTableModel> sorter = new TableRowSorter<>(model);
@@ -416,48 +431,15 @@ public class JFrameConsultaProduto extends javax.swing.JFrame {
     }
     
     private void atualizarLista(){
-        ProdutoService produtoService = new ProdutoService();
-        
-        List<ProdutoResponseDTO> listaProdutos = PDVUtils.produtos;
-        
-        ProdutoTableModel model = 
-               new ProdutoTableModel(listaProdutos);
-        
+        ProdutoTableModel model = new ProdutoTableModel(PDVUtils.produtos);
         jTableProdutos.setModel(model);
     }
-    
-    private void atualizarCampos() {
-        String descontoText = jTextFieldDesconto.getText();
-        String qtdText = jTextPaneVlSubtotal.getText();
-        String vlUnitText = jTextPaneVlUnit.getText();
-
-        try {
-            int qtd = Integer.parseInt(qtdText);
-            double vlUnit = Double.parseDouble(vlUnitText);
-            double desconto = Double.parseDouble(descontoText);
-            double subtotal = qtd * vlUnit;
-            double total = Math.round(subtotal - (subtotal * (desconto / 100)));
-            
-            jTextPaneVlSubtotal.setText(Double.toString(subtotal));
-            jTextPaneVlTotal.setText(Double.toString(total));
-//            this.itemVenda.setDescontoProduto(desconto);
-            this.itemVenda.setQuantidade(qtd);
-            this.itemVenda.setValorTotal(total);
-            this.itemVenda.setValorUnitario(vlUnit);
-        } 
-        catch (NumberFormatException ex) {
-            System.out.println("Erro ao transformar números");
-        }
-        catch (Exception ex) {
-            JOptionPane.showMessageDialog(null, ex.getMessage(), "Input inválido", JOptionPane.ERROR_MESSAGE);
-        }
-    }
-
     
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btConfirmar;
     private javax.swing.JButton btVoltar;
+    private javax.swing.JButton jButton1;
     private javax.swing.JButton jButtonCancelar;
     private javax.swing.JButton jButtonSelecionar;
     private javax.swing.JLabel jLabel1;
