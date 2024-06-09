@@ -4,6 +4,7 @@ import com.google.gson.Gson;
 import com.mycompany.app.pdv.dtos.response.ClienteResponseDTO;
 import com.mycompany.app.pdv.dtos.response.ErrorResponseDTO;
 import com.mycompany.app.pdv.dtos.response.ProdutoResponseDTO;
+import com.mycompany.app.pdv.dtos.response.VendaResponseDTO;
 import com.mycompany.app.pdv.exceptions.ApiException;
 import java.io.IOException;
 import java.sql.Connection;
@@ -22,6 +23,7 @@ public class PDVUtils {
    
    public static List<ProdutoResponseDTO> produtos;
    public static List<ClienteResponseDTO> clientes;
+   public static List<VendaResponseDTO> vendas;
    public static ScheduledExecutorService scheduler;
    
    

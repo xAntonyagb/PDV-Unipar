@@ -4,18 +4,24 @@
  */
 package com.mycompany.app.pdv.views;
 
+import com.mycompany.app.pdv.dtos.response.ClienteResponseDTO;
+import com.mycompany.app.pdv.dtos.response.VendaResponseDTO;
+import com.mycompany.app.pdv.views.JframeVenda;
 import com.mycompany.app.pdv.views.components.TableDark;
+import java.util.List;
 
 /**
  *
  * @author wallg
  */
+    
 public class JFrameConsultaVendas extends javax.swing.JFrame {
-
+    private JframeVenda frameVenda;
+    private List<VendaResponseDTO> venda;
     /**
      * Creates new form JFrameConsultaVendas
      */
-    public JFrameConsultaVendas() {
+    public JFrameConsultaVendas(JframeVenda frameVenda) {
         initComponents();
         tbHistorico.fixTable(jScrollPane1);
     }
@@ -163,36 +169,16 @@ public class JFrameConsultaVendas extends javax.swing.JFrame {
     /**
      * @param args the command line arguments
      */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(JFrameConsultaVendas.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(JFrameConsultaVendas.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(JFrameConsultaVendas.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(JFrameConsultaVendas.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
 
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new JFrameConsultaVendas().setVisible(true);
-            }
-        });
+        private void atualizarLista() {
+        List<VendaResponseDTO> listaVendas = PDVUtils.vendas;
+        this.clientes = listaClientes;
+        
+         ClienteTableModel model = 
+                new ClienteTableModel(listaClientes);
+        
+        tbHistorico.setModel(model);
+    }
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
