@@ -1,11 +1,15 @@
 package org.example.pdvapi.dtos.request;
 
+import jakarta.validation.constraints.NotNull;
+
 /**
  *
  * @author gabri
  */
 public class TokenRequestDTO {
+    @NotNull
     private String username;
+    @NotNull
     private String password;
 
     public TokenRequestDTO() {

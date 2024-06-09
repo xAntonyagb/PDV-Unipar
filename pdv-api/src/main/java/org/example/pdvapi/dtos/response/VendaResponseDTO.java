@@ -159,16 +159,14 @@ public class VendaResponseDTO {
             if(vendaResponseDTO.getData() != null){
                 venda.setData(vendaResponseDTO.getData());
             }
+            if(vendaResponseDTO.getCliente() != null) {
+                venda.setCliente(new ClienteResponseDTO().toEntity(vendaResponseDTO.getCliente()));
+            }
 
-            venda.setCliente(vendaResponseDTO.getCliente() != null
-                    ? new ClienteResponseDTO().toEntity(vendaResponseDTO.getCliente())
-                    : null
-            );
+            if (vendaResponseDTO.getItensVenda() != null) {
+                venda.setItensVenda(new ItemVendaResponseDTO().toEntityList(vendaResponseDTO.getItensVenda()));
+            }
 
-            venda.setItensVenda(vendaResponseDTO.getItensVenda() != null
-                    ? new ItemVendaResponseDTO().toEntityList(vendaResponseDTO.getItensVenda())
-                    : null
-            );
         }
 
         return venda;

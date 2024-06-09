@@ -1,5 +1,8 @@
 package org.example.pdvapi.dtos.request;
 
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotNull;
 import org.example.pdvapi.dtos.response.VendaResponseDTO;
 
 import java.util.ArrayList;
@@ -12,8 +15,13 @@ import java.util.List;
 public class VendaRequestDTO {
 
     private String observacao;
+    @NotNull
+    @NotEmpty
+    @NotBlank
     private List<ItemVendaRequestDTO> itensVenda;
+    @NotNull
     private ClienteRequestDTO cliente;
+    @NotNull
     private String data;
 
     public VendaRequestDTO() {
