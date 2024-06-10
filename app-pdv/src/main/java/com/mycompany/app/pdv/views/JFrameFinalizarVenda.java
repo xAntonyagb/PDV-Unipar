@@ -2,10 +2,8 @@ package com.mycompany.app.pdv.views;
 
 import com.mycompany.app.pdv.dtos.request.VendaRequestDTO;
 import com.mycompany.app.pdv.dtos.response.VendaResponseDTO;
-import com.mycompany.app.pdv.exceptions.ApiException;
 import com.mycompany.app.pdv.services.VendaService;
 import com.mycompany.app.pdv.utils.TimeUtils;
-import javax.swing.JOptionPane;
 
 /**
  *
@@ -13,12 +11,12 @@ import javax.swing.JOptionPane;
  */
 public class JFrameFinalizarVenda extends javax.swing.JFrame {
     
-    private VendaResponseDTO venda;
-    private JframeVenda frameVenda;
+    private final VendaResponseDTO VENDA;
+    private final JframeVenda FRAME_VENDA;
 
     public JFrameFinalizarVenda(VendaResponseDTO venda, JframeVenda frameVenda) {
-        this.venda = venda;
-        this.frameVenda = frameVenda;
+        VENDA = venda;
+        FRAME_VENDA = frameVenda;
         initComponents();
         
         jFieldSubTotal.setText(Double.toString(venda.getValorTotal()));
@@ -204,7 +202,7 @@ public class JFrameFinalizarVenda extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btFinalizarVendaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btFinalizarVendaActionPerformed
-        VendaRequestDTO vendaRequest = VendaRequestDTO.toVendaRequestDTO(venda);
+        VendaRequestDTO vendaRequest = VendaRequestDTO.toVendaRequestDTO(VENDA);
         VendaService vendaService = new VendaService();
 
         Object selectedItem = jComboBoxMetodoPgmt.getSelectedItem();
@@ -213,7 +211,7 @@ public class JFrameFinalizarVenda extends javax.swing.JFrame {
 
         vendaService.insertAsync(vendaRequest);
 
-        this.frameVenda.limparVenda();
+        FRAME_VENDA.limparVenda();
         dispose();
     }//GEN-LAST:event_btFinalizarVendaActionPerformed
 

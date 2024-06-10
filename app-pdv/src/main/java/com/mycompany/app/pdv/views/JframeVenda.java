@@ -93,12 +93,6 @@ public class JframeVenda extends javax.swing.JFrame {
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu4 = new javax.swing.JMenu();
         jMenuItemHistorico = new javax.swing.JMenuItem();
-        jMenu1 = new javax.swing.JMenu();
-        jMenuItemCategoria = new javax.swing.JMenuItem();
-        jMenu2 = new javax.swing.JMenu();
-        jMenuItemProduto = new javax.swing.JMenuItem();
-        jMenu3 = new javax.swing.JMenu();
-        jMenuItemCliente = new javax.swing.JMenuItem();
 
         jTextField1.setText("jTextField1");
 
@@ -533,14 +527,14 @@ public class JframeVenda extends javax.swing.JFrame {
         tableItens.setForeground(new java.awt.Color(25, 35, 45));
         tableItens.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {"Teste", "123", "1", "23", "2222"}
+
             },
             new String [] {
-                "Produto", "Valor Unit.", "Qtd.", "Desconto (%)", "Valor Total"
+                "Produto", "Valor Unit.", "Qtd.", "Subtotal", "Desconto (R$)", "Valor Total"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false
+                false, false, false, false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -558,9 +552,10 @@ public class JframeVenda extends javax.swing.JFrame {
             tableItens.getColumnModel().getColumn(2).setResizable(false);
             tableItens.getColumnModel().getColumn(2).setPreferredWidth(45);
             tableItens.getColumnModel().getColumn(3).setResizable(false);
-            tableItens.getColumnModel().getColumn(3).setPreferredWidth(45);
             tableItens.getColumnModel().getColumn(4).setResizable(false);
             tableItens.getColumnModel().getColumn(4).setPreferredWidth(45);
+            tableItens.getColumnModel().getColumn(5).setResizable(false);
+            tableItens.getColumnModel().getColumn(5).setPreferredWidth(45);
         }
 
         javax.swing.GroupLayout PrincipalLayout = new javax.swing.GroupLayout(Principal);
@@ -615,67 +610,6 @@ public class JframeVenda extends javax.swing.JFrame {
         jMenu4.add(jMenuItemHistorico);
 
         jMenuBar1.add(jMenu4);
-
-        jMenu1.setBackground(new java.awt.Color(0, 0, 0));
-        jMenu1.setForeground(new java.awt.Color(204, 204, 204));
-        jMenu1.setText("Categorias");
-        jMenu1.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
-        jMenu1.setMargin(new java.awt.Insets(3, 16, 12, 16));
-
-        jMenuItemCategoria.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_F2, 0));
-        jMenuItemCategoria.setBackground(new java.awt.Color(40, 46, 56));
-        jMenuItemCategoria.setForeground(new java.awt.Color(204, 204, 204));
-        jMenuItemCategoria.setIcon(new javax.swing.ImageIcon(getClass().getResource("/META-INF/Novo.png"))); // NOI18N
-        jMenuItemCategoria.setText("Gerenciar Categorias");
-        jMenuItemCategoria.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
-        jMenuItemCategoria.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItemCategoriaActionPerformed(evt);
-            }
-        });
-        jMenu1.add(jMenuItemCategoria);
-
-        jMenuBar1.add(jMenu1);
-
-        jMenu2.setBackground(new java.awt.Color(0, 0, 0));
-        jMenu2.setForeground(new java.awt.Color(204, 204, 204));
-        jMenu2.setText("Produtos");
-        jMenu2.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
-        jMenu2.setMargin(new java.awt.Insets(3, 16, 12, 16));
-
-        jMenuItemProduto.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_F3, 0));
-        jMenuItemProduto.setBackground(new java.awt.Color(40, 46, 56));
-        jMenuItemProduto.setForeground(new java.awt.Color(204, 204, 204));
-        jMenuItemProduto.setIcon(new javax.swing.ImageIcon(getClass().getResource("/META-INF/adicionar-sacola-de-compras (1).png"))); // NOI18N
-        jMenuItemProduto.setText("Gerenciar Produtos");
-        jMenuItemProduto.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItemProdutoActionPerformed(evt);
-            }
-        });
-        jMenu2.add(jMenuItemProduto);
-
-        jMenuBar1.add(jMenu2);
-
-        jMenu3.setBackground(new java.awt.Color(0, 0, 0));
-        jMenu3.setForeground(new java.awt.Color(204, 204, 204));
-        jMenu3.setText("Clientes");
-        jMenu3.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
-        jMenu3.setMargin(new java.awt.Insets(3, 16, 12, 16));
-
-        jMenuItemCliente.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_F4, 0));
-        jMenuItemCliente.setBackground(new java.awt.Color(40, 46, 56));
-        jMenuItemCliente.setForeground(new java.awt.Color(204, 204, 204));
-        jMenuItemCliente.setIcon(new javax.swing.ImageIcon(getClass().getResource("/META-INF/Clientes.png"))); // NOI18N
-        jMenuItemCliente.setText("Gerenciar Clientes");
-        jMenuItemCliente.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItemClienteActionPerformed(evt);
-            }
-        });
-        jMenu3.add(jMenuItemCliente);
-
-        jMenuBar1.add(jMenu3);
 
         setJMenuBar(jMenuBar1);
 
@@ -733,16 +667,12 @@ public class JframeVenda extends javax.swing.JFrame {
         addProduto();
     }//GEN-LAST:event_btAddProdutosActionPerformed
 
-    private void jMenuItemClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemClienteActionPerformed
-        JOptionPane.showMessageDialog(null, "Essa tela ainda não foi implementada", "TODO", JOptionPane.INFORMATION_MESSAGE);
-    }//GEN-LAST:event_jMenuItemClienteActionPerformed
-
     private void btRemoverProdutoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btRemoverProdutoActionPerformed
         removerProduto();
     }//GEN-LAST:event_btRemoverProdutoActionPerformed
 
     private void jMenuItemHistoricoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemHistoricoActionPerformed
-        JFrameConsultaVendas frame = new JFrameConsultaVendas(this);
+        JFrameConsultaVendas frame = new JFrameConsultaVendas();
         frame.setResizable(false);
         frame.setLocationRelativeTo(null);
         frame.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
@@ -750,14 +680,6 @@ public class JframeVenda extends javax.swing.JFrame {
         removerFocoPricipal(frame);
         frame.setVisible(true);
     }//GEN-LAST:event_jMenuItemHistoricoActionPerformed
-
-    private void jMenuItemProdutoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemProdutoActionPerformed
-        JOptionPane.showMessageDialog(null, "Essa tela ainda não foi implementada", "TODO", JOptionPane.INFORMATION_MESSAGE);
-    }//GEN-LAST:event_jMenuItemProdutoActionPerformed
-
-    private void jMenuItemCategoriaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemCategoriaActionPerformed
-        JOptionPane.showMessageDialog(null, "Essa tela ainda não foi implementada", "TODO", JOptionPane.INFORMATION_MESSAGE);
-    }//GEN-LAST:event_jMenuItemCategoriaActionPerformed
     
     public VendaResponseDTO getVenda() {
         return venda;
@@ -984,15 +906,9 @@ public class JframeVenda extends javax.swing.JFrame {
     private javax.swing.JLabel jLabelDescontos3;
     private javax.swing.JLabel jLabelSubtotal;
     private javax.swing.JLabel jLabelTotal;
-    private javax.swing.JMenu jMenu1;
-    private javax.swing.JMenu jMenu2;
-    private javax.swing.JMenu jMenu3;
     private javax.swing.JMenu jMenu4;
     private javax.swing.JMenuBar jMenuBar1;
-    private javax.swing.JMenuItem jMenuItemCategoria;
-    private javax.swing.JMenuItem jMenuItemCliente;
     private javax.swing.JMenuItem jMenuItemHistorico;
-    private javax.swing.JMenuItem jMenuItemProduto;
     private javax.swing.JPanel jPanel13;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;

@@ -13,7 +13,7 @@ public class ItemVendaTableModel extends DefaultTableModel {
         this.addColumn("Valor Unit.");
         this.addColumn("Qtd.");
         this.addColumn("Subtotal");
-        this.addColumn("Desconto");
+        this.addColumn("Desconto (R$)");
         this.addColumn("Valor Total");
     }
     

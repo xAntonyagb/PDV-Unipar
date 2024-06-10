@@ -16,6 +16,6 @@ public interface IClienteRequest {
     @GET("cliente/all")
     Call<List<ClienteResponseDTO>> findAll(@Header("Authorization")String token);
     
-    @GET("cliente/{name}")
-    Call<List<ClienteResponseDTO>> findByName(@Path("name") String nome, @Header("Authorization") String token);
+//    @GET("cliente/{name}")
+//    Call<List<ClienteResponseDTO>> findByName(@Path("name") String nome, @Header("Authorization") String token);
 }

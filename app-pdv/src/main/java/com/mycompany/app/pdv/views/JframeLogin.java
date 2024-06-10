@@ -12,7 +12,6 @@ import com.mycompany.app.pdv.services.VendaService;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import com.mycompany.app.pdv.views.JframeVenda;
-import com.mycompany.app.pdv.utils.ApiLoggerUtils;
 import com.mycompany.app.pdv.utils.PDVUtils;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
@@ -328,7 +327,7 @@ public class JframeLogin extends javax.swing.JFrame {
             
             // Inicia o agendamento da tarefa
             startScheduledTask();
-
+            
             JOptionPane.showMessageDialog(this, "Login realizado com sucesso!", "Sucesso!", JOptionPane.INFORMATION_MESSAGE);
             abrirFrameVenda();
         } catch(ApiException ex) {
@@ -355,8 +354,14 @@ public class JframeLogin extends javax.swing.JFrame {
                     PDVUtils.produtos = produtos;
                     PDVUtils.clientes = clientes; 
                     PDVUtils.vendas = vendas;
-                } catch (ApiException | InterruptedException e) {
-                    e.printStackTrace(); // ou trate a exceção conforme necessário
+                } 
+                catch(ApiException ex) {
+                    JOptionPane.showMessageDialog(null, ex.getMessage() + "\nBanco de dados não preenchido, por favor preencha antes de utilizar o sistema", "Erro ao prosseguir", JOptionPane.ERROR_MESSAGE);
+                    System.exit(0);
+                } 
+                catch (InterruptedException ex) {
+                    JOptionPane.showMessageDialog(null, ex.getMessage() + "\nTempo esgotado! Um erro ocorreu ao requisitar os dados para o sistema, caso persista, tente novamente mais tarde.", "Erro ao processar", JOptionPane.ERROR_MESSAGE);
+                    System.exit(0);
                 }
             }
         };
