@@ -10,6 +10,10 @@ import com.mycompany.app.pdv.services.ClienteService;
 import com.mycompany.app.pdv.services.VendaService;
 import com.mycompany.app.pdv.tablemodels.ItemVendaTableModel;
 import com.mycompany.app.pdv.utils.PDVUtils;
+import java.awt.event.ComponentAdapter;
+import java.awt.event.ComponentEvent;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.text.DecimalFormat;
@@ -31,6 +35,21 @@ public class JframeVenda extends javax.swing.JFrame {
         
         setExtendedState(JFrame.MAXIMIZED_BOTH);
         setTitle("Menu PDV");
+        aplicarFocoPrincipal();
+        
+        this.addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyPressed(KeyEvent evt) {
+                executaKeyListener(evt);
+            }
+        });
+        
+        btSelecionarCliente.addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyPressed(KeyEvent evt) {
+                executaKeyListener(evt);
+            }
+        });
     }
 
     @SuppressWarnings("unchecked")
@@ -108,7 +127,7 @@ public class JframeVenda extends javax.swing.JFrame {
         btAddProdutos.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
         btAddProdutos.setForeground(new java.awt.Color(204, 204, 204));
         btAddProdutos.setIcon(new javax.swing.ImageIcon(getClass().getResource("/META-INF/adicionar-sacola-de-compras (1).png"))); // NOI18N
-        btAddProdutos.setText("Adicionar Produtos");
+        btAddProdutos.setText("Adicionar Produtos (T)");
         btAddProdutos.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(15, 45, 48), 2, true));
         btAddProdutos.setFocusable(false);
         btAddProdutos.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
@@ -123,15 +142,14 @@ public class JframeVenda extends javax.swing.JFrame {
         btSelecionarCliente.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         btSelecionarCliente.setForeground(new java.awt.Color(204, 204, 204));
         btSelecionarCliente.setIcon(new javax.swing.ImageIcon(getClass().getResource("/META-INF/Clientes.png"))); // NOI18N
-        btSelecionarCliente.setText("Selecionar Cliente");
+        btSelecionarCliente.setText("Selecionar Cliente (Espaço)");
         btSelecionarCliente.setToolTipText("");
         btSelecionarCliente.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(15, 45, 48), 2, true));
-        btSelecionarCliente.setDefaultCapable(false);
-        btSelecionarCliente.setFocusable(false);
         btSelecionarCliente.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
         btSelecionarCliente.setIconTextGap(5);
         btSelecionarCliente.setMargin(new java.awt.Insets(20, 14, 20, 14));
         btSelecionarCliente.setPreferredSize(new java.awt.Dimension(166, 35));
+        btSelecionarCliente.setRequestFocusEnabled(false);
         btSelecionarCliente.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btSelecionarClienteActionPerformed(evt);
@@ -142,7 +160,7 @@ public class JframeVenda extends javax.swing.JFrame {
         btNovo.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
         btNovo.setForeground(new java.awt.Color(204, 204, 204));
         btNovo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/META-INF/Novo.png"))); // NOI18N
-        btNovo.setText("Novo (F9)");
+        btNovo.setText("Novo (F5)");
         btNovo.setActionCommand("Novo");
         btNovo.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(22, 76, 50), 2, true));
         btNovo.setDefaultCapable(false);
@@ -160,7 +178,7 @@ public class JframeVenda extends javax.swing.JFrame {
         btFinalizar.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
         btFinalizar.setForeground(new java.awt.Color(204, 204, 204));
         btFinalizar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/META-INF/Checked.png"))); // NOI18N
-        btFinalizar.setText("Finalizar (F8)");
+        btFinalizar.setText("Finalizar (Enter)");
         btFinalizar.setActionCommand("Finalizar");
         btFinalizar.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(27, 61, 79), 2, true));
         btFinalizar.setDefaultCapable(false);
@@ -189,16 +207,17 @@ public class JframeVenda extends javax.swing.JFrame {
         );
 
         jFieldCliente.setEditable(false);
-        jFieldCliente.setBackground(new java.awt.Color(40, 46, 56));
+        jFieldCliente.setBackground(new java.awt.Color(44, 49, 58));
         jFieldCliente.setForeground(new java.awt.Color(204, 204, 204));
         jFieldCliente.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(40, 46, 56)));
+        jFieldCliente.setEnabled(false);
         jFieldCliente.setMinimumSize(new java.awt.Dimension(64, 15));
         jFieldCliente.setPreferredSize(new java.awt.Dimension(64, 40));
 
         btRemoverProduto.setBackground(new java.awt.Color(81, 19, 19));
         btRemoverProduto.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
         btRemoverProduto.setForeground(new java.awt.Color(204, 204, 204));
-        btRemoverProduto.setText("Remover");
+        btRemoverProduto.setText("Remover (Delete)");
         btRemoverProduto.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(76, 17, 17), 2, true));
         btRemoverProduto.setFocusable(false);
         btRemoverProduto.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
@@ -582,7 +601,7 @@ public class JframeVenda extends javax.swing.JFrame {
         jMenu4.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
         jMenu4.setMargin(new java.awt.Insets(3, 16, 12, 16));
 
-        jMenuItemHistorico.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_F3, 0));
+        jMenuItemHistorico.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_F1, 0));
         jMenuItemHistorico.setBackground(new java.awt.Color(40, 46, 56));
         jMenuItemHistorico.setForeground(new java.awt.Color(204, 204, 204));
         jMenuItemHistorico.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Historico.png"))); // NOI18N
@@ -602,7 +621,7 @@ public class JframeVenda extends javax.swing.JFrame {
         jMenu1.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
         jMenu1.setMargin(new java.awt.Insets(3, 16, 12, 16));
 
-        jMenuItemCategoria.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_F1, 0));
+        jMenuItemCategoria.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_F2, 0));
         jMenuItemCategoria.setBackground(new java.awt.Color(40, 46, 56));
         jMenuItemCategoria.setForeground(new java.awt.Color(204, 204, 204));
         jMenuItemCategoria.setIcon(new javax.swing.ImageIcon(getClass().getResource("/META-INF/Novo.png"))); // NOI18N
@@ -623,7 +642,7 @@ public class JframeVenda extends javax.swing.JFrame {
         jMenu2.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
         jMenu2.setMargin(new java.awt.Insets(3, 16, 12, 16));
 
-        jMenuItemProduto.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_F2, 0));
+        jMenuItemProduto.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_F3, 0));
         jMenuItemProduto.setBackground(new java.awt.Color(40, 46, 56));
         jMenuItemProduto.setForeground(new java.awt.Color(204, 204, 204));
         jMenuItemProduto.setIcon(new javax.swing.ImageIcon(getClass().getResource("/META-INF/adicionar-sacola-de-compras (1).png"))); // NOI18N
@@ -643,7 +662,7 @@ public class JframeVenda extends javax.swing.JFrame {
         jMenu3.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
         jMenu3.setMargin(new java.awt.Insets(3, 16, 12, 16));
 
-        jMenuItemCliente.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_F3, 0));
+        jMenuItemCliente.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_F4, 0));
         jMenuItemCliente.setBackground(new java.awt.Color(40, 46, 56));
         jMenuItemCliente.setForeground(new java.awt.Color(204, 204, 204));
         jMenuItemCliente.setIcon(new javax.swing.ImageIcon(getClass().getResource("/META-INF/Clientes.png"))); // NOI18N
@@ -677,25 +696,28 @@ public class JframeVenda extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void executaKeyListener(KeyEvent evt) {
+        switch (evt.getKeyCode()) {
+            case KeyEvent.VK_ENTER:
+                finalizarVenda();
+                break;
+            case KeyEvent.VK_F5:
+                limparVenda();
+                break;
+            case KeyEvent.VK_SPACE:
+                addCliente();
+                break;
+            case KeyEvent.VK_T:
+                addProduto();
+                break;
+            case KeyEvent.VK_DELETE:
+                removerProduto();
+                break;
+        }
+    }
+    
     private void btFinalizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btFinalizarActionPerformed
-        try {
-            VendaRequestDTO requisicao = VendaRequestDTO.toVendaRequestDTO(this.venda);
-            applyVenda(vendaService.doCalc(requisicao));
-            
-            JFrameFinalizarVenda frame = new JFrameFinalizarVenda(this.venda, this);
-            frame.setResizable(false);
-            frame.setLocationRelativeTo(null);
-            frame.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
-
-            removerFocoPricipal(frame);
-            frame.setVisible(true);
-        }
-        catch(ApiException ex) {
-            JOptionPane.showMessageDialog(null, ex.getMessage() + "\nVenda incompleta! Faça os ajustes necessários antes de finaliza-la.", "Erro ao presseguir", JOptionPane.ERROR_MESSAGE);
-        } 
-        catch (InterruptedException ex) {
-            JOptionPane.showMessageDialog(this, ex.getMessage() + "\nTempo esgotado! Um erro ocorreu ao finalizar a venda, caso persista, tente novamente mais tarde.", "Erro ao processar", JOptionPane.ERROR_MESSAGE);
-        }
+        finalizarVenda();
     }//GEN-LAST:event_btFinalizarActionPerformed
 
     private void btNovoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btNovoActionPerformed
@@ -703,36 +725,11 @@ public class JframeVenda extends javax.swing.JFrame {
     }//GEN-LAST:event_btNovoActionPerformed
 
     private void btSelecionarClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btSelecionarClienteActionPerformed
-        JFrameConsultaCliente frameClientes = new JFrameConsultaCliente(this);
-        frameClientes.setResizable(false);
-        frameClientes.setLocationRelativeTo(null);
-        frameClientes.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
-
-        removerFocoPricipal(frameClientes);
-        frameClientes.setVisible(true);
+        addCliente();
     }//GEN-LAST:event_btSelecionarClienteActionPerformed
 
     private void btAddProdutosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btAddProdutosActionPerformed
-        // Verificar cliente
-        try {
-            ClienteService clienteService = new ClienteService();
-            ClienteResponseDTO consulta = clienteService.findById(this.venda.getCliente().getId());
-            this.venda.setCliente(consulta);
-        } catch (ApiException ex) {
-            JOptionPane.showMessageDialog(null, ex.getMessage() + "\nPorfavor selecione um cliente! Faça os ajustes necessários antes de continuar.", "Erro ao presseguir", JOptionPane.ERROR_MESSAGE);
-            return;
-        } catch (InterruptedException ex) {
-            JOptionPane.showMessageDialog(this, ex.getMessage() + "\nTempo esgotado! Um erro ocorreu ao continuar selecionando produtos, caso persista, tente novamente mais tarde.", "Erro ao processar", JOptionPane.ERROR_MESSAGE);
-            return;
-        }
-        
-        JFrameConsultaProduto frame = new JFrameConsultaProduto(this);
-        frame.setResizable(false);
-        frame.setLocationRelativeTo(null);
-        frame.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
-
-        removerFocoPricipal(frame);
-        frame.setVisible(true);
+        addProduto();
     }//GEN-LAST:event_btAddProdutosActionPerformed
 
     private void jMenuItemClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemClienteActionPerformed
@@ -740,24 +737,11 @@ public class JframeVenda extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenuItemClienteActionPerformed
 
     private void btRemoverProdutoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btRemoverProdutoActionPerformed
-        int selectedRow = tableItens.getSelectedRow();
-
-        if (selectedRow != -1) {
-            String nome = (String) tableItens.getValueAt(selectedRow, 0);
-            for (int i = 0; i < this.venda.getItensVenda().size(); i++) {
-                if(nome.equalsIgnoreCase(this.venda.getItensVenda().get(i).getProduto().getDescricao())){
-                    removerItemTable(i);
-                    return;
-                }
-            }
-        }
-        else {
-            JOptionPane.showMessageDialog(null, "Por favor selecione algum item", "Erro ao continuar", JOptionPane.ERROR_MESSAGE);
-        }
+        removerProduto();
     }//GEN-LAST:event_btRemoverProdutoActionPerformed
 
     private void jMenuItemHistoricoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemHistoricoActionPerformed
-        JFrameConsultaVendas frame = new JFrameConsultaVendas();
+        JFrameConsultaVendas frame = new JFrameConsultaVendas(this);
         frame.setResizable(false);
         frame.setLocationRelativeTo(null);
         frame.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
@@ -773,6 +757,45 @@ public class JframeVenda extends javax.swing.JFrame {
     private void jMenuItemCategoriaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemCategoriaActionPerformed
         JOptionPane.showMessageDialog(null, "Essa tela ainda não foi implementada", "TODO", JOptionPane.INFORMATION_MESSAGE);
     }//GEN-LAST:event_jMenuItemCategoriaActionPerformed
+    
+    public VendaResponseDTO getVenda() {
+        return venda;
+    }
+
+    public void setVenda(VendaResponseDTO venda) {
+        this.venda = venda;
+    }
+    
+    public void applyVenda(VendaResponseDTO venda) {
+        this.venda = venda;
+        
+        //Cliente
+        ClienteResponseDTO cliente = venda.getCliente();
+        jFieldCliente.setText(cliente == null ? "" : cliente.getNome());
+        
+        //ItensVenda
+        List<ItemVendaResponseDTO> itensVenda = venda.getItensVenda();
+        ItemVendaTableModel model = new ItemVendaTableModel(itensVenda);
+        tableItens.setModel(model);
+        
+        // Arredondar
+        DecimalFormat df = new DecimalFormat("#.###");
+
+        // Subtotal
+        double valorSubtotal = venda.getValorSubtotal();
+        String subtotal = df.format(valorSubtotal);
+        jLabelSubtotal.setText(subtotal);
+
+        // Total
+        double valorTotal = venda.getValorTotal();
+        String total = df.format(valorTotal);
+        jLabelTotal.setText(total);
+
+        // Descontos
+        double descontoTotal = venda.getDescontoTotal();
+        String descontos = df.format(descontoTotal);
+        jLabelDescontos.setText(descontos);
+    }
     
     public void limparVenda() {
         this.venda = new VendaResponseDTO();
@@ -830,47 +853,77 @@ public class JframeVenda extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, ex.getMessage() + "\nTempo esgotado! Tente novamente mais tarde.", "Erro ao remover", JOptionPane.ERROR_MESSAGE);
         }
     }
-    
-    
-    public void applyVenda(VendaResponseDTO venda) {
-        this.venda = venda;
-        
-        //Cliente
-        ClienteResponseDTO cliente = venda.getCliente();
-        jFieldCliente.setText(cliente == null ? "" : cliente.getNome());
-        
-        //ItensVenda
-        List<ItemVendaResponseDTO> itensVenda = venda.getItensVenda();
-        ItemVendaTableModel model = new ItemVendaTableModel(itensVenda);
-        tableItens.setModel(model);
-        
-        // Arredondar
-        DecimalFormat df = new DecimalFormat("#.###");
 
-        // Subtotal
-        double valorSubtotal = venda.getValorSubtotal();
-        String subtotal = df.format(valorSubtotal);
-        jLabelSubtotal.setText(subtotal);
+    private void addCliente() {
+        JFrameConsultaCliente frameClientes = new JFrameConsultaCliente(this);
+        frameClientes.setResizable(false);
+        frameClientes.setLocationRelativeTo(null);
+        frameClientes.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 
-        // Total
-        double valorTotal = venda.getValorTotal();
-        String total = df.format(valorTotal);
-        jLabelTotal.setText(total);
-
-        // Descontos
-        double descontoTotal = venda.getDescontoTotal();
-        String descontos = df.format(descontoTotal);
-        jLabelDescontos.setText(descontos);
+        removerFocoPricipal(frameClientes);
+        frameClientes.setVisible(true);
     }
     
-    public VendaResponseDTO getVenda() {
-        return venda;
-    }
+    private void addProduto() {
+        // Verificar cliente
+        try {
+            ClienteService clienteService = new ClienteService();
+            ClienteResponseDTO consulta = clienteService.findById(this.venda.getCliente().getId());
+            this.venda.setCliente(consulta);
+        } catch (ApiException ex) {
+            JOptionPane.showMessageDialog(null, ex.getMessage() + "\nPorfavor selecione um cliente! Faça os ajustes necessários antes de continuar.", "Erro ao presseguir", JOptionPane.ERROR_MESSAGE);
+            return;
+        } catch (InterruptedException ex) {
+            JOptionPane.showMessageDialog(this, ex.getMessage() + "\nTempo esgotado! Um erro ocorreu ao continuar selecionando produtos, caso persista, tente novamente mais tarde.", "Erro ao processar", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        
+        JFrameConsultaProduto frame = new JFrameConsultaProduto(this);
+        frame.setResizable(false);
+        frame.setLocationRelativeTo(null);
+        frame.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 
-    public void setVenda(VendaResponseDTO venda) {
-        this.venda = venda;
+        removerFocoPricipal(frame);
+        frame.setVisible(true);
     }
     
+    private void removerProduto() {
+        int selectedRow = tableItens.getSelectedRow();
+
+        if (selectedRow != -1) {
+            String nome = (String) tableItens.getValueAt(selectedRow, 0);
+            for (int i = 0; i < this.venda.getItensVenda().size(); i++) {
+                if(nome.equalsIgnoreCase(this.venda.getItensVenda().get(i).getProduto().getDescricao())){
+                    removerItemTable(i);
+                    return;
+                }
+            }
+        }
+        else {
+            JOptionPane.showMessageDialog(null, "Por favor selecione algum item", "Erro ao continuar", JOptionPane.ERROR_MESSAGE);
+        }
+    }
+    
+    private void finalizarVenda() {
+        try {
+            VendaRequestDTO requisicao = VendaRequestDTO.toVendaRequestDTO(this.venda);
+            applyVenda(vendaService.doCalc(requisicao));
+            
+            JFrameFinalizarVenda frame = new JFrameFinalizarVenda(this.venda, this);
+            frame.setResizable(false);
+            frame.setLocationRelativeTo(null);
+            frame.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+
+            removerFocoPricipal(frame);
+            frame.setVisible(true);
+        }
+        catch(ApiException ex) {
+            JOptionPane.showMessageDialog(null, ex.getMessage() + "\nVenda incompleta! Faça os ajustes necessários antes de finaliza-la.", "Erro ao presseguir", JOptionPane.ERROR_MESSAGE);
+        } 
+        catch (InterruptedException ex) {
+            JOptionPane.showMessageDialog(this, ex.getMessage() + "\nTempo esgotado! Um erro ocorreu ao finalizar a venda, caso persista, tente novamente mais tarde.", "Erro ao processar", JOptionPane.ERROR_MESSAGE);
+        }
+    }
     
     private void removerFocoPricipal(JFrame frame) {
         frame.addWindowListener(new WindowAdapter() {
@@ -882,9 +935,20 @@ public class JframeVenda extends javax.swing.JFrame {
             @Override
             public void windowClosed(WindowEvent e) {
                 setEnabled(true); //habilitar janela de venda
-                requestFocus(); //aplicar foco novamente
+                aplicarFocoPrincipal();
             }
         });
+    }
+    
+    private void aplicarFocoPrincipal() {
+        requestFocus();
+        
+        addComponentListener(new ComponentAdapter() {
+            public void componentShown(ComponentEvent e) {
+                    requestFocusInWindow();
+                }
+            }
+        );
     }
     
     //Parar thread de requisições
@@ -903,7 +967,6 @@ public class JframeVenda extends javax.swing.JFrame {
     private javax.swing.JPanel Subtotal;
     private javax.swing.JPanel Subtotal1;
     private javax.swing.JPanel Total;
-    private javax.swing.JPanel Total1;
     private javax.swing.JButton btAddProdutos;
     private javax.swing.JButton btFinalizar;
     public javax.swing.JButton btNovo;
@@ -912,18 +975,14 @@ public class JframeVenda extends javax.swing.JFrame {
     private javax.swing.JTextField jFieldCliente;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
-    private javax.swing.JLabel jLabel15;
-    private javax.swing.JLabel jLabel16;
     private javax.swing.JLabel jLabel17;
     private javax.swing.JLabel jLabel20;
     private javax.swing.JLabel jLabel21;
     private javax.swing.JLabel jLabel22;
     private javax.swing.JLabel jLabelDescontos;
-    private javax.swing.JLabel jLabelDescontos1;
     private javax.swing.JLabel jLabelDescontos3;
     private javax.swing.JLabel jLabelSubtotal;
     private javax.swing.JLabel jLabelTotal;
-    private javax.swing.JLabel jLabelTotal1;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenu jMenu3;
@@ -934,10 +993,8 @@ public class JframeVenda extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItemHistorico;
     private javax.swing.JMenuItem jMenuItemProduto;
     private javax.swing.JPanel jPanel13;
-    private javax.swing.JPanel jPanel14;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
-    private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;
     private javax.swing.JPanel jPanel6;
     private javax.swing.JPanel jPanel7;
@@ -945,6 +1002,5 @@ public class JframeVenda extends javax.swing.JFrame {
     private javax.swing.JTextField jTextField1;
     private com.mycompany.app.pdv.views.components.TableDark tableItens;
     // End of variables declaration//GEN-END:variables
-
 
 }

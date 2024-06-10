@@ -1,14 +1,6 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
- */
 package com.mycompany.app.pdv.views;
 
-import com.mycompany.app.pdv.dtos.response.ClienteResponseDTO;
-import com.mycompany.app.pdv.dtos.response.VendaResponseDTO;
 import com.mycompany.app.pdv.views.JframeVenda;
-import com.mycompany.app.pdv.views.components.TableDark;
-import java.util.List;
 
 /**
  *
@@ -17,7 +9,6 @@ import java.util.List;
     
 public class JFrameConsultaVendas extends javax.swing.JFrame {
     private JframeVenda frameVenda;
-    private List<VendaResponseDTO> venda;
     /**
      * Creates new form JFrameConsultaVendas
      */
@@ -166,19 +157,14 @@ public class JFrameConsultaVendas extends javax.swing.JFrame {
     dispose();
     }//GEN-LAST:event_btVoltarActionPerformed
 
-    /**
-     * @param args the command line arguments
-     */
 
-        private void atualizarLista() {
-        List<VendaResponseDTO> listaVendas = PDVUtils.vendas;
-        this.clientes = listaClientes;
-        
-         ClienteTableModel model = 
-                new ClienteTableModel(listaClientes);
-        
-        tbHistorico.setModel(model);
-    }
+    private void atualizarLista() {
+//        List<VendaResponseDTO> listaVendas = PDVUtils.vendas;
+//        
+//            ClienteTableModel model = 
+//                new ClienteTableModel(listaClientes);
+//        
+//        tbHistorico.setModel(model);
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
