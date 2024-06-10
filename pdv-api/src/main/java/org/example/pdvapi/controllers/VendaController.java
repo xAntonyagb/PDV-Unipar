@@ -17,10 +17,9 @@ import org.example.pdvapi.exceptions.ValidationException;
 import org.example.pdvapi.service.VendaService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @SecuritySchemes(value = {
         @SecurityScheme(
@@ -89,6 +88,11 @@ public class VendaController {
         VendaResponseDTO vendaResponseDTO = new VendaResponseDTO();
         vendaResponseDTO = vendaService.insert(vendaRequestDTO);
         return ResponseEntity.ok(vendaResponseDTO);
+    }
+
+    @GetMapping ("/all")
+    public ResponseEntity<List<VendaResponseDTO>> findAll() {
+        return ResponseEntity.ok(vendaService.findAll());
     }
 
 }

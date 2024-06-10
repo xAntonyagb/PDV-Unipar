@@ -10,6 +10,7 @@ import com.mycompany.app.pdv.services.ClienteService;
 import com.mycompany.app.pdv.services.VendaService;
 import com.mycompany.app.pdv.tablemodels.ItemVendaTableModel;
 import com.mycompany.app.pdv.utils.PDVUtils;
+import com.mycompany.app.pdv.views.JFrameConsultaVendas;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.text.DecimalFormat;
@@ -757,7 +758,7 @@ public class JframeVenda extends javax.swing.JFrame {
     }//GEN-LAST:event_btRemoverProdutoActionPerformed
 
     private void jMenuItemHistoricoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemHistoricoActionPerformed
-        JFrameConsultaVendas frame = new JFrameConsultaVendas();
+        JFrameConsultaVendas frame = new JFrameConsultaVendas(this);
         frame.setResizable(false);
         frame.setLocationRelativeTo(null);
         frame.setDefaultCloseOperation(DISPOSE_ON_CLOSE);

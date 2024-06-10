@@ -111,6 +111,11 @@ public class JFrameFinalizarVenda extends javax.swing.JFrame {
         jFieldVlTotal.setForeground(new java.awt.Color(204, 204, 204));
         jFieldVlTotal.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(40, 46, 56)));
         jFieldVlTotal.setEnabled(false);
+        jFieldVlTotal.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jFieldVlTotalActionPerformed(evt);
+            }
+        });
 
         jLabel3.setForeground(new java.awt.Color(204, 204, 204));
         jLabel3.setText("Descontos: R$");
@@ -246,10 +251,10 @@ public class JFrameFinalizarVenda extends javax.swing.JFrame {
         try{
             double descontoFinal = Double.parseDouble(descontoText);
             
-//            this.venda.setValorTotal(Double.parseDouble(jFieldVlTotal.getText()));
+            this.venda.setValorTotal(Double.parseDouble(jFieldVlTotal.getText()));
 //            this.venda.setValorDesconto(Double.parseDouble(jFieldDescontoTotal.getText()));
             Object selectedItem = jComboBoxMetodoPgmt.getSelectedItem();
-            // this.venda.setMetodoPagamento(selectedItem != null ? selectedItem.toString() : null);
+//             this.venda.setMetodoPagamento(selectedItem != null ? selectedItem.toString() : null);
             
             for(ItemVendaResponseDTO item : this.venda.getItensVenda()) {
 //                item.setVenda(this.venda);
@@ -283,6 +288,10 @@ public class JFrameFinalizarVenda extends javax.swing.JFrame {
     private void btCancelarVendaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btCancelarVendaActionPerformed
         dispose();
     }//GEN-LAST:event_btCancelarVendaActionPerformed
+
+    private void jFieldVlTotalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jFieldVlTotalActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jFieldVlTotalActionPerformed
 
     private void atualizarCampos() {
     String descontoText = jFieldDescontoFinal.getText();
