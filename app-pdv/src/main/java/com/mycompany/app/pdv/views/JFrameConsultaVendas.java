@@ -1,6 +1,15 @@
 package com.mycompany.app.pdv.views;
 
+
+import com.mycompany.app.pdv.tablemodels.VendaTableModel;
+import com.mycompany.app.pdv.utils.PDVUtils;
 import com.mycompany.app.pdv.views.JframeVenda;
+import javax.swing.JOptionPane;
+import javax.swing.RowFilter;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableRowSorter;
 
 /**
  *
@@ -13,8 +22,33 @@ public class JFrameConsultaVendas extends javax.swing.JFrame {
      * Creates new form JFrameConsultaVendas
      */
     public JFrameConsultaVendas(JframeVenda frameVenda) {
+        this.frameVenda = frameVenda;
         initComponents();
         tbHistorico.fixTable(jScrollPane1);
+        try {
+            atualizarLista();
+        
+        txtConsulta.getDocument().addDocumentListener(new DocumentListener() {
+            @Override
+            public void insertUpdate(DocumentEvent e) {
+                filtrarTabela(txtConsulta.getText());
+            }
+
+            @Override
+            public void removeUpdate(DocumentEvent e) { 
+                filtrarTabela(txtConsulta.getText());
+            }
+
+            @Override
+            public void changedUpdate(DocumentEvent e) {
+                filtrarTabela(txtConsulta.getText());
+            }
+        });
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(null, "Erro ao carregar produtos: \n\n"+ ex.getMessage(), "Produtos", JOptionPane.ERROR_MESSAGE);
+            this.dispose();
+            return;
+        } 
     }
 
     /**
@@ -29,8 +63,6 @@ public class JFrameConsultaVendas extends javax.swing.JFrame {
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         txtConsulta = new javax.swing.JTextField();
-        btBuscar = new javax.swing.JButton();
-        btSelecionar = new javax.swing.JButton();
         btVoltar = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         tbHistorico = new com.mycompany.app.pdv.views.components.TableDark();
@@ -43,30 +75,11 @@ public class JFrameConsultaVendas extends javax.swing.JFrame {
         jLabel1.setForeground(new java.awt.Color(255, 255, 255));
         jLabel1.setText("CONSULTAR VENDAS");
 
-        txtConsulta.setBackground(new java.awt.Color(51, 51, 51));
+        txtConsulta.setBackground(new java.awt.Color(40, 46, 56));
+        txtConsulta.setForeground(new java.awt.Color(255, 255, 255));
         txtConsulta.setBorder(null);
 
-        btBuscar.setBackground(new java.awt.Color(51, 51, 51));
-        btBuscar.setForeground(new java.awt.Color(255, 255, 255));
-        btBuscar.setText("Buscar");
-        btBuscar.setBorder(null);
-        btBuscar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btBuscarActionPerformed(evt);
-            }
-        });
-
-        btSelecionar.setBackground(new java.awt.Color(51, 51, 51));
-        btSelecionar.setForeground(new java.awt.Color(255, 255, 255));
-        btSelecionar.setText("Selecionar");
-        btSelecionar.setBorder(null);
-        btSelecionar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btSelecionarActionPerformed(evt);
-            }
-        });
-
-        btVoltar.setBackground(new java.awt.Color(51, 51, 51));
+        btVoltar.setBackground(new java.awt.Color(40, 46, 56));
         btVoltar.setForeground(new java.awt.Color(255, 255, 255));
         btVoltar.setText("Voltar");
         btVoltar.setBorder(null);
@@ -95,39 +108,32 @@ public class JFrameConsultaVendas extends javax.swing.JFrame {
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+            .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap(95, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                        .addGroup(jPanel1Layout.createSequentialGroup()
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(btVoltar, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(btSelecionar, javax.swing.GroupLayout.PREFERRED_SIZE, 133, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 794, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(85, 85, 85)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 371, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txtConsulta, javax.swing.GroupLayout.PREFERRED_SIZE, 484, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(18, 18, 18)
-                        .addComponent(btBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(73, 73, 73))
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 794, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(73, 73, 73))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addComponent(txtConsulta, javax.swing.GroupLayout.PREFERRED_SIZE, 624, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(158, 158, 158))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 371, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(271, 271, 271))))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(18, 18, 18)
+                .addGap(17, 17, 17)
                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(28, 28, 28)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(btBuscar, javax.swing.GroupLayout.DEFAULT_SIZE, 40, Short.MAX_VALUE)
-                    .addComponent(txtConsulta))
+                .addGap(29, 29, 29)
+                .addComponent(txtConsulta, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 368, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(12, 12, 12)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btVoltar, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btSelecionar, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(btVoltar, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(33, Short.MAX_VALUE))
         );
 
@@ -145,31 +151,26 @@ public class JFrameConsultaVendas extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void btBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btBuscarActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btBuscarActionPerformed
-
-    private void btSelecionarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btSelecionarActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btSelecionarActionPerformed
-
     private void btVoltarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btVoltarActionPerformed
     dispose();
     }//GEN-LAST:event_btVoltarActionPerformed
 
+    private void filtrarTabela(String termoPesquisa) {
+        DefaultTableModel model = (DefaultTableModel) tbHistorico.getModel();
+        TableRowSorter<DefaultTableModel> sorter = new TableRowSorter<>(model);
+        tbHistorico.setRowSorter(sorter);
 
-    private void atualizarLista() {
-//        List<VendaResponseDTO> listaVendas = PDVUtils.vendas;
-//        
-//            ClienteTableModel model = 
-//                new ClienteTableModel(listaClientes);
-//        
-//        tbHistorico.setModel(model);
+        RowFilter<DefaultTableModel, Object> rowFilter = RowFilter.regexFilter("(?i)" + termoPesquisa);
+        sorter.setRowFilter(rowFilter);
     }
+    
+    private void atualizarLista(){
+        VendaTableModel model = new VendaTableModel(PDVUtils.vendas);
+        tbHistorico.setModel(model);
+    }
+   
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btBuscar;
-    private javax.swing.JButton btSelecionar;
     private javax.swing.JButton btVoltar;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;

@@ -3,10 +3,12 @@ package com.mycompany.app.pdv.views;
 import com.mycompany.app.pdv.dtos.response.ClienteResponseDTO;
 import com.mycompany.app.pdv.dtos.response.ProdutoResponseDTO;
 import com.mycompany.app.pdv.dtos.request.TokenRequestDTO;
+import com.mycompany.app.pdv.dtos.response.VendaResponseDTO;
 import com.mycompany.app.pdv.exceptions.ApiException;
 import com.mycompany.app.pdv.services.ClienteService;
 import com.mycompany.app.pdv.services.ProdutoService;
 import com.mycompany.app.pdv.services.TokenService;
+import com.mycompany.app.pdv.services.VendaService;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import com.mycompany.app.pdv.views.JframeVenda;
@@ -346,10 +348,13 @@ public class JframeLogin extends javax.swing.JFrame {
                 try {
                     ProdutoService produtoService = new ProdutoService();
                     List<ProdutoResponseDTO> produtos =  produtoService.findAll();
+                    VendaService vendaService = new VendaService();
+                    List<VendaResponseDTO> vendas =  vendaService.findAll();
                     ClienteService clienteService = new ClienteService();
                     List<ClienteResponseDTO> clientes = clienteService.findAll();
                     PDVUtils.produtos = produtos;
-                    PDVUtils.clientes = clientes;   
+                    PDVUtils.clientes = clientes; 
+                    PDVUtils.vendas = vendas;
                 } catch (ApiException | InterruptedException e) {
                     e.printStackTrace(); // ou trate a exceção conforme necessário
                 }

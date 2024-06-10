@@ -231,7 +231,6 @@ public class JFrameFinalizarVenda extends javax.swing.JFrame {
         dispose();
     }//GEN-LAST:event_btCancelarVendaActionPerformed
 
-    
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btCancelarVenda;
     private javax.swing.JButton btFinalizarVenda;
