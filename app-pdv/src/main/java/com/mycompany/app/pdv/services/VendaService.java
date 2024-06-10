@@ -113,28 +113,26 @@ public class VendaService {
     
     
     public List<VendaResponseDTO> findAll() throws ApiException, InterruptedException {
-        final List<VendaResponseDTO>[] vendaList = new List[1];
-        final CountDownLatch latch = new CountDownLatch(1);
-        final Throwable[] throwable = new Throwable[1];
+    final List<VendaResponseDTO>[] vendaList = new List[1];
+    final CountDownLatch latch = new CountDownLatch(1);
+    final Throwable[] throwable = new Throwable[1];
 
-        Call<List<VendaResponseDTO>> call = new RetrofitConfig()
-                .vendaRequest().findAll("Bearer " + PDVUtils.acessToken);
-        call.enqueue(new Callback<List<VendaResponseDTO>>() {
-            @Override
-            public void onResponse(Call<List<VendaResponseDTO>> call, Response<List<VendaResponseDTO>> response) {
-                Integer code =  response.code();
-                ApiLoggerUtils.logOperation(LocalDateTime.now(), " GET(findAll) - VENDA ", code.toString());
-                if (response.isSuccessful()) {
-                    vendaList[0] = response.body();
-                }
-                else if(response.code() == 401) {
-                    throwable[0] = new ApiException(response.code() + ": Seu login expirou!");
-                } 
-                else {
-                    throwable[0] = PDVUtils.getResponseError(response);
-                }
-                latch.countDown();
+    Call<List<VendaResponseDTO>> call = new RetrofitConfig()
+            .vendaRequest().findAll("Bearer " + PDVUtils.acessToken);
+    call.enqueue(new Callback<List<VendaResponseDTO>>() {
+        @Override
+        public void onResponse(Call<List<VendaResponseDTO>> call, Response<List<VendaResponseDTO>> response) {
+            Integer code = response.code();
+            ApiLoggerUtils.logOperation(LocalDateTime.now(), "GET(findAll) - VENDA", code.toString());
+            if (response.isSuccessful()) {
+                vendaList[0] = response.body();
+            } else if (response.code() == 401) {
+                throwable[0] = new ApiException(response.code() + ": Seu login expirou!");
+            } else {
+                throwable[0] = PDVUtils.getResponseError(response);
             }
+            latch.countDown();
+        }
 
             @Override
             public void onFailure(Call<List<VendaResponseDTO>> call, Throwable t) {
