@@ -41,7 +41,6 @@ com\mycompany\app\pdv\views\JframeVenda$11.class
 com\mycompany\app\pdv\views\JframeVenda.class
 com\mycompany\app\pdv\services\ClienteService.class
 com\mycompany\app\pdv\views\JFrameConsultaVendas.class
-com\mycompany\app\pdv\views\JFrameFinalizarVenda$4.class
 com\mycompany\app\pdv\views\JframeVenda$8.class
 com\mycompany\app\pdv\views\components\TableDark$TableDarkHeader.class
 com\mycompany\app\pdv\views\JframeLogin$1.class

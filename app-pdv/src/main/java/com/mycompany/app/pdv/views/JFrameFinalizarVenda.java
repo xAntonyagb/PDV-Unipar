@@ -204,27 +204,17 @@ public class JFrameFinalizarVenda extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btFinalizarVendaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btFinalizarVendaActionPerformed
-        try{
-            VendaRequestDTO vendaRequest = VendaRequestDTO.toVendaRequestDTO(venda);
-            VendaService vendaService = new VendaService();
-            
-            Object selectedItem = jComboBoxMetodoPgmt.getSelectedItem();
-            vendaRequest.setObservacao(selectedItem != null ? selectedItem.toString() : "N/A");
-            vendaRequest.setData(TimeUtils.getStringNow());
+        VendaRequestDTO vendaRequest = VendaRequestDTO.toVendaRequestDTO(venda);
+        VendaService vendaService = new VendaService();
 
-            VendaResponseDTO retorno = vendaService.insert(vendaRequest);
+        Object selectedItem = jComboBoxMetodoPgmt.getSelectedItem();
+        vendaRequest.setObservacao(selectedItem != null ? selectedItem.toString() : "N/A");
+        vendaRequest.setData(TimeUtils.getStringNow());
 
-            JOptionPane.showMessageDialog(null, "Venda feita com sucesso: "+ retorno.getId(), "Sucesso", JOptionPane.INFORMATION_MESSAGE);
-            this.frameVenda.limparVenda();
-            
-            dispose();
-        } 
-        catch (ApiException ex) {
-            JOptionPane.showMessageDialog(this, "Um erro ocorreu ao finalizar a venda:\n\n" + ex.getMessage(), "Erro ao finalizar venda", JOptionPane.ERROR_MESSAGE);
-        } 
-        catch (InterruptedException ex) {
-            JOptionPane.showMessageDialog(this, "Tempo esgotado! Tente novamente mais tarde.\n\n" + ex.getMessage(), "Erro ao finalizar venda", JOptionPane.ERROR_MESSAGE);
-        }
+        vendaService.insertAsync(vendaRequest);
+
+        this.frameVenda.limparVenda();
+        dispose();
     }//GEN-LAST:event_btFinalizarVendaActionPerformed
 
     private void btCancelarVendaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btCancelarVendaActionPerformed

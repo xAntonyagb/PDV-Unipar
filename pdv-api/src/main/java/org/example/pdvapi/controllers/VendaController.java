@@ -105,6 +105,7 @@ public class VendaController {
                     content = { @Content(mediaType = "application/json") })
     })
     @SecurityRequirement(name = "token")
+
     @GetMapping ("/all")
     public ResponseEntity<List<VendaResponseDTO>> findAll() {
         return ResponseEntity.ok(vendaService.findAll());
