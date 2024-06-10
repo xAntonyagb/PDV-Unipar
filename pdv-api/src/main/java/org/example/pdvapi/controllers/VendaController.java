@@ -89,7 +89,22 @@ public class VendaController {
         vendaResponseDTO = vendaService.insert(vendaRequestDTO);
         return ResponseEntity.ok(vendaResponseDTO);
     }
-
+    // ----------------------------- RETORNAR VENDAS -----------------------------
+    @Operation(summary = "Retorna todas as vendas")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Ok", content =
+                    { @Content(mediaType = "application/json", schema =
+                    @Schema(implementation = VendaResponseDTO.class)) }),
+            @ApiResponse(responseCode = "400", description = "Venda fora de padrão ou inválida",
+                    content = { @Content(mediaType = "application/json") }),
+            @ApiResponse(responseCode = "401", description = "Usuário não autorizado / Credenciais inválidas",
+                    content = { @Content(mediaType = "application/json") }),
+            @ApiResponse(responseCode = "404", description = "Itens da venda / Cliente não encontrados",
+                    content = { @Content(mediaType = "application/json") }),
+            @ApiResponse(responseCode = "500", description = "Erro interno no servidor",
+                    content = { @Content(mediaType = "application/json") })
+    })
+    @SecurityRequirement(name = "token")
     @GetMapping ("/all")
     public ResponseEntity<List<VendaResponseDTO>> findAll() {
         return ResponseEntity.ok(vendaService.findAll());
